@@ -1,32 +1,40 @@
-import { Routes, Route, Link } from "react-router-dom";
-import Home from "~/pages/Home/Home.js";
-import News from "~/pages/News";
-import Contact from "~/pages/Contact";
+import { Fragment } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { publicRoutes } from "~/routes/index";
+import { DefaultLayout } from "~/components/Layout";
 
 function App() {
-    return (
-        <div className="App">
-            <nav>
-                <ul>
-                    <li>
-                        <Link to="/">Home</Link>
-                    </li>
-                    <li>
-                        <Link to="/news">News</Link>
-                    </li>
-                    <li>
-                        <Link to="/contact">Contact</Link>
-                    </li>
-                </ul>
-            </nav>
-
+   return (
+      <Router>
+         <div className="App">
             <Routes>
-                <Route path="/" element={<Home disable></Home>} />
-                <Route path="/News" element={<News></News>} />
-                <Route path="/Contact" element={<Contact></Contact>} />
+               {publicRoutes.map((route, index) => {
+                  // NGU: let Layout chứ không phải const layout
+                  let Layout = DefaultLayout;
+
+                  if (route.layout === null) {
+                     Layout = Fragment;
+                  } else if (route.layout) {
+                     Layout = route.layout;
+                  }
+
+                  const Page = route.component;
+                  return (
+                     <Route
+                        key={index}
+                        path={route.path}
+                        element={
+                           <Layout>
+                              <Page />
+                           </Layout>
+                        }
+                     />
+                  );
+               })}
             </Routes>
-        </div>
-    );
+         </div>
+      </Router>
+   );
 }
 
 export default App;
