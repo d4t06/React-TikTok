@@ -8,5 +8,40 @@
 .inner {
    height: 100%;
    width: 1150px;
-   background-color: #ccc;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+.search {
+   width: 362px;
+   height: 46px;
+   background-color: rgb(199, 199, 199);
+   border-radius: 92px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+.input {
+   // color: #fff;
+   flex: 1;
+   padding: 12px 16px;
+   font-size: 1.6rem;
+   background-color: transparent;
+   border: none;
+   outline: none;
+}
+.clear {
+}
+
+.loading {
+   display: none;
+}
+
+.search-btn {
+   font-size: 2rem;
+   padding: 0 16px;
+   border-left: 1px solid #333;
+}
+
+.cta {
 }

@@ -6,7 +6,7 @@ import Sidebar from "./Sidebar";
 const cx = classNames.bind(styles);
 function DefaultLayout({ children }) {
    return (
-      <div className="wrapper">
+      <div className={cx("wrapper")}>
          <Header />
          <div className={cx("Container")}>
             <Sidebar />
