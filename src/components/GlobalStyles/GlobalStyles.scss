@@ -1,9 +1,8 @@
 @import "normalize.css";
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap");
 :root {
-   --black: #000;
    --text-color: #333;
+   --hover-color: rgb(246, 246, 246);
    --primary-color: rgb(254, 44, 85);
    --header-search-height: 46px;
 }
@@ -14,8 +13,8 @@
    box-sizing: border-box;
 }
 html {
-   font-size: 62.5%;
-   font-family: "Montserrat", sans-serif;
+   font-size: 62.5% !important;
+   font-family: "Poppins", sans-serif !important;
 }
 button,
 input {
@@ -23,11 +22,5 @@ input {
    outline: none;
 }
 a[href] {
-   color: var(--text-color);
    text-decoration: none;
-}
-.primary {
-   font-weight: 500;
-   color: #fff;
-   background-color: rgb(254, 44, 85);
 }

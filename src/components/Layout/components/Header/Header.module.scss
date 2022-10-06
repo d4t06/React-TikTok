@@ -11,6 +11,7 @@
    display: flex;
    align-items: center;
    justify-content: space-between;
+   padding: 0 20px;
 }
 .search,
 .search-result {
@@ -78,41 +79,10 @@
       left: 0;
    }
    &:hover {
-      background-color: rgb(219, 219, 219);
+      background-color: var(--hover-color);
    }
 }
-.cta,
-.div-upload {
-   display: flex;
-   align-items: center;
-}
-.btn {
-   height: 36px;
-   min-width: 100px;
-   font-size: 1.7rem;
-   font-weight: 400;
-   color: var(--black);
-   border-radius: 5px;
-   background-color: transparent;
-   border: 0.5px solid rgba(22, 24, 35, 0.15);
-   .plus-icon {
-      color: var(--black);
-      margin-right: 10px;
-   }
-}
-.btn + .btn {
-   margin-left: 15px;
-}
-.div-upload {
-   padding: 0 15px;
-   height: 36px;
-}
-.seemore-icon {
-   margin-left: 15px;
-   font-size: 1.6rem;
-   background-color: transparent;
-   padding: 5px 8px;
-}
+
 .lable-text {
    font-size: 1.4rem;
    font-weight: 600;

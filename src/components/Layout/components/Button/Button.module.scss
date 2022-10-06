@@ -1,0 +1,79 @@
+.cta,
+.div-upload {
+   display: flex;
+   align-items: center;
+}
+.btn {
+   padding: 4px 0;
+   min-width: 100px;
+   font-size: 1.7rem;
+   font-weight: 500;
+   color: var(--black);
+   border-radius: 4px;
+   background-color: transparent;
+   border: 1px solid rgba(22, 24, 35, 0.15);
+   cursor: pointer;
+   font-family: "Poppins";
+
+   &:hover {
+      background-color: var(--hover-color);
+   }
+}
+.btn + .btn {
+   margin-left: 15px;
+}
+.div-upload {
+   padding: 0 15px;
+   height: 36px;
+}
+
+.primary {
+   color: #fff;
+   background-color: rgb(254, 44, 85);
+   border: unset;
+   &:hover {
+      background-color: rgb(244, 41, 82);
+   }
+}
+.outline {
+   border-color: var(--primary-color);
+   color: var(--primary-color);
+   &:hover {
+      background-color: rgb(244, 41, 82, 0.05);
+   }
+}
+.disable {
+   opacity: 0.3;
+   pointer-events: none;
+   cursor: default;
+}
+.small {
+   padding: 3px 0;
+   min-width: 88px;
+}
+.long {
+   padding: 4px 13px;
+}
+.round {
+   border-radius: 99px;
+   box-shadow: 1px 1px 5px rgba(22, 24, 35, 0.3);
+}
+
+.text {
+   margin-left: 15px;
+   font-size: 1.6rem;
+   background-color: transparent;
+   padding: 5px 8px;
+   min-width: unset;
+   border: none;
+}
+.custom-login {
+   color: red;
+}
+.left-icon {
+   color: var(--black);
+   margin-right: 10px;
+}
+.right-icon {
+   margin-left: 10px;
+}
