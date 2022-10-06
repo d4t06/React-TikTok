@@ -1,3 +1,30 @@
-.sidebar {
+.sidebar-container {
    width: 361px;
+   display: flex;
+   flex-direction: column;
+   padding: 0 8px;
+   overflow: auto;
+}
+.cta {
+   padding: 18px 0;
+}
+.login-frame {
+   padding: 20px 0;
+   border-top: 1px solid rgba($color: #333, $alpha: 0.4);
+   border-bottom: 1px solid rgba($color: #333, $alpha: 0.4);
+}
+.login-hint {
+   font-size: 1.6rem;
+   margin-bottom: 15px;
+   color: rgba($color: #333, $alpha: 0.6);
+}
+.discover-container {
+   padding: 20px 0;
+   label {
+      font-size: 1.3rem;
+      color: rgba($color: #333, $alpha: 0.6);
+   }
+   .list-container {
+      padding: 17px 0;
+   }
 }

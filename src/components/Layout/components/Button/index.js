@@ -14,6 +14,8 @@ function Button({
    primary = false,
    round = false,
    disable = false,
+   full = false,
+   tag = false,
    children,
    small,
    long,
@@ -21,7 +23,6 @@ function Button({
    className,
    leftIcon,
    rihgtIcon,
-   text,
    ...passprops
 }) {
    let Comp = "button";
@@ -46,7 +47,8 @@ function Button({
       disable,
       round,
       long,
-      text,
+      full,
+      tag,
    });
    if (disable) {
       Object.keys(props).forEach((key) => {

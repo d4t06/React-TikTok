@@ -3,9 +3,13 @@ import styles from "./PopupItem.module.scss";
 
 const cx = classNames.bind(styles);
 
-function PopupItem({ icon, children }) {
+function PopupItem({ type, icon, children, primary = false }) {
+   let classes = cx("item", {
+      [type]: type,
+      primary,
+   });
    return (
-      <li className={cx("item")}>
+      <li className={classes}>
          <a>
             {icon && <span className={cx("popup-icon")}>{icon}</span>}
             {children}

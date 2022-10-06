@@ -1,26 +1,26 @@
 import {
    faCircleXmark,
    faEllipsisVertical,
-   faKeyboard,
-   faLanguage,
    faMagnifyingGlass,
    faPlus,
-   faPlusSquare,
-   faQuestion,
    faSpinner,
-   faSquare,
+   faA,
+   faKeyboard,
+   faQuestion,
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Tippy from "@tippyjs/react/headless";
+import "tippy.js/animations/scale.css";
 
 import styles from "./Header.module.scss";
 import Image from "~/assets/images";
 import { Wrapper as PopperWrapper } from "../Popper";
+import PopupItem from "../PopupItem";
 import AccountItem from "../AccountsItem";
 import Button from "../Button";
-import PopupItem from "../PopupItem";
+import Menu from "../Menu";
 
 const cx = classNames.bind(styles);
 function Header() {
@@ -37,8 +37,9 @@ function Header() {
             <img src={Image.logo} alt="logo" />
 
             <Tippy
-               visible={true}
-               interactive={true}
+               // visible={true}
+               trigger="mouseenter"
+               interactive
                // visible={searchResult.length > 1}
                render={(attrs) => (
                   <div className={cx("search-result")} tabIndex="-1" {...attrs}>
@@ -51,12 +52,10 @@ function Header() {
                         <AccountItem />
                      </PopperWrapper>
                   </div>
-               )}>
+               )}
+            >
                <div className={cx("search")}>
-                  <input
-                     className={cx("input")}
-                     placeholder="Search accounts and videos"
-                  />
+                  <input className={cx("input")} placeholder="Search accounts and videos" />
                   <button className={cx("clear")}>
                      <FontAwesomeIcon icon={faCircleXmark} />
                   </button>
@@ -70,46 +69,42 @@ function Header() {
             <div className={cx("cta")}>
                <Button
                   long
-                  leftIcon={
-                     <FontAwesomeIcon
-                        className={cx("plus-icon")}
-                        icon={faPlus}
-                     />
-                  }>
+                  leftIcon={<FontAwesomeIcon className={cx("plus-icon")} icon={faPlus} />}
+               >
                   Upload
                </Button>
+
                <Button primary>Log in</Button>
 
                <Tippy
-                  visible
-                  // trigger="mouseenter"
+                  trigger="mouseenter"
                   interactive
-                  placement="bottom"
+                  delay={[0, 500]}
+                  placement="bottom-end"
+                  // animation="scale"
                   render={(attrs) => (
-                     <div
-                        className={cx("search-result")}
-                        tabIndex="-1"
-                        {...attrs}>
-                        <PopperWrapper className={"sort"}>
-                           <PopupItem
-                              icon={<FontAwesomeIcon icon={faLanguage} />}>
-                              English
-                           </PopupItem>
-                           <PopupItem
-                              icon={<FontAwesomeIcon icon={faQuestion} />}>
+                     <div tabIndex="-1" {...attrs}>
+                        <PopperWrapper className={cx("sort")}>
+                           <PopupItem icon={<FontAwesomeIcon icon={faA} />}>English</PopupItem>
+                           <PopupItem icon={<FontAwesomeIcon icon={faQuestion} />}>
                               Feeback and help
                            </PopupItem>
-                           <PopupItem
-                              icon={<FontAwesomeIcon icon={faKeyboard} />}>
+                           <PopupItem icon={<FontAwesomeIcon icon={faKeyboard} />}>
                               Keyboard shortcuts
                            </PopupItem>
                         </PopperWrapper>
                      </div>
-                  )}>
-                  <button className={cx("more-icon")} text>
+                  )}
+               >
+                  <button className={cx("more-icon")}>
                      <FontAwesomeIcon icon={faEllipsisVertical} />
                   </button>
                </Tippy>
+               {/* <Menu>
+                  <button className={cx("more-icon")}>
+                     <FontAwesomeIcon icon={faEllipsisVertical} />
+                  </button>
+               </Menu> */}
             </div>
          </div>
       </header>

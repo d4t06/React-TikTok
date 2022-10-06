@@ -4,10 +4,10 @@ import styles from "./Wrapper.module.scss";
 const cx = classNames.bind(styles);
 
 function Wrapper({ className, children }) {
-    const classes = cx("wrapper", {
-        [className]: className,
-    });
-    return <div className={classes}>{children}</div>;
+   const classes = cx("wrapper", {
+      [className]: className,
+   });
+   return <ul className={classes}>{children}</ul>;
 }
 
 export default Wrapper;

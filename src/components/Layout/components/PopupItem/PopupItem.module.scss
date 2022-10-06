@@ -1,16 +1,41 @@
-li {
+.primary {
+   color: var(--primary-color);
+}
+.item {
    list-style: none;
    text-align: left;
    padding: 12px 13px 12px 17px;
    a {
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       font-weight: 500;
       user-select: none;
    }
+   &:hover {
+      background-color: var(--hover-color);
+   }
+   // &:first-child .popup-icon {
+   //    border: 2px solid black;
+   //    border-radius: 4px;
+   // }
 }
-.popup-icon {
+.item .popup-icon {
+   text-align: center;
    display: inline-block;
    margin-right: 10px;
    min-width: 20px;
+}
+.sidebar {
+   padding: 12px 13px 12px 0px;
+
+   a {
+      font-size: 2rem;
+      font-weight: 600;
+      font-family: "Poppins";
+   }
+}
+.sidebar .popup-icon {
    text-align: center;
+   display: inline-block;
+   margin-right: 10px;
+   min-width: 35px;
 }
