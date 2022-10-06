@@ -1,10 +1,14 @@
 import {
    faCircleXmark,
    faEllipsisVertical,
+   faKeyboard,
+   faLanguage,
    faMagnifyingGlass,
    faPlus,
    faPlusSquare,
+   faQuestion,
    faSpinner,
+   faSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import classNames from "classnames/bind";
@@ -16,6 +20,7 @@ import Image from "~/assets/images";
 import { Wrapper as PopperWrapper } from "../Popper";
 import AccountItem from "../AccountsItem";
 import Button from "../Button";
+import PopupItem from "../PopupItem";
 
 const cx = classNames.bind(styles);
 function Header() {
@@ -32,7 +37,6 @@ function Header() {
             <img src={Image.logo} alt="logo" />
 
             <Tippy
-               // trigger="focusin"
                visible={true}
                interactive={true}
                // visible={searchResult.length > 1}
@@ -47,8 +51,7 @@ function Header() {
                         <AccountItem />
                      </PopperWrapper>
                   </div>
-               )}
-            >
+               )}>
                <div className={cx("search")}>
                   <input
                      className={cx("input")}
@@ -63,6 +66,7 @@ function Header() {
                   </div>
                </div>
             </Tippy>
+
             <div className={cx("cta")}>
                <Button
                   long
@@ -71,14 +75,41 @@ function Header() {
                         className={cx("plus-icon")}
                         icon={faPlus}
                      />
-                  }
-               >
+                  }>
                   Upload
                </Button>
                <Button primary>Log in</Button>
-               <Button text>
-                  <FontAwesomeIcon icon={faEllipsisVertical} />
-               </Button>
+
+               <Tippy
+                  visible
+                  // trigger="mouseenter"
+                  interactive
+                  placement="bottom"
+                  render={(attrs) => (
+                     <div
+                        className={cx("search-result")}
+                        tabIndex="-1"
+                        {...attrs}>
+                        <PopperWrapper className={"sort"}>
+                           <PopupItem
+                              icon={<FontAwesomeIcon icon={faLanguage} />}>
+                              English
+                           </PopupItem>
+                           <PopupItem
+                              icon={<FontAwesomeIcon icon={faQuestion} />}>
+                              Feeback and help
+                           </PopupItem>
+                           <PopupItem
+                              icon={<FontAwesomeIcon icon={faKeyboard} />}>
+                              Keyboard shortcuts
+                           </PopupItem>
+                        </PopperWrapper>
+                     </div>
+                  )}>
+                  <button className={cx("more-icon")} text>
+                     <FontAwesomeIcon icon={faEllipsisVertical} />
+                  </button>
+               </Tippy>
             </div>
          </div>
       </header>

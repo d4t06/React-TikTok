@@ -1,0 +1,16 @@
+li {
+   list-style: none;
+   text-align: left;
+   padding: 12px 13px 12px 17px;
+   a {
+      font-size: 1.6rem;
+      font-weight: 500;
+      user-select: none;
+   }
+}
+.popup-icon {
+   display: inline-block;
+   margin-right: 10px;
+   min-width: 20px;
+   text-align: center;
+}
