@@ -4,73 +4,38 @@ import {
    faMagnifyingGlass,
    faPlus,
    faSpinner,
-   faA,
-   faKeyboard,
-   faQuestion,
    faChevronLeft,
+   faCloudArrowUp,
+   faMessage,
 } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
-import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Tippy from "@tippyjs/react/headless";
-import "tippy.js/animations/scale.css";
+import Tippy from "@tippyjs/react";
+import TippyHeadless from "@tippyjs/react/headless";
+import { useEffect, useState } from "react";
 
-import styles from "./Header.module.scss";
 import Image from "~/assets/images";
 import { Wrapper as PopperWrapper } from "../Popper";
 import PopupItem from "../PopupItem";
 import AccountItem from "../AccountsItem";
 import Button from "../Button";
-import Menu from "../Menu/Header";
+import MENU_ITEMS from "~/assets/items/menuItem";
 
-const MENU_ITEMS = [
-   {
-      icon: <FontAwesomeIcon icon={faA} />,
-      title: "English",
-      children: {
-         title: "Language",
-         data: [
-            {
-               code: "en",
-               title: "English",
-            },
-            {
-               code: "vi",
-               title: "Tiếng Việt",
-               children: {
-                  title: "Language",
-                  data: [
-                     {
-                        code: "en",
-                        title: "English1",
-                     },
-                     {
-                        code: "vi",
-                        title: "Tiếng Việt1",
-                     },
-                  ],
-               },
-            },
-         ],
-      },
-   },
-   {
-      icon: <FontAwesomeIcon icon={faQuestion} />,
-      title: "Feeback and help",
-      to: "/feeback",
-   },
-   {
-      icon: <FontAwesomeIcon icon={faKeyboard} />,
-      title: "Keyboard shortcuts",
-   },
-];
-
+import styles from "./Header.module.scss";
+import stylesx from "../AccountsItem/AccountItem.module.scss";
+import classNames from "classnames/bind";
+import { render } from "@testing-library/react";
 const cx = classNames.bind(styles);
+const cy = classNames.bind(stylesx);
+
 function Header() {
    const [searchResult, setSearchResult] = useState([]);
    const [history, setHistory] = useState([{ data: MENU_ITEMS }]);
-   let current = history[history.length - 1];
-   // console.log(current);
+
+   const currentUser = true;
+   const current = history[history.length - 1];
+   const handleItem = (item) => {
+      console.log(item);
+   };
    const renderItem = () => {
       return current.data.map((item, index) => {
          const isParent = !!item.children;
@@ -81,7 +46,7 @@ function Header() {
                onClick={() => {
                   if (isParent) {
                      setHistory((prev) => [...prev, item.children]);
-                  }
+                  } else handleItem(item);
                }}
             />
          );
@@ -91,15 +56,11 @@ function Header() {
       return arr.slice(0, arr.length - 1);
    }
    function backMenu() {
+      setHistory((prev) => prev.slice(0, history.length - 1));
       // lấy phần tử bị remove
-      // setHistory((prev) => prev.splice(history.length - 1, 1));
-      console.log("history", history);
-
-      setHistory(history.splice(0, history.length - 1));
-
+      // setHistory(history.splice(0, history.length - 1));
       // lấy mảng bị thay đổi
       // setHistory(() => history.splice(history.length - 1, 1));
-      console.log(history);
    }
 
    useEffect(() => {
@@ -112,11 +73,9 @@ function Header() {
          <div className={cx("inner")}>
             <img src={Image.logo} alt="logo" />
 
-            <Tippy
-               // visible={true}
+            <TippyHeadless
                trigger="mouseenter"
                interactive
-               // visible={searchResult.length > 1}
                render={(attrs) => (
                   <div className={cx("search-result")} tabIndex="-1" {...attrs}>
                      <PopperWrapper>
@@ -131,10 +90,7 @@ function Header() {
                )}
             >
                <div className={cx("search")}>
-                  <input
-                     className={cx("input")}
-                     placeholder="Search accounts and videos"
-                  />
+                  <input className={cx("input")} placeholder="Search accounts and videos" />
                   <button className={cx("clear")}>
                      <FontAwesomeIcon icon={faCircleXmark} />
                   </button>
@@ -143,61 +99,105 @@ function Header() {
                      <FontAwesomeIcon icon={faMagnifyingGlass} />
                   </div>
                </div>
-            </Tippy>
+            </TippyHeadless>
 
-            <div className={cx("cta")}>
-               <Button
-                  long
-                  leftIcon={
-                     <FontAwesomeIcon
-                        className={cx("plus-icon")}
-                        icon={faPlus}
-                     />
-                  }
-               >
-                  Upload
-               </Button>
+            <div className={currentUser ? cx("cta", "cta-user") : cx("cta")}>
+               {currentUser ? (
+                  <>
+                     <Tippy content="Upload Video">
+                        <Button
+                           tippy={{
+                              content: "Upload video",
+                              option: [
+                                 {
+                                    trigger: "click",
+                                 },
+                              ],
+                           }}
+                           text
+                        >
+                           <FontAwesomeIcon icon={faCloudArrowUp} />
+                        </Button>
+                     </Tippy>
+                     <Tippy content="Upload Video">
+                        <Button
+                           tippy={{
+                              content: "Message",
+                              option: [
+                                 {
+                                    trigger: "click",
+                                 },
+                              ],
+                           }}
+                           text
+                        >
+                           <FontAwesomeIcon icon={faMessage} />
+                        </Button>
+                     </Tippy>
 
-               <Button primary>Log in</Button>
+                     <TippyHeadless
+                        interactive
+                        placement="bottom"
+                        render={(attrs) => (
+                           <div tabIndex="-1" {...attrs}>
+                              <PopperWrapper className={cx("sort")}>{renderItem()}</PopperWrapper>
+                           </div>
+                        )}
+                     >
+                        {/* <AccountItem imgOnly />
+                         */}
+                        <div className={cy("avatar-frame", "img-only")}>
+                           <img src={require("~/assets/images/avatar.jpg")} />
+                        </div>
+                     </TippyHeadless>
+                  </>
+               ) : (
+                  <>
+                     <Button
+                        normal
+                        long
+                        leftIcon={<FontAwesomeIcon className={cx("plus-icon")} icon={faPlus} />}
+                     >
+                        Upload
+                     </Button>
+                     <Button normal primary>
+                        Log in
+                     </Button>
+                     <TippyHeadless
+                        trigger="mouseenter"
+                        interactive
+                        delay={[0, 300]}
+                        placement="bottom-end"
+                        // animation="scale"
+                        render={(attrs) => (
+                           <div tabIndex="-1" {...attrs}>
+                              <PopperWrapper className={cx("sort")}>
+                                 {/* Header */}
+                                 {history.length > 1 && (
+                                    <div className={cx("menu-header")}>
+                                       <span
+                                          className={cx("header-icon")}
+                                          onClick={() => backMenu()}
+                                       >
+                                          <FontAwesomeIcon icon={faChevronLeft} />
+                                       </span>
 
-               <Tippy
-                  visible
-                  // trigger="mouseenter"
-                  interactive
-                  delay={[0, 500]}
-                  placement="bottom-end"
-                  // animation="scale"
-                  render={(attrs) => (
-                     <div tabIndex="-1" {...attrs}>
-                        <PopperWrapper className={cx("sort")}>
-                           {history.length > 1 && (
-                              <div className={cx("menu-header")}>
-                                 <span
-                                    className={cx("header-icon")}
-                                    onClick={() => backMenu()}
-                                 >
-                                    <FontAwesomeIcon icon={faChevronLeft} />
-                                 </span>
-
-                                 <h4 className={cx("header-title")}>
-                                    Language
-                                 </h4>
-                              </div>
-                           )}
-                           {renderItem()}
-                        </PopperWrapper>
-                     </div>
-                  )}
-               >
-                  <button className={cx("more-icon")}>
-                     <FontAwesomeIcon icon={faEllipsisVertical} />
-                  </button>
-               </Tippy>
-               {/* <Menu>
-                  <button className={cx("more-icon")}>
-                     <FontAwesomeIcon icon={faEllipsisVertical} />
-                  </button>
-               </Menu> */}
+                                       <h4 className={cx("header-title")}>Language</h4>
+                                    </div>
+                                 )}
+                                 {/* Menu item */}
+                                 {renderItem()}
+                              </PopperWrapper>
+                           </div>
+                        )}
+                        onHide={() => setHistory((prev) => prev.slice(0, 1))}
+                     >
+                        <button className={cx("more-icon")}>
+                           <FontAwesomeIcon icon={faEllipsisVertical} />
+                        </button>
+                     </TippyHeadless>
+                  </>
+               )}
             </div>
          </div>
       </header>

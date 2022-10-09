@@ -5,23 +5,23 @@
 }
 .btn {
    display: inline-block;
-   padding: 4px 0;
+   padding: 6px 0;
    min-width: 100px;
    font-size: 1.7rem;
-   font-weight: 500;
+   font-weight: 600;
    color: var(--black);
    border-radius: 4px;
    background-color: transparent;
    border: 1px solid rgba(22, 24, 35, 0.15);
    cursor: pointer;
-   font-family: "Poppins";
+   font-family: "Source Sans Pro";
 
    &:hover {
       background-color: var(--hover-color);
    }
 }
-.btn + .btn {
-   margin-right: 15px;
+.normal + .normal {
+   margin-left: 15px;
 }
 .div-upload {
    padding: 0 15px;
@@ -43,6 +43,18 @@
       background-color: rgb(244, 41, 82, 0.05);
    }
 }
+.text {
+   border: unset;
+   font-size: 1.6rem;
+   min-width: 50px;
+   &:first-child {
+      border-top-left-radius: 99px;
+      border-bottom-left-radius: 99px;
+   }
+   &:hover {
+      color: var(--primary-color);
+   }
+}
 .disable {
    opacity: 0.3;
    pointer-events: none;
@@ -53,7 +65,7 @@
    min-width: 88px;
 }
 .long {
-   padding: 4px 13px;
+   padding: 6px 13px;
 }
 .round {
    border-radius: 99px;
@@ -67,22 +79,26 @@
    padding: 2px 10px;
    font-size: 1.2rem;
    font-weight: 400;
+   margin-right: 15px;
 }
+// .tag:first {
+// }
 .tag + .tag {
    margin-bottom: 10px;
+   // margin-right: 15px;
 }
 
-.text {
-   margin-left: 15px;
-   font-size: 1.6rem;
-   background-color: transparent;
-   padding: 5px 8px;
-   min-width: unset;
-   border: none;
-   &:hover {
-      background-color: transparent;
-   }
-}
+// .text {
+//    margin-left: 15px;
+//    font-size: 1.6rem;
+//    background-color: transparent;
+//    padding: 5px 8px;
+//    min-width: unset;
+//    border: none;
+//    &:hover {
+//       background-color: transparent;
+//    }
+// }
 .custom-login {
    color: red;
 }

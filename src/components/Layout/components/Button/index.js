@@ -2,14 +2,17 @@ import { Link } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./Button.module.scss";
 
-import { faEllipsisVertical, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisVertical, faL, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import Tippy from "@tippyjs/react";
+import "tippy.js/dist/tippy.css";
 const cx = classNames.bind(styles);
 
 function Button({
    to,
    href,
+   normal,
+   text,
    outline = false,
    primary = false,
    round = false,
@@ -23,12 +26,11 @@ function Button({
    className,
    leftIcon,
    rihgtIcon,
-   ...passprops
+   tippy,
 }) {
    let Comp = "button";
    const props = {
       onClick,
-      ...passprops,
    };
    if (to) {
       props.to = to;
@@ -41,6 +43,8 @@ function Button({
 
    const classes = cx("btn", {
       [className]: className, //làm việc với object
+      normal,
+      text,
       primary,
       outline,
       small,
@@ -49,6 +53,7 @@ function Button({
       long,
       full,
       tag,
+      tippy,
    });
    if (disable) {
       Object.keys(props).forEach((key) => {
@@ -59,11 +64,23 @@ function Button({
    }
 
    return (
-      <Comp className={classes} {...props}>
-         {leftIcon && <span className={cx("left-icon")}>{leftIcon}</span>}
-         {children}
-         {rihgtIcon && <span className={cx("right-icon")}>{rihgtIcon}</span>}
-      </Comp>
+      <>
+         {tippy ? (
+            <Tippy content={tippy.content} delay={[0, 0]}>
+               <Comp className={classes} {...props}>
+                  {leftIcon && <span className={cx("left-icon")}>{leftIcon}</span>}
+                  {children}
+                  {rihgtIcon && <span className={cx("right-icon")}>{rihgtIcon}</span>}
+               </Comp>
+            </Tippy>
+         ) : (
+            <Comp className={classes} {...props}>
+               {leftIcon && <span className={cx("left-icon")}>{leftIcon}</span>}
+               {children}
+               {rihgtIcon && <span className={cx("right-icon")}>{rihgtIcon}</span>}
+            </Comp>
+         )}
+      </>
    );
 }
 

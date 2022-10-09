@@ -79,7 +79,13 @@
       background-color: var(--hover-color);
    }
 }
-
+.cta {
+   display: flex;
+}
+.cta-user {
+   background-color: #f1f1f1;
+   border-radius: 99px;
+}
 .lable-text {
    font-size: 1.4rem;
    font-weight: 600;
@@ -90,7 +96,7 @@
 .more-icon {
    padding: 4px 9px;
    font-size: 1.8rem;
-   margin-left: 15px;
+   margin-left: 10px;
    background-color: transparent;
    cursor: pointer;
 }
@@ -111,6 +117,7 @@
 .header-title {
    position: absolute;
    font-size: 1.6rem;
+   font-weight: 600;
    text-align: center;
    left: 50%;
    top: 50%;
