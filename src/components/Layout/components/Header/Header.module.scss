@@ -94,3 +94,25 @@
    background-color: transparent;
    cursor: pointer;
 }
+
+//header menu
+
+.menu-header {
+   height: 50px;
+   position: relative;
+}
+
+.header-icon {
+   font-size: 1.4rem;
+   padding: 5px 5px;
+   margin-left: 18px;
+   line-height: 50px;
+}
+.header-title {
+   position: absolute;
+   font-size: 1.6rem;
+   text-align: center;
+   left: 50%;
+   top: 50%;
+   transform: translate(-50%, -50%);
+}

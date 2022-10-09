@@ -12,3 +12,21 @@
    max-width: 223px;
    overflow: unset;
 }
+.header {
+   height: 50px;
+   position: relative;
+}
+
+.header-icon {
+   font-size: 1.4rem;
+   padding: 0 5px;
+   margin-left: 10px;
+   line-height: 50px;
+}
+.header-title {
+   position: absolute;
+   font-size: 1.6rem;
+   text-align: center;
+   left: 50%;
+   transform: translateX(-50%);
+}

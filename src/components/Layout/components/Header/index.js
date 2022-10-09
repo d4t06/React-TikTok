@@ -7,6 +7,7 @@ import {
    faA,
    faKeyboard,
    faQuestion,
+   faChevronLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import classNames from "classnames/bind";
@@ -20,11 +21,86 @@ import { Wrapper as PopperWrapper } from "../Popper";
 import PopupItem from "../PopupItem";
 import AccountItem from "../AccountsItem";
 import Button from "../Button";
-import Menu from "../Menu";
+import Menu from "../Menu/Header";
+
+const MENU_ITEMS = [
+   {
+      icon: <FontAwesomeIcon icon={faA} />,
+      title: "English",
+      children: {
+         title: "Language",
+         data: [
+            {
+               code: "en",
+               title: "English",
+            },
+            {
+               code: "vi",
+               title: "Tiếng Việt",
+               children: {
+                  title: "Language",
+                  data: [
+                     {
+                        code: "en",
+                        title: "English1",
+                     },
+                     {
+                        code: "vi",
+                        title: "Tiếng Việt1",
+                     },
+                  ],
+               },
+            },
+         ],
+      },
+   },
+   {
+      icon: <FontAwesomeIcon icon={faQuestion} />,
+      title: "Feeback and help",
+      to: "/feeback",
+   },
+   {
+      icon: <FontAwesomeIcon icon={faKeyboard} />,
+      title: "Keyboard shortcuts",
+   },
+];
 
 const cx = classNames.bind(styles);
 function Header() {
    const [searchResult, setSearchResult] = useState([]);
+   const [history, setHistory] = useState([{ data: MENU_ITEMS }]);
+   let current = history[history.length - 1];
+   // console.log(current);
+   const renderItem = () => {
+      return current.data.map((item, index) => {
+         const isParent = !!item.children;
+         return (
+            <PopupItem
+               key={index}
+               data={item}
+               onClick={() => {
+                  if (isParent) {
+                     setHistory((prev) => [...prev, item.children]);
+                  }
+               }}
+            />
+         );
+      });
+   };
+   function test(arr) {
+      return arr.slice(0, arr.length - 1);
+   }
+   function backMenu() {
+      // lấy phần tử bị remove
+      // setHistory((prev) => prev.splice(history.length - 1, 1));
+      console.log("history", history);
+
+      setHistory(history.splice(0, history.length - 1));
+
+      // lấy mảng bị thay đổi
+      // setHistory(() => history.splice(history.length - 1, 1));
+      console.log(history);
+   }
 
    useEffect(() => {
       setTimeout(() => {
@@ -55,7 +131,10 @@ function Header() {
                )}
             >
                <div className={cx("search")}>
-                  <input className={cx("input")} placeholder="Search accounts and videos" />
+                  <input
+                     className={cx("input")}
+                     placeholder="Search accounts and videos"
+                  />
                   <button className={cx("clear")}>
                      <FontAwesomeIcon icon={faCircleXmark} />
                   </button>
@@ -69,7 +148,12 @@ function Header() {
             <div className={cx("cta")}>
                <Button
                   long
-                  leftIcon={<FontAwesomeIcon className={cx("plus-icon")} icon={faPlus} />}
+                  leftIcon={
+                     <FontAwesomeIcon
+                        className={cx("plus-icon")}
+                        icon={faPlus}
+                     />
+                  }
                >
                   Upload
                </Button>
@@ -77,7 +161,8 @@ function Header() {
                <Button primary>Log in</Button>
 
                <Tippy
-                  trigger="mouseenter"
+                  visible
+                  // trigger="mouseenter"
                   interactive
                   delay={[0, 500]}
                   placement="bottom-end"
@@ -85,13 +170,21 @@ function Header() {
                   render={(attrs) => (
                      <div tabIndex="-1" {...attrs}>
                         <PopperWrapper className={cx("sort")}>
-                           <PopupItem icon={<FontAwesomeIcon icon={faA} />}>English</PopupItem>
-                           <PopupItem icon={<FontAwesomeIcon icon={faQuestion} />}>
-                              Feeback and help
-                           </PopupItem>
-                           <PopupItem icon={<FontAwesomeIcon icon={faKeyboard} />}>
-                              Keyboard shortcuts
-                           </PopupItem>
+                           {history.length > 1 && (
+                              <div className={cx("menu-header")}>
+                                 <span
+                                    className={cx("header-icon")}
+                                    onClick={() => backMenu()}
+                                 >
+                                    <FontAwesomeIcon icon={faChevronLeft} />
+                                 </span>
+
+                                 <h4 className={cx("header-title")}>
+                                    Language
+                                 </h4>
+                              </div>
+                           )}
+                           {renderItem()}
                         </PopperWrapper>
                      </div>
                   )}
