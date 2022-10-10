@@ -2,6 +2,7 @@ import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Tippy from "@tippyjs/react";
 import classNames from "classnames/bind";
+import { Wrapper as PopperWrapper } from "../Popper";
 import styles from "./AccountItem.module.scss";
 
 const cx = classNames.bind(styles);
