@@ -2,14 +2,12 @@ import {
    faUser,
    faCamera,
    faDollarSign,
-   faEarthAfrica,
    faEarthAsia,
    faGear,
    faKeyboard,
    faQuestion,
    faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
-// import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const MENU_ITEMS = [

@@ -27,6 +27,17 @@
       align-items: center;
       font-size: 1.8rem;
       font-weight: 600;
+      span {
+         padding: 5px;
+         height: 32px;
+         width: 32px;
+      }
+      p {
+         margin-left: 15px;
+      }
+   }
+   &:last-child span {
+      padding: 0;
    }
 }
 .sidebar .popup-icon {
