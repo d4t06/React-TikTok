@@ -5,20 +5,16 @@ import {
    faPlus,
    faSpinner,
    faChevronLeft,
-   faCloudArrowUp,
-   faMessage,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Tippy from "@tippyjs/react";
-import TippyHeadless from "@tippyjs/react/headless";
 import { useEffect, useState } from "react";
 
-import Image from "~/components/Layout/components/Image";
 import { Wrapper as PopperWrapper } from "../Popper";
+import { MENU_ITEMS, USER_ITEMS } from "~/assets/items/menuItem";
+import Image from "~/components/Layout/components/Image";
 import PopupItem from "../PopupItem";
 import AccountItem from "../AccountsItem";
 import Button from "../Button";
-import { MENU_ITEMS, USER_ITEMS } from "~/assets/items/menuItem";
 
 import styles from "./Header.module.scss";
 import stylesx from "../AccountsItem/AccountItem.module.scss";
@@ -67,23 +63,20 @@ function Header() {
    return (
       <header className={cx("wrapper")}>
          <div className={cx("inner")}>
-            <img src={require("~/assets/images/logo.svg").default} alt="logo" />
+            <Image src={require("~/assets/images/logo.svg").default} alt="logo" />
 
-            <TippyHeadless
-               trigger="mouseenter"
-               interactive
-               render={(attrs) => (
-                  <div className={cx("search-result")} tabIndex="-1" {...attrs}>
-                     <PopperWrapper>
-                        <AccountItem />
-                        <label className={cx("lable-text")}>Accounts</label>
-                        <AccountItem />
-                        <AccountItem />
-                        <AccountItem />
-                        <AccountItem />
-                     </PopperWrapper>
-                  </div>
-               )}
+            <Menu
+               content={
+                  <PopperWrapper>
+                     <AccountItem />
+                     <label className={cx("lable-text")}>Accounts</label>
+                     <AccountItem />
+                     <AccountItem />
+                     <AccountItem />
+                     <AccountItem />
+                  </PopperWrapper>
+               }
+               option={{ trigger: "click" }}
             >
                <div className={cx("search")}>
                   <input className={cx("input")} placeholder="Search accounts and videos" />
@@ -95,7 +88,7 @@ function Header() {
                      <FontAwesomeIcon icon={faMagnifyingGlass} />
                   </div>
                </div>
-            </TippyHeadless>
+            </Menu>
 
             <div className={currentUser ? cx("cta", "cta-user") : cx("cta")}>
                {currentUser ? (
