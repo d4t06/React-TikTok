@@ -7,7 +7,8 @@
 
 import TippyHeadless from "@tippyjs/react/headless";
 import Tippy from "@tippyjs/react";
-function Menu({ type, content, children, onHide }) {
+
+function Menu({ option, type, content, children, onHide }) {
    return (
       <>
          {type ? (
@@ -17,15 +18,16 @@ function Menu({ type, content, children, onHide }) {
          ) : (
             <>
                <TippyHeadless
+                  {...option}
                   interactive
-                  trigger="click"
                   placement="bottom-end"
                   render={(attrs) => (
                      <div tabIndex="-1" {...attrs}>
                         {content}
                      </div>
                   )}
-                  onHide={onHide}>
+                  onHide={onHide}
+               >
                   {children}
                </TippyHeadless>
             </>

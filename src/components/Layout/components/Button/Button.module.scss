@@ -1,3 +1,7 @@
+.pd-t {
+   padding-top: 3px !important;
+}
+
 .cta,
 .div-upload {
    display: flex;
@@ -54,7 +58,6 @@
 .text {
    border: unset;
    font-size: 1.6rem;
-   min-width: 50px;
    &:first-child {
       border-top-left-radius: 99px;
       border-bottom-left-radius: 99px;
@@ -64,6 +67,23 @@
       background-color: unset;
    }
 }
+.icon {
+   height: 32px;
+   width: 32px;
+   min-width: unset;
+   font-size: 1.6rem;
+   border: unset;
+   padding: unset;
+   margin-left: 16px;
+   &:first-child {
+      padding-top: 3px !important;
+   }
+   &:hover {
+      color: var(--primary-color);
+      background-color: transparent;
+   }
+}
+
 .disable {
    opacity: 0.3;
    pointer-events: none;
@@ -74,7 +94,7 @@
    min-width: 88px;
 }
 .long {
-   padding: 6px 13px;
+   padding: 6px 17px;
 }
 .round {
    border-radius: 99px;
@@ -90,7 +110,7 @@
    font-size: 1.4rem;
    font-weight: 400;
    margin-right: 8px;
-   padding: 5px 10px;
+   padding: 3px 10px;
    max-width: 100%;
    width: fit-content;
    height: unset;
@@ -106,7 +126,6 @@
 // }
 .tag + .tag {
    margin-bottom: 10px;
-   // margin-right: 15px;
 }
 
 .custom-login {
@@ -118,8 +137,4 @@
 }
 .right-icon {
    margin-left: 10px;
-}
-.icon {
-   height: unset;
-   padding: 8px 0 0 0;
 }

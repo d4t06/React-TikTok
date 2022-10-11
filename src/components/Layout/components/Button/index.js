@@ -30,6 +30,7 @@ function Button(
       rihgtIcon,
       icon,
       tippy,
+      ...passprops
    },
    ref
 ) {
@@ -60,6 +61,7 @@ function Button(
       tag,
       icon,
       tippy,
+      ...passprops,
    });
    if (disable) {
       Object.keys(props).forEach((key) => {
@@ -82,7 +84,7 @@ function Button(
          ) : (
             <Comp ref={ref} className={classes} {...props}>
                {leftIcon && <span className={cx("left-icon")}>{leftIcon}</span>}
-               <p>{children}</p>
+               {children}
                {rihgtIcon && <span className={cx("right-icon")}>{rihgtIcon}</span>}
             </Comp>
          )}

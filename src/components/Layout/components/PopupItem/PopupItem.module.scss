@@ -22,9 +22,10 @@
 }
 .sidebar {
    padding: 12px 13px 12px 0px;
-
    a {
-      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      font-size: 1.8rem;
       font-weight: 600;
    }
 }

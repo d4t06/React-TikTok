@@ -83,7 +83,8 @@ function Header() {
                         <AccountItem />
                      </PopperWrapper>
                   </div>
-               )}>
+               )}
+            >
                <div className={cx("search")}>
                   <input className={cx("input")} placeholder="Search accounts and videos" />
                   <button className={cx("clear")}>
@@ -102,17 +103,18 @@ function Header() {
                      <Button
                         normal
                         long
-                        leftIcon={<FontAwesomeIcon className={cx("plus-icon")} icon={faPlus} />}>
+                        leftIcon={<FontAwesomeIcon className={cx("plus-icon")} icon={faPlus} />}
+                     >
                         Upload
                      </Button>
 
                      <Menu type content="Message">
-                        <Button text icon>
+                        <Button pd-t icon>
                            <InboxIcon />
                         </Button>
                      </Menu>
-                     <Menu type content="Message">
-                        <Button text icon>
+                     <Menu type content="Inbox">
+                        <Button icon>
                            <MessageIcon />
                         </Button>
                      </Menu>
@@ -131,7 +133,9 @@ function Header() {
                               )}
                               {renderItem(USER_ITEMS)}
                            </PopperWrapper>
-                        }>
+                        }
+                        option={{ offset: [12, 8], trigger: "mouseenter " }}
+                     >
                         <div className={cy("avatar-frame", "img-only")}>
                            <Image src={require("~/assets/images/avatar.jpg")} />
                         </div>
@@ -142,7 +146,8 @@ function Header() {
                      <Button
                         normal
                         long
-                        leftIcon={<FontAwesomeIcon className={cx("plus-icon")} icon={faPlus} />}>
+                        leftIcon={<FontAwesomeIcon className={cx("plus-icon")} icon={faPlus} />}
+                     >
                         Upload
                      </Button>
                      <Button normal primary>
@@ -167,7 +172,8 @@ function Header() {
                               {renderItem(MENU_ITEMS)}
                            </PopperWrapper>
                         }
-                        onHide={() => setHistory((prev) => prev.slice(0, 1))}>
+                        onHide={() => setHistory((prev) => prev.slice(0, 1))}
+                     >
                         <button className={cx("more-icon")}>
                            <FontAwesomeIcon icon={faEllipsisVertical} />
                         </button>

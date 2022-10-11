@@ -11,31 +11,15 @@ import {
    faVideo,
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../components/Button";
+import SidebarHeader from "./SidebarHeader";
 
 const cx = classNames.bind(styles);
 
 function Sidebar() {
    return (
       <div className={cx("sidebar-container")}>
-         <div className={cx("cta")}>
-            <PopupItem primary type={"sidebar"} large icon={<FontAwesomeIcon icon={faHome} />}>
-               For You
-            </PopupItem>
-            <PopupItem type={"sidebar"} large icon={<FontAwesomeIcon icon={faUserGroup} />}>
-               Following
-            </PopupItem>
-            <PopupItem type={"sidebar"} large icon={<FontAwesomeIcon icon={faCamera} />}>
-               Live
-            </PopupItem>
-         </div>
-         <div className={cx("login-frame")}>
-            <p className={cx("login-hint")}>
-               Log in to follow creators, like videos, and view comments.
-            </p>
-            <Button full outline>
-               Log in
-            </Button>
-         </div>
+         <SidebarHeader />
+
          <div className={cx("discover-container")}>
             <label>Discover</label>
             <div className={cx("list-container")}>
