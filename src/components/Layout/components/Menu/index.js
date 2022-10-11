@@ -1,34 +1,36 @@
-import { faA, faKeyboard, faQuestion } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Wrapper as PopperWrapper } from "../Popper";
-import Tippy from "@tippyjs/react";
-import styles from "./Menu.module.scss";
-import classNames from "classnames/bind";
-import PopupItem from "../PopupItem";
+// import { faA, faKeyboard, faQuestion } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { Wrapper as PopperWrapper } from "../Popper";
+// import styles from "./Menu.module.scss";
+// import classNames from "classnames/bind";
+// const cx = classNames.bind(styles);
 
-const cx = classNames.bind(styles);
-function Menu({ children }) {
+import TippyHeadless from "@tippyjs/react/headless";
+import Tippy from "@tippyjs/react";
+function Menu({ type, content, children, onHide }) {
    return (
-      <Tippy
-         trigger="mouseenter"
-         interactive
-         placement="bottom-end"
-         render={(attrs) => (
-            <div tabIndex="-1" {...attrs}>
-               <PopperWrapper className={cx("wrapper", "sort")}>
-                  <PopupItem icon={<FontAwesomeIcon icon={faA} />}>English</PopupItem>
-                  <PopupItem icon={<FontAwesomeIcon icon={faQuestion} />}>
-                     Feeback and help
-                  </PopupItem>
-                  <PopupItem icon={<FontAwesomeIcon icon={faKeyboard} />}>
-                     Keyboard shortcuts
-                  </PopupItem>
-               </PopperWrapper>
-            </div>
+      <>
+         {type ? (
+            <>
+               <Tippy content={content}>{children}</Tippy>
+            </>
+         ) : (
+            <>
+               <TippyHeadless
+                  interactive
+                  trigger="click"
+                  placement="bottom-end"
+                  render={(attrs) => (
+                     <div tabIndex="-1" {...attrs}>
+                        {content}
+                     </div>
+                  )}
+                  onHide={onHide}>
+                  {children}
+               </TippyHeadless>
+            </>
          )}
-      >
-         {children}
-      </Tippy>
+      </>
    );
 }
 

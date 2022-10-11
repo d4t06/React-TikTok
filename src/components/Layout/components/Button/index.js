@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { forwardRef } from "react";
 import classNames from "classnames/bind";
 import styles from "./Button.module.scss";
 
@@ -8,26 +9,30 @@ import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 const cx = classNames.bind(styles);
 
-function Button({
-   to,
-   href,
-   normal,
-   text,
-   outline = false,
-   primary = false,
-   round = false,
-   disable = false,
-   full = false,
-   tag = false,
-   children,
-   small,
-   long,
-   onClick,
-   className,
-   leftIcon,
-   rihgtIcon,
-   tippy,
-}) {
+function Button(
+   {
+      to,
+      href,
+      normal,
+      text,
+      outline = false,
+      primary = false,
+      round = false,
+      disable = false,
+      full = false,
+      tag = false,
+      children,
+      small,
+      long,
+      onClick,
+      className,
+      leftIcon,
+      rihgtIcon,
+      icon,
+      tippy,
+   },
+   ref
+) {
    let Comp = "button";
    const props = {
       onClick,
@@ -53,6 +58,7 @@ function Button({
       long,
       full,
       tag,
+      icon,
       tippy,
    });
    if (disable) {
@@ -67,16 +73,16 @@ function Button({
       <>
          {tippy ? (
             <Tippy content={tippy.content} delay={[0, 0]}>
-               <Comp className={classes} {...props}>
+               <Comp ref={ref} className={classes} {...props}>
                   {leftIcon && <span className={cx("left-icon")}>{leftIcon}</span>}
                   {children}
                   {rihgtIcon && <span className={cx("right-icon")}>{rihgtIcon}</span>}
                </Comp>
             </Tippy>
          ) : (
-            <Comp className={classes} {...props}>
+            <Comp ref={ref} className={classes} {...props}>
                {leftIcon && <span className={cx("left-icon")}>{leftIcon}</span>}
-               {children}
+               <p>{children}</p>
                {rihgtIcon && <span className={cx("right-icon")}>{rihgtIcon}</span>}
             </Comp>
          )}
@@ -84,4 +90,4 @@ function Button({
    );
 }
 
-export default Button;
+export default forwardRef(Button);

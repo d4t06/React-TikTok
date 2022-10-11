@@ -9,20 +9,25 @@
    min-width: 100px;
    font-size: 1.6rem;
    font-weight: 500;
-   font-size: 1.7rem;
    font-weight: 600;
+   height: 36px;
    color: var(--black);
    border-radius: 4px;
    background-color: transparent;
    border: 1px solid rgba(22, 24, 35, 0.15);
    cursor: pointer;
-   font-family: "Source Sans Pro";
+   font-family: "ProximaNova";
 
    &:hover {
       background-color: var(--hover-color);
    }
+   p {
+      display: inline;
+      font-family: inherit;
+      font-family: "ProximaNova";
+   }
 }
-.btn + .btn {
+
 .normal + .normal {
    margin-left: 15px;
 }
@@ -56,6 +61,7 @@
    }
    &:hover {
       color: var(--primary-color);
+      background-color: unset;
    }
 }
 .disable {
@@ -79,10 +85,22 @@
    padding: 10px 0;
 }
 .tag {
-   padding: 2px 10px;
-   font-size: 1.2rem;
+   display: inline-flex;
+   align-items: center;
+   font-size: 1.4rem;
    font-weight: 400;
-   margin-right: 15px;
+   margin-right: 8px;
+   padding: 5px 10px;
+   max-width: 100%;
+   width: fit-content;
+   height: unset;
+   box-shadow: unset;
+   p {
+      color: rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+   }
 }
 // .tag:first {
 // }
@@ -100,4 +118,8 @@
 }
 .right-icon {
    margin-left: 10px;
+}
+.icon {
+   height: unset;
+   padding: 8px 0 0 0;
 }

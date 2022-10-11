@@ -1,10 +1,31 @@
 @import "normalize.css";
-@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600&display=swap");
+
 :root {
    --text-color: #333;
-   --hover-color: rgb(219, 218, 218);
+   --hover-color: rgba(219, 218, 218, 0.3);
    --primary-color: rgb(254, 44, 85);
    --header-search-height: 46px;
+}
+
+@font-face {
+   font-family: ProximaNova;
+   src: url("~/src/assets/fonts/Proxima-Nova-Regular.woff2");
+   font-weight: 400;
+}
+@font-face {
+   font-family: ProximaNova;
+   src: url("~/src/assets/fonts/Proxima-Nova-Semibold.woff2");
+   font-weight: 500;
+}
+@font-face {
+   font-family: ProximaNova;
+   src: url("~/src/assets/fonts/Proxima-Nova-Bold.woff2");
+   font-weight: 600;
+}
+@font-face {
+   font-family: SofiaPro;
+   src: url("~/src/assets/fonts/sofiapro-semibold.otf");
+   font-weight: 500;
 }
 
 * {
@@ -14,7 +35,7 @@
 }
 html {
    font-size: 62.5% !important;
-   font-family: "Source Sans Pro", sans-serif !important;
+   font-family: "ProximaNova", sans-serif !important;
 }
 button,
 input {

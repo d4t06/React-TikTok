@@ -81,11 +81,13 @@
 }
 .cta {
    display: flex;
+   align-items: center;
+   user-select: none;
 }
-.cta-user {
-   background-color: #f1f1f1;
-   border-radius: 99px;
-}
+// .cta-user {
+//    background-color: #f1f1f1;
+//    border-radius: 99px;
+// }
 .lable-text {
    font-size: 1.4rem;
    font-weight: 500;

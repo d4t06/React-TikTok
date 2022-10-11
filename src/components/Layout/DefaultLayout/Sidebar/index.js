@@ -42,8 +42,8 @@ function Sidebar() {
                <Button tag round leftIcon={<FontAwesomeIcon icon={faHashtag} />}>
                   suthatla
                </Button>
-               <Button tag round icon={faHashtag}>
-                  suthatla
+               <Button tag round leftIcon={<FontAwesomeIcon icon={faHashtag} />}>
+                  toikhongbit
                </Button>
                <Button tag round leftIcon={<FontAwesomeIcon icon={faMusic} />}>
                   Yeu Don Phuong La Gi

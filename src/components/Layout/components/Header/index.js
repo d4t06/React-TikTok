@@ -13,36 +13,41 @@ import Tippy from "@tippyjs/react";
 import TippyHeadless from "@tippyjs/react/headless";
 import { useEffect, useState } from "react";
 
-import Image from "~/assets/images";
+import Image from "~/components/Layout/components/Image";
 import { Wrapper as PopperWrapper } from "../Popper";
 import PopupItem from "../PopupItem";
 import AccountItem from "../AccountsItem";
 import Button from "../Button";
-import MENU_ITEMS from "~/assets/items/menuItem";
+import { MENU_ITEMS, USER_ITEMS } from "~/assets/items/menuItem";
 
 import styles from "./Header.module.scss";
 import stylesx from "../AccountsItem/AccountItem.module.scss";
 import classNames from "classnames/bind";
-import { render } from "@testing-library/react";
+import { MessageIcon, InboxIcon } from "~/assets/icons";
+import Menu from "../Menu";
 const cx = classNames.bind(styles);
 const cy = classNames.bind(stylesx);
 
 function Header() {
-   const [searchResult, setSearchResult] = useState([]);
-   const [history, setHistory] = useState([{ data: MENU_ITEMS }]);
-
    const currentUser = true;
+
+   const [history, setHistory] = useState(
+      currentUser ? [{ data: USER_ITEMS }] : [{ data: MENU_ITEMS }]
+   );
+
    const current = history[history.length - 1];
    const handleItem = (item) => {
       console.log(item);
    };
-   const renderItem = () => {
+
+   const renderItem = (data) => {
       return current.data.map((item, index) => {
          const isParent = !!item.children;
+
          return (
             <PopupItem
                key={index}
-               data={item}
+               item={item}
                onClick={() => {
                   if (isParent) {
                      setHistory((prev) => [...prev, item.children]);
@@ -52,26 +57,17 @@ function Header() {
          );
       });
    };
-   function test(arr) {
-      return arr.slice(0, arr.length - 1);
-   }
+
    function backMenu() {
       setHistory((prev) => prev.slice(0, history.length - 1));
-      // lấy phần tử bị remove
-      // setHistory(history.splice(0, history.length - 1));
-      // lấy mảng bị thay đổi
-      // setHistory(() => history.splice(history.length - 1, 1));
+      // setHistory(history.splice(0, history.length - 1)); lấy phần tử bị remove
+      // setHistory(() => history.splice(history.length - 1, 1)); lấy mảng bị thay đổi
    }
 
-   useEffect(() => {
-      setTimeout(() => {
-         setSearchResult([1, 2, 3]);
-      }, 100);
-   });
    return (
       <header className={cx("wrapper")}>
          <div className={cx("inner")}>
-            <img src={Image.logo} alt="logo" />
+            <img src={require("~/assets/images/logo.svg").default} alt="logo" />
 
             <TippyHeadless
                trigger="mouseenter"
@@ -87,8 +83,7 @@ function Header() {
                         <AccountItem />
                      </PopperWrapper>
                   </div>
-               )}
-            >
+               )}>
                <div className={cx("search")}>
                   <input className={cx("input")} placeholder="Search accounts and videos" />
                   <button className={cx("clear")}>
@@ -104,98 +99,79 @@ function Header() {
             <div className={currentUser ? cx("cta", "cta-user") : cx("cta")}>
                {currentUser ? (
                   <>
-                     <Tippy content="Upload Video">
-                        <Button
-                           tippy={{
-                              content: "Upload video",
-                              option: [
-                                 {
-                                    trigger: "click",
-                                 },
-                              ],
-                           }}
-                           text
-                        >
-                           <FontAwesomeIcon icon={faCloudArrowUp} />
-                        </Button>
-                     </Tippy>
-                     <Tippy content="Upload Video">
-                        <Button
-                           tippy={{
-                              content: "Message",
-                              option: [
-                                 {
-                                    trigger: "click",
-                                 },
-                              ],
-                           }}
-                           text
-                        >
-                           <FontAwesomeIcon icon={faMessage} />
-                        </Button>
-                     </Tippy>
+                     <Button
+                        normal
+                        long
+                        leftIcon={<FontAwesomeIcon className={cx("plus-icon")} icon={faPlus} />}>
+                        Upload
+                     </Button>
 
-                     <TippyHeadless
-                        interactive
-                        placement="bottom"
-                        render={(attrs) => (
-                           <div tabIndex="-1" {...attrs}>
-                              <PopperWrapper className={cx("sort")}>{renderItem()}</PopperWrapper>
-                           </div>
-                        )}
-                     >
-                        {/* <AccountItem imgOnly />
-                         */}
+                     <Menu type content="Message">
+                        <Button text icon>
+                           <InboxIcon />
+                        </Button>
+                     </Menu>
+                     <Menu type content="Message">
+                        <Button text icon>
+                           <MessageIcon />
+                        </Button>
+                     </Menu>
+
+                     <Menu
+                        content={
+                           <PopperWrapper className={cx("sort")}>
+                              {history.length > 1 && (
+                                 <div className={cx("menu-header")}>
+                                    <span className={cx("header-icon")} onClick={() => backMenu()}>
+                                       <FontAwesomeIcon icon={faChevronLeft} />
+                                    </span>
+
+                                    <h4 className={cx("header-title")}>Language</h4>
+                                 </div>
+                              )}
+                              {renderItem(USER_ITEMS)}
+                           </PopperWrapper>
+                        }>
                         <div className={cy("avatar-frame", "img-only")}>
-                           <img src={require("~/assets/images/avatar.jpg")} />
+                           <Image src={require("~/assets/images/avatar.jpg")} />
                         </div>
-                     </TippyHeadless>
+                     </Menu>
                   </>
                ) : (
                   <>
                      <Button
                         normal
                         long
-                        leftIcon={<FontAwesomeIcon className={cx("plus-icon")} icon={faPlus} />}
-                     >
+                        leftIcon={<FontAwesomeIcon className={cx("plus-icon")} icon={faPlus} />}>
                         Upload
                      </Button>
                      <Button normal primary>
                         Log in
                      </Button>
-                     <TippyHeadless
-                        trigger="mouseenter"
-                        interactive
-                        delay={[0, 300]}
-                        placement="bottom-end"
-                        // animation="scale"
-                        render={(attrs) => (
-                           <div tabIndex="-1" {...attrs}>
-                              <PopperWrapper className={cx("sort")}>
-                                 {/* Header */}
-                                 {history.length > 1 && (
-                                    <div className={cx("menu-header")}>
-                                       <span
-                                          className={cx("header-icon")}
-                                          onClick={() => backMenu()}
-                                       >
-                                          <FontAwesomeIcon icon={faChevronLeft} />
-                                       </span>
 
-                                       <h4 className={cx("header-title")}>Language</h4>
-                                    </div>
-                                 )}
-                                 {/* Menu item */}
-                                 {renderItem()}
-                              </PopperWrapper>
-                           </div>
-                        )}
-                        onHide={() => setHistory((prev) => prev.slice(0, 1))}
-                     >
+                     <Menu
+                        content={
+                           <PopperWrapper className={cx("sort")}>
+                              {/* Header */}
+                              {history.length > 1 && (
+                                 <div className={cx("menu-header")}>
+                                    <span className={cx("header-icon")} onClick={() => backMenu()}>
+                                       <FontAwesomeIcon icon={faChevronLeft} />
+                                    </span>
+
+                                    <h4 className={cx("header-title")}>Language</h4>
+                                 </div>
+                              )}
+
+                              {/* Menu item */}
+                              {renderItem(MENU_ITEMS)}
+                           </PopperWrapper>
+                        }
+                        onHide={() => setHistory((prev) => prev.slice(0, 1))}>
                         <button className={cx("more-icon")}>
                            <FontAwesomeIcon icon={faEllipsisVertical} />
                         </button>
-                     </TippyHeadless>
+                     </Menu>
                   </>
                )}
             </div>
