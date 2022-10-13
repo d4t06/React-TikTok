@@ -21,6 +21,7 @@ import stylesx from "../AccountsItem/AccountItem.module.scss";
 import classNames from "classnames/bind";
 import { MessageIcon, InboxIcon } from "~/assets/icons";
 import Menu from "../Menu";
+import Search from "../Search";
 const cx = classNames.bind(styles);
 const cy = classNames.bind(stylesx);
 
@@ -63,41 +64,20 @@ function Header() {
    return (
       <header className={cx("wrapper")}>
          <div className={cx("inner")}>
+            {/* logo */}
             <Image src={require("~/assets/images/logo.svg").default} alt="logo" />
 
-            <Menu
-               content={
-                  <PopperWrapper>
-                     <AccountItem />
-                     <label className={cx("lable-text")}>Accounts</label>
-                     <AccountItem />
-                     <AccountItem />
-                     <AccountItem />
-                     <AccountItem />
-                  </PopperWrapper>
-               }
-               option={{ trigger: "click" }}
-            >
-               <div className={cx("search")}>
-                  <input className={cx("input")} placeholder="Search accounts and videos" />
-                  <button className={cx("clear")}>
-                     <FontAwesomeIcon icon={faCircleXmark} />
-                  </button>
-                  <FontAwesomeIcon className={cx("loading")} icon={faSpinner} />
-                  <div className={cx("search-btn")}>
-                     <FontAwesomeIcon icon={faMagnifyingGlass} />
-                  </div>
-               </div>
-            </Menu>
+            {/* Search */}
+            <Search />
 
+            {/* cta */}
             <div className={currentUser ? cx("cta", "cta-user") : cx("cta")}>
                {currentUser ? (
                   <>
                      <Button
                         normal
                         long
-                        leftIcon={<FontAwesomeIcon className={cx("plus-icon")} icon={faPlus} />}
-                     >
+                        leftIcon={<FontAwesomeIcon className={cx("plus-icon")} icon={faPlus} />}>
                         Upload
                      </Button>
 
@@ -127,8 +107,7 @@ function Header() {
                               {renderItem(USER_ITEMS)}
                            </PopperWrapper>
                         }
-                        option={{ offset: [12, 8], trigger: "mouseenter " }}
-                     >
+                        option={{ offset: [12, 8], trigger: "mouseenter " }}>
                         <div className={cy("avatar-frame", "img-only")}>
                            <Image src={require("~/assets/images/avatar.jpg")} />
                         </div>
@@ -139,8 +118,7 @@ function Header() {
                      <Button
                         normal
                         long
-                        leftIcon={<FontAwesomeIcon className={cx("plus-icon")} icon={faPlus} />}
-                     >
+                        leftIcon={<FontAwesomeIcon className={cx("plus-icon")} icon={faPlus} />}>
                         Upload
                      </Button>
                      <Button normal primary>
@@ -165,8 +143,7 @@ function Header() {
                               {renderItem(MENU_ITEMS)}
                            </PopperWrapper>
                         }
-                        onHide={() => setHistory((prev) => prev.slice(0, 1))}
-                     >
+                        onHide={() => setHistory((prev) => prev.slice(0, 1))}>
                         <button className={cx("more-icon")}>
                            <FontAwesomeIcon icon={faEllipsisVertical} />
                         </button>
