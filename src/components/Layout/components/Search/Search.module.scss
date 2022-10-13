@@ -19,6 +19,7 @@
    .input:not(:placeholder-shown) ~ .search-btn {
       color: #333;
    }
+   //    khi focus
    &:focus-within {
       border-color: rgba(22, 24, 35, 0.2);
    }
@@ -33,6 +34,7 @@
    transform: translateY(-50%);
    color: rgb(167, 167, 171);
    background-color: transparent;
+   //    animation: spin 1s linear infinite running;
 }
 .loading {
    display: none;
@@ -40,7 +42,8 @@
 
 .search-btn {
    width: 52px;
-   height: var(--header-search-height);
+   height: 100%;
+   background-color: transparent;
    display: flex;
    align-items: center;
    justify-content: center;
@@ -70,4 +73,10 @@
    color: rgba(22, 24, 35, 0.5);
    display: inline-block;
    padding: 7px 0 7px 12px;
+}
+@keyframes spin {
+   100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+   }
 }

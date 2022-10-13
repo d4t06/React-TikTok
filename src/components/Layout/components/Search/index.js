@@ -6,10 +6,25 @@ import { Wrapper as PopperWrapper } from "../Popper";
 import AccountItem from "../AccountsItem";
 import classNames from "classnames/bind";
 import styles from "./Search.module.scss";
+import { useRef, useState } from "react";
 
 const cx = classNames.bind(styles);
 
 function Search() {
+   const searchRef = useRef();
+   const [searchValue, setSearchValue] = useState("");
+   const [showResult, setShowResult] = useState(true);
+
+   function submit(e) {
+      e.preventDefault();
+   }
+   function handleClear() {
+      setSearchValue("");
+      searchRef.current.focus();
+   }
+   function handleHide() {
+      setShowResult(false);
+   }
    return (
       <Menu
          content={
@@ -22,16 +37,30 @@ function Search() {
                <AccountItem />
             </PopperWrapper>
          }
-         option={{ trigger: "click" }}>
-         <div className={cx("search")}>
-            <input className={cx("input")} placeholder="Search accounts and videos" />
-            <button className={cx("clear")}>
-               <FontAwesomeIcon icon={faCircleXmark} />
-            </button>
+         option={{
+            visible: showResult && searchValue.length > 3,
+            onClickOutside: () => handleHide(),
+         }}>
+         <div className={cx("search")} onSubmit={submit}>
+            <input
+               ref={searchRef}
+               value={searchValue}
+               className={cx("input")}
+               placeholder="Search accounts and videos"
+               onChange={(e) => setSearchValue(e.target.value)}
+               onFocus={() => setShowResult(true)}
+            />
+
+            {!!searchValue && (
+               <button className={cx("clear")} onClick={() => handleClear()}>
+                  <FontAwesomeIcon icon={faCircleXmark} />
+               </button>
+            )}
+
             <FontAwesomeIcon className={cx("loading")} icon={faSpinner} />
-            <div className={cx("search-btn")}>
+            <button className={cx("search-btn")} type="submit">
                <FontAwesomeIcon icon={faMagnifyingGlass} />
-            </div>
+            </button>
          </div>
       </Menu>
    );
