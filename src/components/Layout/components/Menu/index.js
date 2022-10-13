@@ -1,10 +1,3 @@
-// import { faA, faKeyboard, faQuestion } from "@fortawesome/free-solid-svg-icons";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { Wrapper as PopperWrapper } from "../Popper";
-// import styles from "./Menu.module.scss";
-// import classNames from "classnames/bind";
-// const cx = classNames.bind(styles);
-
 import TippyHeadless from "@tippyjs/react/headless";
 import Tippy from "@tippyjs/react";
 
@@ -26,8 +19,7 @@ function Menu({ option, type, content, children, onHide }) {
                         {content}
                      </div>
                   )}
-                  onHide={onHide}
-               >
+                  onHide={onHide}>
                   {children}
                </TippyHeadless>
             </>
