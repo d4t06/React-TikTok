@@ -9,6 +9,7 @@
 }
 .btn {
    display: inline-block;
+   position: relative;
    // padding: 6px 0;
    min-width: 100px;
    font-size: 1.6rem;
@@ -141,4 +142,15 @@
 }
 .right-icon {
    margin-left: 10px;
+}
+// inbox quantity
+.inbox-quantity {
+   border-radius: 5px;
+   padding: 2px 4px;
+   background-color: var(--primary-color);
+   color: #fff;
+   font-size: 1.2rem;
+   position: absolute;
+   top: -5px;
+   right: 0;
 }

@@ -30,6 +30,7 @@ function Button(
       rihgtIcon,
       icon,
       tippy,
+      pseudo,
       ...passprops
    },
    ref
@@ -85,6 +86,8 @@ function Button(
             <Comp ref={ref} className={classes} {...props}>
                {leftIcon && <span className={cx("left-icon")}>{leftIcon}</span>}
                {children}
+               {pseudo && <span className={cx("inbox-quantity")}>2</span>}
+
                {rihgtIcon && <span className={cx("right-icon")}>{rihgtIcon}</span>}
             </Comp>
          )}

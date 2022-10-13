@@ -107,8 +107,9 @@ function Header() {
                         </Button>
                      </Menu>
                      <Menu type content="Inbox">
-                        <Button icon>
+                        <Button icon pseudo>
                            <MessageIcon />
+                           {/* <span>2</span> */}
                         </Button>
                      </Menu>
 
