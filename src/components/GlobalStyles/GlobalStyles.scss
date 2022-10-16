@@ -44,4 +44,12 @@ input {
 }
 a[href] {
    text-decoration: none;
+   color: currentColor;
+}
+
+//tippy
+.tippy-content {
+   padding: 5px 7px;
+   font-weight: 500;
+   font-size: 1.6rem;
 }

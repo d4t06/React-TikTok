@@ -27,17 +27,19 @@
 
 .clear,
 .loading {
-   font-size: 16px;
-   position: absolute;
-   top: 50%;
-   right: 68px;
-   transform: translateY(-50%);
-   color: rgb(167, 167, 171);
    background-color: transparent;
-   //    animation: spin 1s linear infinite running;
+   transform: rotate(0deg);
+   font-size: 16px;
+   position: relative;
+   // top: 50%;
+   // transform: translateY(-50%);
+   right: 8px;
+   color: rgb(167, 167, 171);
 }
+
 .loading {
    display: none;
+   animation: spin 1s linear infinite paused;
 }
 
 .search-btn {
@@ -75,8 +77,8 @@
    padding: 7px 0 7px 12px;
 }
 @keyframes spin {
-   100% {
-      -webkit-transform: rotate(360deg);
+   to {
+      // -webkit-transform: rotate(360deg);
       transform: rotate(360deg);
    }
 }

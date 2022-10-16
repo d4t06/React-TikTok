@@ -77,7 +77,8 @@ function Header() {
                      <Button
                         normal
                         long
-                        leftIcon={<FontAwesomeIcon className={cx("plus-icon")} icon={faPlus} />}>
+                        leftIcon={<FontAwesomeIcon className={cx("plus-icon")} icon={faPlus} />}
+                     >
                         Upload
                      </Button>
 
@@ -89,7 +90,6 @@ function Header() {
                      <Menu type content="Inbox">
                         <Button icon pseudo>
                            <MessageIcon />
-                           {/* <span>2</span> */}
                         </Button>
                      </Menu>
 
@@ -108,7 +108,8 @@ function Header() {
                               {renderItem(USER_ITEMS)}
                            </PopperWrapper>
                         }
-                        option={{ offset: [12, 8], trigger: "mouseenter " }}>
+                        option={{ offset: [12, 8], trigger: "mouseenter " }}
+                     >
                         <div className={cy("avatar-frame", "img-only")}>
                            <Image src={require("~/assets/images/avatar.jpg")} />
                         </div>
@@ -119,7 +120,8 @@ function Header() {
                      <Button
                         normal
                         long
-                        leftIcon={<FontAwesomeIcon className={cx("plus-icon")} icon={faPlus} />}>
+                        leftIcon={<FontAwesomeIcon className={cx("plus-icon")} icon={faPlus} />}
+                     >
                         Upload
                      </Button>
                      <Button normal primary>
@@ -144,7 +146,8 @@ function Header() {
                               {renderItem(MENU_ITEMS)}
                            </PopperWrapper>
                         }
-                        onHide={() => setHistory((prev) => prev.slice(0, 1))}>
+                        onHide={() => setHistory((prev) => prev.slice(0, 1))}
+                     >
                         <button className={cx("more-icon")}>
                            <FontAwesomeIcon icon={faEllipsisVertical} />
                         </button>

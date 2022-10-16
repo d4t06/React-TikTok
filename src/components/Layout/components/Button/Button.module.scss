@@ -146,11 +146,16 @@
 // inbox quantity
 .inbox-quantity {
    border-radius: 5px;
-   padding: 2px 4px;
    background-color: var(--primary-color);
    color: #fff;
    font-size: 1.2rem;
    position: absolute;
-   top: -5px;
-   right: 0;
+   top: -4px;
+   right: -6px;
+   height: 17px;
+   width: 22px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border: 2px solid white;
 }

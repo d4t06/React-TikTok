@@ -6,7 +6,9 @@ function Menu({ option, type, content, children, onHide }) {
       <>
          {type ? (
             <>
-               <Tippy content={content}>{children}</Tippy>
+               <Tippy interactive content={content}>
+                  {children}
+               </Tippy>
             </>
          ) : (
             <>
@@ -19,7 +21,8 @@ function Menu({ option, type, content, children, onHide }) {
                         {content}
                      </div>
                   )}
-                  onHide={onHide}>
+                  onHide={onHide}
+               >
                   {children}
                </TippyHeadless>
             </>

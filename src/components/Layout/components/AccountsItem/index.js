@@ -2,11 +2,12 @@ import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Tippy from "@tippyjs/react";
 import classNames from "classnames/bind";
+import { Link } from "react-router-dom";
 import { Wrapper as PopperWrapper } from "../Popper";
 import styles from "./AccountItem.module.scss";
 
 const cx = classNames.bind(styles);
-function AccountItem({ imgOnly }) {
+function AccountItem({ data, imgOnly }) {
    return (
       <>
          {imgOnly ? (
@@ -25,25 +26,27 @@ function AccountItem({ imgOnly }) {
                </div>
             </Tippy>
          ) : (
-            <div className={cx("account-item")}>
+            <Link to={"/@dauwd"} key={data.id} className={cx("account-item")}>
                {/* cách làm anh vuông
-               cách 1: div -> img rồi dùng objectfit
-               cách 2: div -> div.backgroundimage='' rồi dùng paddingtop 100%
-           */}
+                  cách 1: div -> img rồi dùng objectfit
+                  cách 2: div -> div.backgroundimage='' rồi dùng paddingtop 100%
+               */}
                <div className={cx("avatar-frame")}>
-                  <img src={require("~/assets/images/avatar.jpg")} />
+                  <img src={data.avatar} />
                </div>
                <div>
                   <h3 className={cx("user-name")}>
-                     dat.nguyenhuu
-                     <FontAwesomeIcon
-                        className={cx("check-icon", "img-only")}
-                        icon={faCircleCheck}
-                     />
+                     {data.full_name}
+                     {data.tick && (
+                        <FontAwesomeIcon
+                           className={cx("check-icon", "img-only")}
+                           icon={faCircleCheck}
+                        />
+                     )}
                   </h3>
-                  <h4 className={cx("user-desc")}>huudatit06</h4>
+                  <h4 className={cx("user-desc")}>{data.nickname}</h4>
                </div>
-            </div>
+            </Link>
          )}
       </>
    );
