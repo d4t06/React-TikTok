@@ -32,6 +32,13 @@
       font-family: "ProximaNova";
    }
 }
+.logo {
+   border: none;
+   height: unset;
+   &:hover {
+      background-color: unset;
+   }
+}
 
 .normal + .normal {
    margin-left: 15px;

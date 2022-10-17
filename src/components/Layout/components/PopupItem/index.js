@@ -17,7 +17,7 @@ function PopupItem({ item = {}, type, icon, children, primary, onClick }, ref) {
             <span>{icon}</span>
             <p>{children}</p>
 
-            {/* {item && <span className={cx("popup-icon")}>{item.icon}</span>} */}
+            {item && <span className={cx("popup-icon")}>{item.icon}</span>}
             {item && item.title}
          </a>
       </li>

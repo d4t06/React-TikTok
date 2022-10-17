@@ -11,6 +11,7 @@ const cx = classNames.bind(styles);
 
 function Button(
    {
+      logo,
       to,
       href,
       normal,
@@ -36,9 +37,11 @@ function Button(
    ref
 ) {
    let Comp = "button";
+
    const props = {
       onClick,
    };
+
    if (to) {
       props.to = to;
       Comp = Link;
@@ -50,6 +53,7 @@ function Button(
 
    const classes = cx("btn", {
       [className]: className, //làm việc với object
+      logo,
       normal,
       text,
       primary,

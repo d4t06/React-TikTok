@@ -65,7 +65,9 @@ function Header() {
       <header className={cx("wrapper")}>
          <div className={cx("inner")}>
             {/* logo */}
-            <Image src={require("~/assets/images/logo.svg").default} alt="logo" />
+            <Button to="/" logo>
+               <Image src={require("~/assets/images/logo.svg").default} alt="logo" />
+            </Button>
 
             {/* Search */}
             <Search />
