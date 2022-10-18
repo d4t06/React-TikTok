@@ -1,20 +1,21 @@
 //import layout
-import { HeaderOnly } from "~/components/Layout";
+import { HeaderOnly } from "~/layouts";
 // import pages
 import Home from "~/pages/Home/";
 import Following from "~/pages/Following";
 import Upload from "~/pages/Upload";
 import Search from "~/pages/Search";
 import Profile from "~/pages/Profile";
+
+import config from "~/config";
 // import routes config
-import routesConfig from "~/ocnfig/routes";
 
 const publicRoutes = [
-   { path: routesConfig.home, component: Home },
-   { path: routesConfig.following, component: Following,layout: null },
-   { path: routesConfig.upload, component: Upload, layout: HeaderOnly },
-   { path: routesConfig.search, component: Search, layout: null },
-   { path: routesConfig.nickname, component: Profile, layout: HeaderOnly },
+   { path: config.routes.home, component: Home },
+   { path: config.routes.following, component: Following, layout: null },
+   { path: config.routes.upload, component: Upload, layout: HeaderOnly },
+   { path: config.routes.search, component: Search, layout: null },
+   { path: config.routes.nickname, component: Profile, layout: HeaderOnly },
 ];
 const privateRoutes = [];
 

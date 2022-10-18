@@ -44,6 +44,7 @@ function AccountItem({ data, imgOnly }) {
                </div>
                <div>
                   <h3 className={cx("user-name")}>
+                     {/* {console.log(data.full_name)} */}
                      {data.full_name}
                      {data.tick && (
                         <FontAwesomeIcon

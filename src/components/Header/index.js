@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { Wrapper as PopperWrapper } from "../Popper";
 import { MENU_ITEMS, USER_ITEMS } from "~/assets/items/menuItem";
-import Image from "~/components/Layout/components/Image";
+import Image from "~/components/Image";
 import PopupItem from "../PopupItem";
 import Button from "../Button";
 
@@ -14,16 +14,17 @@ import classNames from "classnames/bind";
 import { MessageIcon, InboxIcon } from "~/assets/icons";
 import Menu from "../Menu";
 import Search from "../Search";
+import config from "~/config";
 
-import routesConfig from "~/ocnfig/routes";
+import routesConfig from "~/config/routes";
 const cx = classNames.bind(styles);
 const cy = classNames.bind(stylesx);
 
 function Header() {
-   const currentUser = true;
+   // const currentUser = true;
 
    const [history, setHistory] = useState(
-      currentUser ? [{ data: USER_ITEMS }] : [{ data: MENU_ITEMS }]
+      config.isUser ? [{ data: USER_ITEMS }] : [{ data: MENU_ITEMS }]
    );
 
    const current = history[history.length - 1];
@@ -67,8 +68,8 @@ function Header() {
             <Search />
 
             {/* cta */}
-            <div className={currentUser ? cx("cta", "cta-user") : cx("cta")}>
-               {currentUser ? (
+            <div className={config.isUser ? cx("cta", "cta-user") : cx("cta")}>
+               {config.isUser ? (
                   <>
                      <Button
                         normal

@@ -11,6 +11,7 @@ const cx = classNames.bind(styles);
 
 function Button(
    {
+      wrap,
       logo,
       to,
       href,
@@ -18,6 +19,7 @@ function Button(
       text,
       outline = false,
       primary = false,
+      primarytext,
       round = false,
       disable = false,
       full = false,
@@ -54,10 +56,12 @@ function Button(
 
    const classes = cx("btn", {
       [className]: className, //làm việc với object
+      // wrap,
       logo,
       normal,
       text,
       primary,
+      primarytext,
       outline,
       small,
       disable,
@@ -91,9 +95,9 @@ function Button(
          ) : (
             <Comp ref={ref} className={classes} {...props}>
                {leftIcon && <span className={cx("left-icon")}>{leftIcon}</span>}
+               {/* {wrap && <h4>{children}</h4>} */}
                {children}
                {pseudo && <span className={cx("inbox-quantity")}>2</span>}
-
                {rihgtIcon && <span className={cx("right-icon")}>{rihgtIcon}</span>}
             </Comp>
          )}

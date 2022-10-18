@@ -8,8 +8,8 @@
    }
 }
 .avatar-frame {
-   width: 40px;
-   height: 40px;
+   width: 32px;
+   height: 32px;
    margin-right: 10px;
    img {
       width: 100%;
@@ -35,8 +35,7 @@
 
 .user-desc {
    font-size: 1.4rem;
-   font-weight: 300;
-   color: #999;
+   font-weight: 400;
+   color: rgba($color: #000, $alpha: 0.7);
    margin-top: 4px;
-   font-family: "SofiaPro";
 }

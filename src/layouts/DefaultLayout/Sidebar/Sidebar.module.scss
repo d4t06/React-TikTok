@@ -1,0 +1,82 @@
+.sidebar-container {
+   width: 361px;
+   display: flex;
+   flex-direction: column;
+   padding: 0 15px;
+   overflow: auto;
+   height: 100vh;
+   overflow-y: overlay;
+   label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: rgba($color: #333, $alpha: 0.85);
+      margin-bottom: 16px;
+   }
+}
+.cta {
+   padding: 18px 0 10px;
+   border-bottom: 1px solid rgba($color: #333, $alpha: 0.1);
+}
+.sidebar-cta-btn {
+   display: inline-flex;
+   align-items: center;
+   height: 46px;
+   border: unset;
+   text-align: left;
+   font-size: 1.8rem;
+   font-weight: 600;
+   span {
+      width: 32px;
+      margin-right: 5px;
+   }
+   &:last-child {
+      span {
+         height: 32px;
+         margin-left: -3px;
+         margin-right: 8px;
+      }
+   }
+}
+.login-frame {
+   padding: 20px 0;
+   // border-top: 1px solid rgba($color: #333, $alpha: 0.1);
+   border-bottom: 1px solid rgba($color: #333, $alpha: 0.1);
+}
+.login-hint {
+   font-size: 1.6rem;
+   margin-bottom: 15px;
+   color: rgba($color: #333, $alpha: 0.6);
+}
+.login-btn {
+   font-size: 1.9rem;
+   padding: 0;
+   height: 48px;
+}
+
+.discover-container {
+   padding: 20px 0;
+   border-bottom: 1px solid rgba($color: #333, $alpha: 0.1);
+
+   // .list-container {
+   //    padding: 17px 0 0;
+   // }
+}
+.suggested-account {
+   padding: 20px 0;
+   border-bottom: 1px solid rgba($color: #333, $alpha: 0.1);
+   a {
+      padding: unset;
+      height: 48px;
+   }
+}
+.see-all {
+   font-size: 1.4rem;
+   font-weight: 500;
+   font-family: var(--default-font);
+   background-color: transparent;
+   color: var(--primary-color);
+   margin-top: 5px;
+   cursor: pointer;
+}
