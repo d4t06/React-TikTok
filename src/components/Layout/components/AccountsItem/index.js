@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Tippy from "@tippyjs/react";
 import classNames from "classnames/bind";
 import { Link } from "react-router-dom";
+import Image from "../Image";
 import { Wrapper as PopperWrapper } from "../Popper";
 import styles from "./AccountItem.module.scss";
 
@@ -32,7 +33,14 @@ function AccountItem({ data, imgOnly }) {
                   cách 2: div -> div.backgroundimage='' rồi dùng paddingtop 100%
                */}
                <div className={cx("avatar-frame")}>
-                  <img src={data.avatar} />
+                  {/* {data && data.avatar => error}
+                      {data.avatar && data.avatar => ok}
+                  */}
+                  {data.avatar && data.avatar.includes(".jpg") ? (
+                     <Image src={data.avatar} />
+                  ) : (
+                     <Image />
+                  )}
                </div>
                <div>
                   <h3 className={cx("user-name")}>

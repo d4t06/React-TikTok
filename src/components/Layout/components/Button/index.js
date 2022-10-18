@@ -32,6 +32,7 @@ function Button(
       icon,
       tippy,
       pseudo,
+      nopos,
       ...passprops
    },
    ref
@@ -66,6 +67,7 @@ function Button(
       tag,
       icon,
       tippy,
+      nopos,
       ...passprops,
    });
    if (disable) {

@@ -15,6 +15,7 @@
       font-size: 1.6rem;
       background-color: transparent;
       color: rgba(22, 24, 35, 0.9);
+      font-family: var(--default-font);
    }
    .input:not(:placeholder-shown) ~ .search-btn {
       color: #333;
@@ -53,6 +54,8 @@
    border-top-right-radius: 92px;
    border-bottom-right-radius: 92px;
    color: rgb(167, 167, 171);
+   // color: var(--primary-color);
+
    svg {
       font-size: 1.9rem;
    }
@@ -67,6 +70,9 @@
    }
    &:hover {
       background-color: var(--hover-color);
+   }
+   &:active {
+      color: var(--primary-color);
    }
 }
 .lable-text {

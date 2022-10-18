@@ -27,7 +27,7 @@ function SidebarHeader() {
             <p className={cx("login-hint")}>
                Log in to follow creators, like videos, and view comments.
             </p>
-            <Button full outline>
+            <Button full outline nopos>
                Log in
             </Button>
          </div>

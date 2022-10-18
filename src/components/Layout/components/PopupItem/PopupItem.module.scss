@@ -25,14 +25,14 @@
    a {
       display: flex;
       align-items: center;
-      font-size: 1.8rem;
-      font-weight: 600;
       span {
          padding: 5px;
          height: 32px;
          width: 32px;
       }
       p {
+         font-weight: 600;
+         font-size: 1.8rem;
          margin-left: 15px;
       }
    }

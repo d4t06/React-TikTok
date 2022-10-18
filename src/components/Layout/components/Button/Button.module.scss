@@ -21,15 +21,14 @@
    background-color: transparent;
    border: 1px solid rgba(22, 24, 35, 0.15);
    cursor: pointer;
-   font-family: "ProximaNova";
+   font-family: var(--default-font);
 
    &:hover {
       background-color: var(--hover-color);
    }
    p {
       display: inline;
-      font-family: inherit;
-      font-family: "ProximaNova";
+      font-family: var(--default-font);
    }
 }
 .logo {
@@ -115,6 +114,9 @@
 .full {
    width: 100%;
    padding: 10px 0;
+}
+.nopos {
+   position: unset;
 }
 .tag {
    display: inline-flex;

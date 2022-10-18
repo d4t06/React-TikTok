@@ -5,6 +5,7 @@
    --hover-color: rgba(219, 218, 218, 0.3);
    --primary-color: rgb(254, 44, 85);
    --header-search-height: 46px;
+   --default-font: "ProximaNova", sans-serif;
 }
 
 @font-face {
@@ -34,8 +35,33 @@
    box-sizing: border-box;
 }
 html {
-   font-size: 62.5% !important;
-   font-family: "ProximaNova", sans-serif !important;
+   font-size: 62.5%;
+   font-family: "ProximaNova", sans-serif;
+}
+html *::-webkit-scrollbar {
+   width: 8px;
+}
+
+/* Track */
+html *::-webkit-scrollbar-track {
+   background: #fff;
+   // background-color: green;
+}
+
+/* Handle */
+html *::-webkit-scrollbar-thumb {
+   border-radius: 4px;
+   background-color: rgba($color: #000000, $alpha: 0.15);
+}
+
+/* Handle on hover */
+html *::-webkit-scrollbar-thumb:hover {
+   background: #999;
+}
+// scroll bar
+
+body {
+   overflow-y: overlay;
 }
 button,
 input {

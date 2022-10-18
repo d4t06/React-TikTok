@@ -13,7 +13,7 @@ import classNames from "classnames/bind";
 import styles from "./Search.module.scss";
 import { useEffect, useRef, useState } from "react";
 import { useDebounce } from "~/hook";
-import * as searchService from "~/apiServices/searchService";
+import * as searchService from "~/services/searchService";
 
 const cx = classNames.bind(styles);
 
@@ -75,6 +75,13 @@ function Search() {
    function handleHide() {
       setShowResult(false);
    }
+   function handleChange(e) {
+      //  trim(): ' Learn JavaScript   ' => 'Learn JavaScript'
+      const searchValue = e.target.value;
+      if (!searchValue.startsWith(" ")) {
+         setSearchValue(searchValue);
+      }
+   }
 
    return (
       <Menu
@@ -93,6 +100,7 @@ function Search() {
          option={{
             visible: showResult && searchValue.length > 0,
             onClickOutside: () => handleHide(),
+            appendTo: () => document.body,
          }}
       >
          <div className={cx("search")} onSubmit={submit}>
@@ -101,7 +109,7 @@ function Search() {
                value={searchValue}
                className={cx("input")}
                placeholder="Search accounts and videos"
-               onChange={(e) => setSearchValue(e.target.value)}
+               onChange={(e) => handleChange(e)}
                onFocus={() => setShowResult(true)}
             />
 
@@ -111,12 +119,15 @@ function Search() {
                </button>
             )}
 
-            {
-               <button ref={loadingRef} className={cx("loading")}>
-                  <FontAwesomeIcon icon={faSpinner} />
-               </button>
-            }
-            <button className={cx("search-btn")} type="submit">
+            <button ref={loadingRef} className={cx("loading")}>
+               <FontAwesomeIcon icon={faSpinner} />
+            </button>
+
+            <button
+               className={cx("search-btn")}
+               type="submit"
+               onMouseDown={(e) => e.preventDefault()}
+            >
                <FontAwesomeIcon icon={faMagnifyingGlass} />
             </button>
          </div>

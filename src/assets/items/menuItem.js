@@ -24,19 +24,46 @@ const MENU_ITEMS = [
             {
                code: "vi",
                title: "Tiếng Việt",
-               children: {
-                  title: "Language",
-                  data: [
-                     {
-                        code: "en",
-                        title: "English1",
-                     },
-                     {
-                        code: "vi",
-                        title: "Tiếng Việt1",
-                     },
-                  ],
-               },
+            },
+            {
+               code: "en",
+               title: "English",
+            },
+            {
+               code: "vi",
+               title: "Tiếng Việt",
+            },
+            {
+               code: "en",
+               title: "English",
+            },
+            {
+               code: "vi",
+               title: "Tiếng Việt",
+            },
+            {
+               code: "en",
+               title: "English",
+            },
+            {
+               code: "vi",
+               title: "Tiếng Việt",
+            },
+            {
+               code: "en",
+               title: "English",
+            },
+            {
+               code: "vi",
+               title: "Tiếng Việt",
+            },
+            {
+               code: "en",
+               title: "English",
+            },
+            {
+               code: "vi",
+               title: "Tiếng Việt",
             },
          ],
       },

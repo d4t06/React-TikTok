@@ -1,19 +1,11 @@
-import {
-   faCircleXmark,
-   faEllipsisVertical,
-   faMagnifyingGlass,
-   faPlus,
-   faSpinner,
-   faChevronLeft,
-} from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisVertical, faPlus, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Wrapper as PopperWrapper } from "../Popper";
 import { MENU_ITEMS, USER_ITEMS } from "~/assets/items/menuItem";
 import Image from "~/components/Layout/components/Image";
 import PopupItem from "../PopupItem";
-import AccountItem from "../AccountsItem";
 import Button from "../Button";
 
 import styles from "./Header.module.scss";
@@ -22,6 +14,8 @@ import classNames from "classnames/bind";
 import { MessageIcon, InboxIcon } from "~/assets/icons";
 import Menu from "../Menu";
 import Search from "../Search";
+
+import routesConfig from "~/ocnfig/routes";
 const cx = classNames.bind(styles);
 const cy = classNames.bind(stylesx);
 
@@ -65,7 +59,7 @@ function Header() {
       <header className={cx("wrapper")}>
          <div className={cx("inner")}>
             {/* logo */}
-            <Button to="/" logo>
+            <Button to={routesConfig.home} logo>
                <Image src={require("~/assets/images/logo.svg").default} alt="logo" />
             </Button>
 
@@ -84,12 +78,25 @@ function Header() {
                         Upload
                      </Button>
 
-                     <Menu type content="Message">
+                     <Menu
+                        type
+                        content="Message"
+                        option={{
+                           appendTo: () => document.body,
+                        }}
+                     >
                         <Button pd-t icon>
                            <InboxIcon />
                         </Button>
                      </Menu>
-                     <Menu type content="Inbox">
+
+                     <Menu
+                        type
+                        content="Inbox"
+                        option={{
+                           appendTo: () => document.body,
+                        }}
+                     >
                         <Button icon pseudo>
                            <MessageIcon />
                         </Button>
@@ -110,7 +117,11 @@ function Header() {
                               {renderItem(USER_ITEMS)}
                            </PopperWrapper>
                         }
-                        option={{ offset: [12, 8], trigger: "mouseenter " }}
+                        option={{
+                           offset: [12, 8],
+                           trigger: "mouseenter",
+                           hideOnClick: false,
+                        }}
                      >
                         <div className={cy("avatar-frame", "img-only")}>
                            <Image src={require("~/assets/images/avatar.jpg")} />
