@@ -1,22 +1,23 @@
-import { faEllipsisVertical, faPlus, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
+import classNames from "classnames/bind";
 
-import { Wrapper as PopperWrapper } from "../Popper";
+import { faEllipsisVertical, faPlus, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { MessageIcon, InboxIcon } from "~/assets/icons";
+
+import { Wrapper as PopperWrapper } from "~/components//Popper";
 import { MENU_ITEMS, USER_ITEMS } from "~/assets/items/menuItem";
+
 import Image from "~/components/Image";
-import PopupItem from "../PopupItem";
-import Button from "../Button";
+import PopupItem from "~/components//PopupItem";
+import Button from "~/components/Button";
+import config from "~/config";
+import Menu from "~/components//Menu";
+import routesConfig from "~/config/routes";
+import Search from "../Search";
 
 import styles from "./Header.module.scss";
-import stylesx from "../AccountsItem/AccountItem.module.scss";
-import classNames from "classnames/bind";
-import { MessageIcon, InboxIcon } from "~/assets/icons";
-import Menu from "../Menu";
-import Search from "../Search";
-import config from "~/config";
-
-import routesConfig from "~/config/routes";
+import stylesx from "~/components//AccountsItem/AccountItem.module.scss";
 const cx = classNames.bind(styles);
 const cy = classNames.bind(stylesx);
 

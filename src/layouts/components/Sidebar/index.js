@@ -7,65 +7,49 @@ import { CameraIcon } from "~/assets/icons";
 
 import Button from "../../../components/Button";
 import AccountItem from "../../../components/AccountsItem";
-import PopupItem from "~/components/PopupItem";
+// import PopupItem from "~/components/PopupItem";
 import config from "~/config";
-import axios from "axios";
 import { useState } from "react";
-import * as searchService from "~/services/searchService";
 
 const cx = classNames.bind(styles);
-// let suggestedAcc = [];
-// const suggestedAcc = [
-//    {
-//       id: 1,
-//       full_name: "theanh28entertainment",
-//       tick: true,
-//       nickname: "Theanh 28 Entertainment",
-//    },
-//    {
-//       id: 2,
-//       full_name: "theanh28entertainment",
-//       tick: true,
-//       nickname: "Theanh 28 Entertainment",
-//    },
-//    {
-//       id: 3,
-//       full_name: "theanh28entertainment",
-//       tick: true,
-//       nickname: "Theanh 28 Entertainment",
-//    },
-//    {
-//       id: 4,
-//       full_name: "theanh28entertainment",
-//       tick: true,
-//       nickname: "Theanh 28 Entertainment",
-//    },
-//    {
-//       id: 5,
-//       full_name: "theanh28entertainment",
-//       tick: true,
-//       nickname: "Theanh 28 Entertainment",
-//    },
-// ];
+const suggestedAcc = [
+   {
+      id: 1,
+      full_name: "theanh28entertainment",
+      tick: true,
+      nickname: "Theanh 28 Entertainment",
+   },
+   {
+      id: 2,
+      full_name: "theanh28entertainment",
+      tick: true,
+      nickname: "Theanh 28 Entertainment",
+   },
+   {
+      id: 3,
+      full_name: "theanh28entertainment",
+      tick: true,
+      nickname: "Theanh 28 Entertainment",
+   },
+   {
+      id: 4,
+      full_name: "theanh28entertainment",
+      tick: true,
+      nickname: "Theanh 28 Entertainment",
+   },
+   {
+      id: 5,
+      full_name: "theanh28entertainment",
+      tick: true,
+      nickname: "Theanh 28 Entertainment",
+   },
+];
 
 function Sidebar() {
-   // const key = "q";
-   const [suggestedAcc, setSuggestedAcc] = useState([]);
-
-   // const fetchApi = async () => {
-   //    try {
-   //       // const result = await searchService.search("q");
-   //       // console.log(result);
-   //       setSuggestedAcc(result);
-   //    } catch (error) {
-   //       console.log(error);
-   //    }
-   // };
-   // fetchApi();
-   axios.get();
+   const [activeNav, setActiveNav] = useState(1);
    return (
       <div className={cx("sidebar-container")}>
-         <div className={cx("cta")}>
+         <nav className={cx("cta")}>
             {/* <PopupItem primary type={"sidebar"} large icon={<FontAwesomeIcon icon={faHome} />}>
                For You
             </PopupItem>
@@ -76,28 +60,33 @@ function Sidebar() {
                LIVE
             </PopupItem> */}
             <Button
+               to={config.routes.home}
                className={cx("sidebar-cta-btn")}
-               primarytext
                nopos
                full
-               wrap
                leftIcon={<FontAwesomeIcon icon={faHome} />}
             >
                For You
             </Button>
             <Button
+               to={config.routes.following}
                className={cx("sidebar-cta-btn")}
                nopos
                full
-               wrap
                leftIcon={<FontAwesomeIcon icon={faUserGroup} />}
             >
                Following
             </Button>
-            <Button className={cx("sidebar-cta-btn")} full nopos wrap leftIcon={<CameraIcon />}>
+            <Button
+               className={cx("sidebar-cta-btn")}
+               full
+               nopos
+               to={config.routes.live}
+               leftIcon={<CameraIcon />}
+            >
                LIVE
             </Button>
-         </div>
+         </nav>
 
          {config.isUser && (
             <div className={cx("login-frame")}>

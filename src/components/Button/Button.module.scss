@@ -54,9 +54,7 @@
       background-color: rgb(244, 41, 82);
    }
 }
-.primarytext {
-   color: var(--primary-color);
-}
+
 .outline {
    border-color: var(--primary-color);
    color: var(--primary-color);
@@ -115,7 +113,6 @@
 }
 .full {
    width: 100%;
-   padding: 10px 0;
 }
 .nopos {
    position: unset;
@@ -169,4 +166,7 @@
    align-items: center;
    justify-content: center;
    border: 2px solid white;
+}
+.active {
+   color: var(--primary-color);
 }

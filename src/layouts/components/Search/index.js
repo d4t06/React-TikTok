@@ -5,13 +5,13 @@ import {
    faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import Menu from "../Menu";
-import { Wrapper as PopperWrapper } from "../Popper";
-import AccountItem from "../AccountsItem";
-import classNames from "classnames/bind";
-import styles from "./Search.module.scss";
 import { useEffect, useRef, useState } from "react";
+import classNames from "classnames/bind";
+
+import Menu from "~/components/Menu";
+import { Wrapper as PopperWrapper } from "~/components//Popper";
+import AccountItem from "~/components//AccountsItem";
+import styles from "./Search.module.scss";
 import { useDebounce } from "~/hook";
 import * as searchService from "~/services/searchService";
 

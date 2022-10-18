@@ -68,7 +68,7 @@ input {
    border: none;
    outline: none;
 }
-a[href] {
+a {
    text-decoration: none;
    color: currentColor;
 }
@@ -78,4 +78,7 @@ a[href] {
    padding: 5px 7px;
    font-weight: 500;
    font-size: 1.6rem;
+}
+.active {
+   color: var(--primary-color);
 }

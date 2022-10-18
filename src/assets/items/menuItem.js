@@ -27,7 +27,15 @@ const MENU_ITEMS = [
             },
             {
                code: "en",
-               title: "English",
+               title: "Vietnamese",
+            },
+            {
+               code: "vi",
+               title: "Tiếng Kinh",
+            },
+            {
+               code: "en",
+               title: "Tieng Me De",
             },
             {
                code: "vi",
@@ -36,34 +44,6 @@ const MENU_ITEMS = [
             {
                code: "en",
                title: "English",
-            },
-            {
-               code: "vi",
-               title: "Tiếng Việt",
-            },
-            {
-               code: "en",
-               title: "English",
-            },
-            {
-               code: "vi",
-               title: "Tiếng Việt",
-            },
-            {
-               code: "en",
-               title: "English",
-            },
-            {
-               code: "vi",
-               title: "Tiếng Việt",
-            },
-            {
-               code: "en",
-               title: "English",
-            },
-            {
-               code: "vi",
-               title: "Tiếng Việt",
             },
          ],
       },
