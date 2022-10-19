@@ -45,18 +45,20 @@ html *::-webkit-scrollbar {
 /* Track */
 html *::-webkit-scrollbar-track {
    background: #fff;
+   // z-index: -1;
    // background-color: green;
 }
 
 /* Handle */
 html *::-webkit-scrollbar-thumb {
    border-radius: 4px;
-   background-color: rgba($color: #000000, $alpha: 0.15);
+   background-color: rgba($color: #000, $alpha: 0.15);
+   // z-index: -1;
 }
 
 /* Handle on hover */
 html *::-webkit-scrollbar-thumb:hover {
-   background: #999;
+   background: red;
 }
 // scroll bar
 

@@ -53,7 +53,7 @@ function AccountItem({ data, imgOnly, tippy }) {
                }
                option={{
                   placement: "bottom",
-                  offset: [-10, 0],
+                  offset: [-15, 0],
                   delay: [500, 0],
                   appendTo: () => document.body,
                }}
