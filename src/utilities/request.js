@@ -1,6 +1,6 @@
 import axios from "axios";
 
-console.log(process.env);
+// console.log(process.env);
 
 const request = axios.create({
    baseURL: process.env.REACT_APP_BASE_URL,

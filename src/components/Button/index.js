@@ -1,40 +1,38 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { forwardRef } from "react";
 import classNames from "classnames/bind";
 import styles from "./Button.module.scss";
 
-import { faEllipsisVertical, faL, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faEllipsisVertical, faL, faPlus } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 const cx = classNames.bind(styles);
 
 function Button(
    {
-      wrap,
-      logo,
       to,
-      href,
-      normal,
-      text,
-      outline = false,
-      primary = false,
-      primarytext,
-      round = false,
-      disable = false,
-      full = false,
-      tag = false,
       children,
+      href,
+
+      round,
+      outline,
+      primary,
+      full,
+      tag,
       small,
       long,
-      onClick,
+
       className,
+      icon,
       leftIcon,
       rihgtIcon,
-      icon,
+
+      disable,
       tippy,
       pseudo,
       nopos,
+      onClick,
       ...passprops
    },
    ref
@@ -47,7 +45,7 @@ function Button(
 
    if (to) {
       props.to = to;
-      Comp = Link;
+      Comp = NavLink;
    }
    if (href) {
       props.href = href;
@@ -55,23 +53,21 @@ function Button(
    }
 
    const classes = cx("btn", {
-      [className]: className, //làm việc với object
-      // wrap,
-      logo,
-      normal,
-      text,
-      primary,
-      primarytext,
+      [className]: className,
+
       outline,
+      primary,
       small,
-      disable,
-      round,
       long,
+      round,
       full,
       tag,
+
+      disable,
       icon,
       tippy,
       nopos,
+
       ...passprops,
    });
    if (disable) {
@@ -93,7 +89,7 @@ function Button(
                </Comp>
             </Tippy>
          ) : (
-            <Comp ref={ref} className={classes} {...props}>
+            <Comp ref={ref} className={classes}>
                {leftIcon && <span className={cx("left-icon")}>{leftIcon}</span>}
                {/* {wrap && <h4>{children}</h4>} */}
                {children}

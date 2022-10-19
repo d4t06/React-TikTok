@@ -61,7 +61,7 @@ function Header() {
       <header className={cx("wrapper")}>
          <div className={cx("inner")}>
             {/* logo */}
-            <Button to={routesConfig.home} logo>
+            <Button to={routesConfig.home} className={cx("logo")}>
                <Image src={require("~/assets/images/logo.svg").default} alt="logo" />
             </Button>
 

@@ -9,7 +9,7 @@ import Button from "../../../components/Button";
 import AccountItem from "../../../components/AccountsItem";
 // import PopupItem from "~/components/PopupItem";
 import config from "~/config";
-import { useState } from "react";
+import NavItem from "./components/NavItem";
 
 const cx = classNames.bind(styles);
 const suggestedAcc = [
@@ -18,35 +18,44 @@ const suggestedAcc = [
       full_name: "theanh28entertainment",
       tick: true,
       nickname: "Theanh 28 Entertainment",
+      avatar:
+         "https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-giso/fac92301a36c2275c99f393061ef04ca~c5_100x100.jpeg?x-expires=1666321200&x-signature=p%2FQEcRjlxNc8olvEs3pvZu5Tr0k%3D",
    },
    {
       id: 2,
       full_name: "theanh28entertainment",
       tick: true,
       nickname: "Theanh 28 Entertainment",
+      avatar:
+         "https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-aiso/65d3c6b1d1e205c75536ccf1f26d552d~c5_100x100.jpeg?x-expires=1666321200&x-signature=Zn2dGCMgpJx%2Bzq5vEdvRWMhL2uk%3D",
    },
    {
       id: 3,
       full_name: "theanh28entertainment",
       tick: true,
       nickname: "Theanh 28 Entertainment",
+      avatar:
+         "https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-aiso/65d3c6b1d1e205c75536ccf1f26d552d~c5_100x100.jpeg?x-expires=1666321200&x-signature=Zn2dGCMgpJx%2Bzq5vEdvRWMhL2uk%3D",
    },
    {
       id: 4,
       full_name: "theanh28entertainment",
       tick: true,
       nickname: "Theanh 28 Entertainment",
+      avatar:
+         "https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-aiso/65d3c6b1d1e205c75536ccf1f26d552d~c5_100x100.jpeg?x-expires=1666321200&x-signature=Zn2dGCMgpJx%2Bzq5vEdvRWMhL2uk%3D",
    },
    {
       id: 5,
-      full_name: "theanh28entertainment",
+      full_name: "60giay.com",
       tick: true,
-      nickname: "Theanh 28 Entertainment",
+      nickname: "60giay.com",
+      avatar:
+         "https://p16-sign-sg.tiktokcdn.com/aweme/100x100/tos-alisg-avt-0068/a454aa795bdb1a9970cc2106321360e6.jpeg?x-expires=1666324800&x-signature=nH0xqKnEwlmmhsPkUh4j9XOtZcs%3D",
    },
 ];
 
 function Sidebar() {
-   const [activeNav, setActiveNav] = useState(1);
    return (
       <div className={cx("sidebar-container")}>
          <nav className={cx("cta")}>
@@ -59,33 +68,15 @@ function Sidebar() {
             <PopupItem type={"sidebar"} large icon={<CameraIcon />}>
                LIVE
             </PopupItem> */}
-            <Button
-               to={config.routes.home}
-               className={cx("sidebar-cta-btn")}
-               nopos
-               full
-               leftIcon={<FontAwesomeIcon icon={faHome} />}
-            >
+            <NavItem to={config.routes.home} icon={<FontAwesomeIcon icon={faHome} />}>
                For You
-            </Button>
-            <Button
-               to={config.routes.following}
-               className={cx("sidebar-cta-btn")}
-               nopos
-               full
-               leftIcon={<FontAwesomeIcon icon={faUserGroup} />}
-            >
+            </NavItem>
+            <NavItem to={config.routes.following} icon={<FontAwesomeIcon icon={faUserGroup} />}>
                Following
-            </Button>
-            <Button
-               className={cx("sidebar-cta-btn")}
-               full
-               nopos
-               to={config.routes.live}
-               leftIcon={<CameraIcon />}
-            >
+            </NavItem>
+            <NavItem to={config.routes.live} icon={<CameraIcon />}>
                LIVE
-            </Button>
+            </NavItem>
          </nav>
 
          {config.isUser && (
@@ -101,6 +92,16 @@ function Sidebar() {
 
          <div className={cx("suggested-account")}>
             <label>Suggested accounts</label>
+
+            {suggestedAcc &&
+               suggestedAcc.map((item) => {
+                  return <AccountItem tippy key={item.id} data={item} />;
+               })}
+            <button className={cx("see-all")}>See all</button>
+         </div>
+
+         <div className={cx("suggested-account")}>
+            <label>Following accounts</label>
 
             {suggestedAcc &&
                suggestedAcc.map((item) => {

@@ -12,7 +12,6 @@ function Menu({ option, type, content, children, onHide }) {
             </Tippy>
          ) : (
             <TippyHeadless
-               {...option}
                interactive
                placement="bottom-end"
                render={(attrs) => (
@@ -21,6 +20,7 @@ function Menu({ option, type, content, children, onHide }) {
                   </div>
                )}
                onHide={onHide}
+               {...option}
             >
                {children}
             </TippyHeadless>

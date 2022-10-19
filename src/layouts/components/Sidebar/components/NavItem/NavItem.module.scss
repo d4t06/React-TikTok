@@ -1,0 +1,26 @@
+.sidebar-nav {
+   display: inline-flex;
+   align-items: center;
+   height: 46px;
+   width: 100%;
+   border: unset;
+   position: unset;
+   text-align: left;
+   font-size: 1.8rem;
+   font-weight: 600;
+   padding: 0 8px;
+   span {
+      width: 32px;
+      margin-right: 5px;
+   }
+   &:last-child {
+      span {
+         height: 32px;
+         margin-left: -3px;
+         margin-right: 8px;
+      }
+   }
+   &:hover {
+      background-color: var(--hover-color);
+   }
+}
