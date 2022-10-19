@@ -1,15 +1,17 @@
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import classNames from "classnames/bind";
 import { Link } from "react-router-dom";
-import Button from "../Button";
+import { forwardRef } from "react";
+import classNames from "classnames/bind";
+
 import Image from "../Image";
 import Menu from "../Menu";
-// import { Wrapper as PopperWrapper } from "../Popper";
+
 import styles from "./AccountItem.module.scss";
 
 const cx = classNames.bind(styles);
-function AccountItem({ data, imgOnly, tippy }) {
+
+function AccountItem({ data, imgOnly, tippy }, ref) {
    let Comp = Link;
 
    if (tippy) Comp = Menu;
@@ -17,26 +19,35 @@ function AccountItem({ data, imgOnly, tippy }) {
    return (
       <>
          {imgOnly ? (
-            <div className={cx("avatar-frame")}>
+            <div ref={ref} className={cx("avatar-frame")}>
                <Image src={require("~/assets/images/avatar.jpg")} />
             </div>
          ) : (
-            <Comp
-               //account preview
-               content={
-                  <div className={cx("account-preview")}>
-                     <div className={cx("account-preview-header")}>
-                        <div className={cx("avatar-frame-preview")}>
-                           {data.avatar && data.avatar.includes(".jpg" && ".jpeg") ? (
-                              <Image src={data.avatar} />
-                           ) : (
-                              <Image />
-                           )}
-                        </div>
-                        <Button primary>Follow</Button>
-                     </div>
-                     <h3 className={cx("user-name", "user-name-preview")}>
-                        theanh28entertainment{" "}
+            //account preview
+
+            <Comp ref={ref} to={"/home"} key={data.id} className={cx("account-item")}>
+               {/* cách làm anh vuông
+               cách 1: div -> img rồi dùng objectfit
+               cách 2: div -> div.backgroundimage='' rồi dùng paddingtop 100%
+            */}
+
+               <div className={cx("avatar-frame")}>
+                  {/* {data && data.avatar => error}
+            {data.avatar && data.avatar => ok}
+            */}
+
+                  {(data.avatar && data.avatar.includes(".jpg")) ||
+                  data.avatar.includes(".jpeg") ? (
+                     <Image src={data.avatar} />
+                  ) : (
+                     <Image />
+                  )}
+               </div>
+               <div>
+                  <h3 className={cx("user-name")}>
+                     {/* {console.log(data.full_name)} */}
+                     {data.full_name || data.first_name + " " + data.last_name}
+                     {data.tick && (
                         <FontAwesomeIcon
                            className={cx("check-icon", "img-only")}
                            icon={faCircleCheck}
@@ -72,25 +83,13 @@ function AccountItem({ data, imgOnly, tippy }) {
                      ) : (
                         <Image />
                      )}
-                  </div>
-                  <div>
-                     <h3 className={cx("user-name")}>
-                        {/* {console.log(data.full_name)} */}
-                        {data.full_name}
-                        {data.tick && (
-                           <FontAwesomeIcon
-                              className={cx("check-icon", "img-only")}
-                              icon={faCircleCheck}
-                           />
-                        )}
-                     </h3>
-                     <h4 className={cx("user-desc")}>{data.nickname}</h4>
-                  </div>
-               </Link>
+                  </h3>
+                  <h4 className={cx("user-desc")}>{data.nickname}</h4>
+               </div>
             </Comp>
          )}
       </>
    );
 }
 
-export default AccountItem;
+export default forwardRef(AccountItem);

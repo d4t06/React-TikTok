@@ -26,6 +26,14 @@ const MENU_ITEMS = [
                title: "Tiếng Việt",
             },
             {
+               code: "vi",
+               title: "Tiếng Diệt",
+            },
+            {
+               code: "en",
+               title: "Tiếng Ziệt",
+            },
+            {
                code: "en",
                title: "Vietnamese",
             },
@@ -35,15 +43,7 @@ const MENU_ITEMS = [
             },
             {
                code: "en",
-               title: "Tieng Me De",
-            },
-            {
-               code: "vi",
-               title: "Tiếng Việt",
-            },
-            {
-               code: "en",
-               title: "English",
+               title: "Tieng Mẹ Đẻ",
             },
          ],
       },
