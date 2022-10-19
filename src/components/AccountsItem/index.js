@@ -36,8 +36,7 @@ function AccountItem({ data, imgOnly, tippy }, ref) {
             {data.avatar && data.avatar => ok}
             */}
 
-                  {(data.avatar && data.avatar.includes(".jpg")) ||
-                  data.avatar.includes(".jpeg") ? (
+                  {(data.avatar && data.avatar.includes(".jpg")) || data.avatar.includes(".jpeg") ? (
                      <Image src={data.avatar} />
                   ) : (
                      <Image />
@@ -47,42 +46,7 @@ function AccountItem({ data, imgOnly, tippy }, ref) {
                   <h3 className={cx("user-name")}>
                      {/* {console.log(data.full_name)} */}
                      {data.full_name || data.first_name + " " + data.last_name}
-                     {data.tick && (
-                        <FontAwesomeIcon
-                           className={cx("check-icon", "img-only")}
-                           icon={faCircleCheck}
-                        />
-                     </h3>
-                     <h4 className={cx("user-desc", "user-desc-preview")}>{data.nickname}</h4>{" "}
-                     <p className={cx("user-counting")}>
-                        <span className={cx("count", "follow-count")}>7.7M</span>
-                        <span className={cx("count-desc")}>Follower</span>
-                        <span className={cx("count", "like-count")}>537.5M</span>
-                        <span className={cx("count-desc")}>Likes</span>
-                     </p>
-                  </div>
-               }
-               option={{
-                  placement: "bottom",
-                  offset: [-15, 0],
-                  delay: [500, 0],
-                  appendTo: () => document.body,
-               }}
-            >
-               <Link to={"/home"} key={data.id} className={cx("account-item")}>
-                  {/* cách làm anh vuông
-                  cách 1: div -> img rồi dùng objectfit
-                  cách 2: div -> div.backgroundimage='' rồi dùng paddingtop 100%
-               */}
-                  <div className={cx("avatar-frame")}>
-                     {/* {data && data.avatar => error}
-                      {data.avatar && data.avatar => ok}
-                  */}
-                     {data.avatar && data.avatar.includes(".jpg" && ".jpeg") ? (
-                        <Image src={data.avatar} />
-                     ) : (
-                        <Image />
-                     )}
+                     {data.tick && <FontAwesomeIcon className={cx("check-icon", "img-only")} icon={faCircleCheck} />}
                   </h3>
                   <h4 className={cx("user-desc")}>{data.nickname}</h4>
                </div>

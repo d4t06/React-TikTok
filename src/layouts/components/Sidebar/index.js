@@ -38,12 +38,6 @@ function Sidebar() {
          <nav className={cx("cta")}>
             {/* <PopupItem primary type={"sidebar"} large icon={<FontAwesomeIcon icon={faHome} />}>
                For You
-            </PopupItem>
-            <PopupItem type={"sidebar"} large icon={<FontAwesomeIcon icon={faUserGroup} />}>
-               Following
-            </PopupItem>
-            <PopupItem type={"sidebar"} large icon={<CameraIcon />}>
-               LIVE
             </PopupItem> */}
             <NavItem to={config.routes.home} icon={<FontAwesomeIcon icon={faHome} />}>
                For You
@@ -58,9 +52,7 @@ function Sidebar() {
 
          {!config.isUser && (
             <div className={cx("login-frame")}>
-               <p className={cx("login-hint")}>
-                  Log in to follow creators, like videos, and view comments.
-               </p>
+               <p className={cx("login-hint")}>Log in to follow creators, like videos, and view comments.</p>
                <Button full outline nopos className={cx("login-btn")}>
                   Log in
                </Button>
