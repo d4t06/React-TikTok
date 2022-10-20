@@ -1,100 +1,112 @@
+.seperate::before {
+   content: "";
+   position: absolute;
+   top: 0;
+   left: 8px;
+   right: 8px;
+   height: 1px;
+   background-color: rgba($color: #333, $alpha: 0.1);
+}
+
 .sidebar-container {
-  width: 361px;
-  display: flex;
-  flex-direction: column;
-  padding: 0 15px;
-  overflow: auto;
-  height: 100vh;
-  overflow-y: overlay;
-  label {
-    display: block;
-    font-size: 1.4rem;
-    font-weight: 500;
-    color: rgba($color: #333, $alpha: 0.85);
-    margin-left: 8px;
-    margin-bottom: 16px;
-  }
+   flex-direction: column;
+   display: flex;
+   width: 356px;
+   max-height: 100vh;
+   padding: 20px 15px;
+   position: fixed;
+   top: 60px;
+   left: auto;
+   overflow-y: auto;
+   label {
+      display: block;
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: rgba($color: #333, $alpha: 0.85);
+      margin: 0 0 8px 15px;
+   }
 }
 .cta {
-  padding: 0 0 10px;
-  border-bottom: 1px solid rgba($color: #333, $alpha: 0.1);
+   padding-bottom: 10px;
+   //  border-bottom: 1px solid rgba($color: #333, $alpha: 0.1);
 }
 .login-frame {
-  padding: 20px 0;
-  // border-top: 1px solid rgba($color: #333, $alpha: 0.1);
-  border-bottom: 1px solid rgba($color: #333, $alpha: 0.1);
+   padding: 20px 0;
+   //  border-bottom: 1px solid rgba($color: #333, $alpha: 0.1);
 }
 .login-hint {
-  font-size: 1.6rem;
-  margin-bottom: 15px;
-  color: rgba($color: #333, $alpha: 0.6);
+   font-size: 1.6rem;
+   margin-bottom: 15px;
+   color: rgba($color: #333, $alpha: 0.6);
 }
 .login-btn {
-  font-size: 1.9rem;
-  padding: 0;
-  height: 48px;
+   font-size: 1.9rem;
+   padding: 0;
+   height: 48px;
 }
 
 .discover-container {
-  padding: 20px 0;
-  border-bottom: 1px solid rgba($color: #333, $alpha: 0.1);
+   position: relative;
+   padding: 20px 8px;
+   //  border-bottom: 1px solid rgba($color: #333, $alpha: 0.1);
 }
 .suggested-account {
-  padding: 20px 0;
-  border-bottom: 1px solid rgba($color: #333, $alpha: 0.1);
-  a {
-    padding: 0 8px;
-    height: 48px;
-  }
+   position: relative;
+   padding: 20px 0;
+   //  border-bottom: 1px solid rgba($color: #333, $alpha: 0.1);
+   a {
+      padding: 0 8px;
+      height: 48px;
+   }
 }
 .see-all {
-  font-size: 1.4rem;
-  font-weight: 500;
-  font-family: var(--default-font);
-  background-color: transparent;
-  color: var(--primary-color);
-  margin-top: 5px;
-  margin-left: 8px;
-  cursor: pointer;
+   font-size: 1.4rem;
+   font-weight: 500;
+   font-family: var(--default-font);
+   background-color: transparent;
+   color: var(--primary-color);
+   margin-top: 5px;
+   margin-left: 8px;
+   cursor: pointer;
 }
 // account preview
 .account-preview {
-  width: 320px;
-  padding: 20px;
+   width: 320px;
+   padding: 20px;
 
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 16px;
-  border-radius: 5px;
-  background-color: #fff;
+   box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 16px;
+   //  border-radius: 5px;
+   background-color: #fff;
 }
 .account-preview-header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 12px;
+   display: flex;
+   justify-content: space-between;
+   margin-bottom: 12px;
 }
 .user-name-preview {
-  font-size: 1.8rem;
+   font-size: 1.8rem;
 }
 .user-desc-preview {
-  font-size: 1.4rem;
-  font-weight: 500;
-  color: #000;
+   font-size: 1.4rem;
+   font-weight: 500;
+   color: #000;
 }
 .avatar-frame-preview {
-  height: 44px;
-  width: 44px;
+   height: 44px;
+   width: 44px;
 }
 .user-counting {
-  margin-top: 10px;
-  .count {
-    font-size: 1.7rem;
-    font-weight: 600;
-  }
-  .count ~ .count {
-    margin-left: 8px;
-  }
-  .count-desc {
-    font-size: 1.7rem;
-    font-weight: 400;
-    margin-left: 5px;
-  }
+   margin-top: 10px;
+   .count {
+      font-size: 1.7rem;
+      font-weight: 600;
+   }
+   .count ~ .count {
+      margin-left: 8px;
+   }
+   .count-desc {
+      font-size: 1.7rem;
+      font-weight: 400;
+      margin-left: 5px;
+   }
 }

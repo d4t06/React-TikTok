@@ -59,7 +59,7 @@ function Sidebar() {
             </div>
          )}
 
-         <div className={cx("suggested-account")}>
+         <div className={cx("suggested-account", "seperate")}>
             <label>Suggested accounts</label>
 
             <SuggestedUser data={suggestedUser} />
@@ -67,7 +67,7 @@ function Sidebar() {
             <button className={cx("see-all")}>See all</button>
          </div>
 
-         <div className={cx("suggested-account")}>
+         <div className={cx("suggested-account", "seperate")}>
             <label>Following accounts</label>
 
             {suggestedUser &&
@@ -77,7 +77,7 @@ function Sidebar() {
             <button className={cx("see-all")}>See all</button>
          </div>
 
-         <div className={cx("discover-container")}>
+         <div className={cx("discover-container", "seperate")}>
             <label>Discover</label>
             <Button tag round leftIcon={<FontAwesomeIcon icon={faHashtag} />}>
                suthatla
