@@ -1,13 +1,3 @@
-.seperate::before {
-   content: "";
-   position: absolute;
-   top: 0;
-   left: 8px;
-   right: 8px;
-   height: 1px;
-   background-color: rgba($color: #333, $alpha: 0.1);
-}
-
 .sidebar-container {
    flex-direction: column;
    display: flex;

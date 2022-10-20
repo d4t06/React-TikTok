@@ -1,7 +1,7 @@
 import routes from "./routes";
 
 const config = {
-   isUser: false,
+   isUser: true,
    routes,
 };
 

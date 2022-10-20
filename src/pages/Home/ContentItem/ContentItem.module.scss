@@ -4,7 +4,8 @@
 
 .item-container {
    display: flex;
-   padding-top: 20px;
+   padding: 20px 0;
+   position: relative;
 }
 .main-container {
    flex: 1;
@@ -13,7 +14,7 @@
    display: flex;
 }
 .content-text {
-   // flex: 1;
+   // flex: 1;`
 }
 .avatarframe-main-container {
    height: 56px;
@@ -59,5 +60,5 @@
    margin-top: calc(var(--elementsGap) + 2px);
    width: auto;
    border-radius: 8px;
-   height: 95vh;
+   height: 90vh;
 }

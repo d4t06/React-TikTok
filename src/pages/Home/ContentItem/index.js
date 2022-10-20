@@ -1,8 +1,6 @@
 import { faMusic, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
-import { useEffect, useRef } from "react";
-import Image from "~/components/Image";
 import Button from "~/components/Button";
 import Menu from "~/components/Menu";
 import AccountsItem from "~/components/AccountsItem";
@@ -10,6 +8,7 @@ import styles from "./ContentItem.module.scss";
 import styles_from_cx_suggestedUser from "~/layouts/components/Sidebar/Sidebar.module.scss";
 import styles_from_accountItem from "~/components/AccountsItem/AccountItem.module.scss";
 import UserPreview from "~/components/UserPreview";
+import VideoJS from "./VideoJS";
 
 const cx = classNames.bind(styles);
 const cx_suggestedUser = classNames.bind(styles_from_cx_suggestedUser);
@@ -28,7 +27,7 @@ function Contentdata({ data }) {
             data.map((data) => {
                if (!data.popular_video) return;
                return (
-                  <div key={data.id} className={cx("item-container")}>
+                  <div key={data.id} className={cx("item-container", "seperate")}>
                      <AccountsItem className={cx("avatarframe-main-container")} imgOnly src={data.avatar} />
                      <div className={cx("main-container")}>
                         <div className={cx("content-header")}>
@@ -72,13 +71,27 @@ function Contentdata({ data }) {
                               Follow
                            </Button>
                         </div>
-                        <video
-                           // ref={videoRef}
-                           allowf
-                           className={cx("video")}
-                           controls
-                           src={data.popular_video.file_url}
-                        ></video>
+
+                        {/* <video controls className={cx("video", "video-js")}>
+                           <source src={data.popular_video.file_url} type="video/mp4" />
+                        </video> */}
+                        {/* <div className={cx("video")}>
+                        </div> */}
+                        <VideoJS
+                           // className={cx("video")}
+                           options={{
+                              height: "476px",
+                              width: "auto",
+                              controls: true,
+                              loop: true,
+                              sources: [
+                                 {
+                                    src: data.popular_video.file_url,
+                                    type: "video/mp4",
+                                 },
+                              ],
+                           }}
+                        />
                      </div>
                   </div>
                );

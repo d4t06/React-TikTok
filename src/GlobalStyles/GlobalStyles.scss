@@ -81,3 +81,33 @@ a {
 .active {
    color: var(--primary-color);
 }
+.seperate::before {
+   content: "";
+   position: absolute;
+   top: 0;
+   left: 8px;
+   right: 8px;
+   height: 1px;
+   background-color: rgba($color: #333, $alpha: 0.1);
+}
+// player
+.video-js {
+   font-size: 16px !important;
+   border-radius: 10px;
+   margin-top: 10px !important;
+}
+.vjs-control-bar {
+   background-color: transparent !important;
+   bottom: 35px !important;
+   justify-content: space-between;
+}
+.vjs-tech {
+   border-radius: 8px;
+}
+
+.vjs-time-control,
+.vjs-time-control,
+.vjs-progress-control,
+.vjs-fullscreen-control {
+   display: none !important;
+}
