@@ -11,7 +11,7 @@ import styles from "./AccountItem.module.scss";
 
 const cx = classNames.bind(styles);
 
-function AccountItem({ data, imgOnly, tippy }, ref) {
+function AccountItem({ className, data, imgOnly, tippy, src }, ref) {
    let Comp = Link;
 
    if (tippy) Comp = Menu;
@@ -19,8 +19,8 @@ function AccountItem({ data, imgOnly, tippy }, ref) {
    return (
       <>
          {imgOnly ? (
-            <div ref={ref} className={cx("avatar-frame")}>
-               <Image src={require("~/assets/images/avatar.jpg")} />
+            <div ref={ref} className={cx("avatar-frame", { [className]: className })}>
+               <Image src={src || require("~/assets/images/avatar.jpg")} />
             </div>
          ) : (
             //account preview

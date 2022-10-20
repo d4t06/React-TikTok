@@ -20,18 +20,15 @@ const cx = classNames.bind(styles);
 function Sidebar() {
    const [suggestedUser, setSuggestedUser] = useState([]);
 
-   useEffect(
-      (_) => {
-         const fecthApi = async () => {
-            const result = await userService.getSuggested(1, 5);
+   useEffect((_) => {
+      const fecthApi = async () => {
+         const result = await userService.getSuggested(1, 5);
 
-            // console.log(result);
-            setSuggestedUser(result);
-         };
-         fecthApi();
-      },
-      [suggestedUser]
-   );
+         // console.log(result);
+         setSuggestedUser(result);
+      };
+      fecthApi();
+   }, []);
 
    return (
       <div className={cx("sidebar-container")}>

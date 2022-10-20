@@ -1,0 +1,41 @@
+.account-preview {
+   width: 320px;
+   padding: 20px;
+
+   box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 16px;
+   //  border-radius: 5px;
+   background-color: #fff;
+   border-radius: 4px;
+}
+.account-preview-header {
+   display: flex;
+   justify-content: space-between;
+   margin-bottom: 12px;
+}
+.user-name-preview {
+   font-size: 1.8rem;
+}
+.user-desc-preview {
+   font-size: 1.4rem;
+   font-weight: 500;
+   color: #000;
+}
+.avatar-frame-preview {
+   height: 44px;
+   width: 44px;
+}
+.user-counting {
+   margin-top: 10px;
+   .count {
+      font-size: 1.7rem;
+      font-weight: 600;
+   }
+   .count ~ .count {
+      margin-left: 8px;
+   }
+   .count-desc {
+      font-size: 1.7rem;
+      font-weight: 400;
+      margin-left: 5px;
+   }
+}
