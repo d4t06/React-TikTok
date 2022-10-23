@@ -21,6 +21,7 @@ function SuggestedUser({ data }) {
             data.map((item) => {
                return (
                   <Menu
+                     key={item.id}
                      content={<UserPreview data={item} />}
                      option={{
                         placement: "bottom",

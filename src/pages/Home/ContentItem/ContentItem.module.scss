@@ -56,9 +56,12 @@
       margin-right: 5px;
    }
 }
-.video {
-   margin-top: calc(var(--elementsGap) + 2px);
-   width: auto;
+.video-frame {
+   display: inline-block;
+   height: 467px;
    border-radius: 8px;
-   height: 90vh;
+   margin-top: calc(var(--elementsGap) + 2px);
+   video {
+      height: 100%;
+   }
 }

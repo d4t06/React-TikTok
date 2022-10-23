@@ -3,6 +3,7 @@
    flex-direction: column;
    align-items: center;
    margin-top: 60px;
+   background-color: #222;
 }
 .Container {
    display: flex;
@@ -10,7 +11,7 @@
    padding: 5px 5px;
 }
 .Content {
-   height: 2000px;
+   // height: auto;
    width: 692px;
    max-width: 692px;
    position: relative;
