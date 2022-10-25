@@ -20,7 +20,8 @@ function AccountItem({ className, data, imgOnly, tippy, src }, ref) {
       <>
          {imgOnly ? (
             <div ref={ref} className={cx("avatar-frame", { [className]: className })}>
-               <Image src={src || require("~/assets/images/avatar.jpg")} />
+               {/* {src.includes('.jpg') && <Image src />} */}
+               <Image src={src.includes(".jpg") ? src : require("~/assets/images/avatar.jpg")} />
             </div>
          ) : (
             //account preview
@@ -36,10 +37,14 @@ function AccountItem({ className, data, imgOnly, tippy, src }, ref) {
             {data.avatar && data.avatar => ok}
             */}
 
-                  {(data.avatar && data.avatar.includes(".jpg")) || data.avatar.includes(".jpeg") ? (
-                     <Image src={data.avatar} />
-                  ) : (
-                     <Image />
+                  {data.avatar && (
+                     <Image
+                        src={
+                           data.avatar.includes(".jpg") || data.avatar.includes(".jpeg")
+                              ? data.avatar
+                              : require("~/assets/images/avatar.jpg")
+                        }
+                     />
                   )}
                </div>
                <div>
