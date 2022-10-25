@@ -1,6 +1,6 @@
-import { faMusic, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
+import { faMusic, faCircleCheck, faShare, faHeart, faMessage } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import Button from "~/components/Button";
 import Menu from "~/components/Menu";
@@ -10,28 +10,30 @@ import styles_from_cx_suggestedUser from "~/layouts/components/Sidebar/Sidebar.m
 import styles_from_accountItem from "~/components/AccountsItem/AccountItem.module.scss";
 import UserPreview from "~/components/UserPreview";
 import Video from "./Video/Video";
+import { SHARE_ITEMS } from "~/assets/items/menuItem";
+import PopupItem from "~/components/PopupItem";
+import { Wrapper as PopperWrapper } from "~/components//Popper";
 
 const cx = classNames.bind(styles);
 const cx_suggestedUser = classNames.bind(styles_from_cx_suggestedUser);
 const cx_accountItem = classNames.bind(styles_from_accountItem);
 
 function Contentdata({ data }) {
+   // const [status, setStatus] = useState("pause");
    const videoRef = useRef();
    const handleAutoPLay = (video) => {
-      if (
-         video.getBoundingClientRect().top - 60 > 0 &&
-         video.getBoundingClientRect().bottom - 60 < window.innerHeight
-      ) {
+      if (video.getBoundingClientRect().top - 60 > 0 && video.getBoundingClientRect().bottom < window.innerHeight) {
          // video.play();
-         videoRef.current = video;
-         videoRef.current.play();
-         console.log("play");
+         // setStatus("play");
+         // videoRef.current = video;
+         // videoRef.current.play();
+         // console.log("play");
       } else {
-         videoRef.current = video;
-
-         console.log("pause");
+         // videoRef.current = video;
+         // console.log("pause");
          // video.pause();
-         videoRef.current.pause();
+         // setStatus("pause");
+         // videoRef.current.pause();
       }
    };
 
@@ -94,8 +96,42 @@ function Contentdata({ data }) {
                               Follow
                            </Button>
                         </div>
+                        <div className={cx("video-wrapper")}>
+                           <Video ref={videoRef} src={data.popular_video.file_url} />
+                           <div className={cx("video-action")}>
+                              <button>
+                                 <FontAwesomeIcon icon={faHeart} />
+                              </button>
+                              <span className={cx("share-number")}>827</span>
 
-                        <Video ref={videoRef} src={data.popular_video.file_url} />
+                              <button>
+                                 <FontAwesomeIcon icon={faMessage} />
+                              </button>
+                              <span className={cx("share-number")}>212</span>
+                              <Menu
+                                 content={
+                                    <PopperWrapper styles={{ width: "230px" }}>
+                                       {!!SHARE_ITEMS &&
+                                          SHARE_ITEMS.map((item, index) => {
+                                             return <PopupItem key={index} item={item} />;
+                                          })}
+                                    </PopperWrapper>
+                                 }
+                                 option={{
+                                    placement: "top-start",
+                                    offset: [-10, 10],
+                                    delay: [0, 500],
+                                    hideOnClick: false,
+                                    appendTo: () => document.body,
+                                 }}
+                              >
+                                 <button>
+                                    <FontAwesomeIcon icon={faShare} />
+                                 </button>
+                              </Menu>
+                              <span className={cx("share-number")}>547</span>
+                           </div>
+                        </div>
                      </div>
                   </div>
                );

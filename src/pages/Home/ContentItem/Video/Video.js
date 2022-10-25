@@ -7,45 +7,46 @@ import { useElementOnScreen } from "~/hook";
 const cx = classNames.bind(styles);
 
 function Video(props, ref) {
+   const videoRef = useRef();
    const [status, setStatus] = useState("pause");
 
-   const handlePlay = () => {
-      videoRef.current.play();
+   const handlePlay = (target) => {
+      // console.log(target);
+      target.play();
       setStatus("play");
    };
-   const handlePause = () => {
-      videoRef.current.pause();
+   const handlePause = (target) => {
+      target.pause();
       setStatus("pause");
    };
 
-   const handlePosition = () => {
-      console.log(
-         "top",
-         videoRef.current.getBoundingClientRect().top - 60 + " bot",
-         videoRef.current.getBoundingClientRect().bottom - 60 + "window",
-         window.innerHeight
-      );
+   const callbackFunction = (entries) => {
+      const [entry] = entries;
+      // entries.forEach((entry) => {
+      // });
+      entry.isIntersecting ? handlePlay(entry.target) : handlePause(entry.target);
    };
 
-   useImperativeHandle(ref, () => ({
-      play: handlePlay,
-      pause: handlePause,
-   }));
+   useEffect(() => {
+      const observer = new IntersectionObserver(callbackFunction, {
+         threshold: 0.7,
+      });
+      observer.observe(videoRef.current);
+   }, [videoRef]);
 
-   const videoRef = useRef();
    return (
       <>
          {console.log("render")}
          <div className={cx("video-frame")}>
-            <video className={cx("video")} ref={videoRef} src={props.src} onClick={handlePosition} />
+            <video className={cx("video")} ref={videoRef} src={props.src} />
             <button className={cx("play-btn")}>
                {status == "pause" && (
-                  <span className={cx("paused-icon", "btn")} onClick={() => handlePlay()}>
+                  <span className={cx("paused-icon", "btn")} onClick={(e) => handlePlay(e)}>
                      <FontAwesomeIcon icon={faPlay} />
                   </span>
                )}
                {status == "play" && (
-                  <span className={cx("play-icon", "btn")} onClick={() => handlePause()}>
+                  <span className={cx("play-icon", "btn")} onClick={(e) => handlePause(e)}>
                      <FontAwesomeIcon icon={faPause} />
                   </span>
                )}

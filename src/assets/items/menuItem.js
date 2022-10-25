@@ -1,3 +1,6 @@
+import { icon } from "@fortawesome/fontawesome-svg-core";
+import { faEmber, faFacebook, faUbuntu, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import { faClosedCaptioning } from "@fortawesome/free-regular-svg-icons";
 import {
    faUser,
    faCamera,
@@ -7,6 +10,9 @@ import {
    faKeyboard,
    faQuestion,
    faRightFromBracket,
+   faCopy,
+   faCodeCommit,
+   faCodeBranch,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -83,4 +89,11 @@ const USER_ITEMS = [
       seperate: true,
    },
 ];
-export { MENU_ITEMS, USER_ITEMS };
+const SHARE_ITEMS = [
+   { icon: <FontAwesomeIcon icon={faCodeBranch} />, title: "Embed" },
+   { icon: <FontAwesomeIcon icon={faUbuntu} />, title: "Send to Friend" },
+   { icon: <FontAwesomeIcon icon={faFacebook} />, title: "Share to Facebook" },
+   { icon: <FontAwesomeIcon icon={faWhatsapp} />, title: "Share to WhatsApp" },
+   { icon: <FontAwesomeIcon icon={faCopy} />, title: "Copy Link" },
+];
+export { MENU_ITEMS, USER_ITEMS, SHARE_ITEMS };
