@@ -1,5 +1,6 @@
 import { faMusic, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRef, useEffect } from "react";
 import classNames from "classnames/bind";
 import Button from "~/components/Button";
 import Menu from "~/components/Menu";
@@ -8,19 +9,41 @@ import styles from "./ContentItem.module.scss";
 import styles_from_cx_suggestedUser from "~/layouts/components/Sidebar/Sidebar.module.scss";
 import styles_from_accountItem from "~/components/AccountsItem/AccountItem.module.scss";
 import UserPreview from "~/components/UserPreview";
-import VideoJS from "./VideoJS";
+import Video from "./Video/Video";
 
 const cx = classNames.bind(styles);
 const cx_suggestedUser = classNames.bind(styles_from_cx_suggestedUser);
 const cx_accountItem = classNames.bind(styles_from_accountItem);
 
 function Contentdata({ data }) {
-   // const videoRef = useRef();
+   const videoRef = useRef();
+   const handleAutoPLay = (video) => {
+      if (
+         video.getBoundingClientRect().top - 60 > 0 &&
+         video.getBoundingClientRect().bottom - 60 < window.innerHeight
+      ) {
+         // video.play();
+         videoRef.current = video;
+         videoRef.current.play();
+         console.log("play");
+      } else {
+         videoRef.current = video;
 
-   // useEffect((_) => {
-   //    console.log(videoRef.current.videoHeight);
-   // });
+         console.log("pause");
+         // video.pause();
+         videoRef.current.pause();
+      }
+   };
 
+   useEffect((_) => {
+      let videos = document.querySelectorAll("video");
+      window.onscroll = () => {
+         videos.forEach((video) => {
+            handleAutoPLay(video);
+         });
+      };
+      console.log(videoRef.current);
+   });
    return (
       <>
          {data &&
@@ -72,26 +95,7 @@ function Contentdata({ data }) {
                            </Button>
                         </div>
 
-                        {/* <video controls className={cx("video", "video-js")}>
-                           <source src={data.popular_video.file_url} type="video/mp4" />
-                        </video> */}
-                        {/* <div className={cx("video")}>
-                        </div> */}
-                        <VideoJS
-                           // className={cx("video")}
-                           options={{
-                              height: "476px",
-                              width: "auto",
-                              controls: true,
-                              loop: true,
-                              sources: [
-                                 {
-                                    src: data.popular_video.file_url,
-                                    type: "video/mp4",
-                                 },
-                              ],
-                           }}
-                        />
+                        <Video ref={videoRef} src={data.popular_video.file_url} />
                      </div>
                   </div>
                );

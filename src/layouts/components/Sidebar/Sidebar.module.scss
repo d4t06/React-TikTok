@@ -2,7 +2,7 @@
    flex-direction: column;
    display: flex;
    width: 356px;
-   max-height: 100vh;
+   height: calc(100vh - 20px);
    padding: 20px 15px;
    position: fixed;
    top: 60px;
@@ -100,4 +100,29 @@
       font-weight: 400;
       margin-left: 5px;
    }
+}
+//footer
+.sidebar-footer {
+   position: relative;
+   padding: 20px 0 26px;
+}
+.link-container {
+   margin-bottom: 10px;
+   font-size: 1.2rem;
+   color: #999;
+   a + a {
+      margin-left: 5px;
+   }
+   a {
+      &:hover {
+         cursor: pointer;
+         text-decoration: underline;
+      }
+   }
+}
+.span-copyrihgt {
+   font-size: 1.3rem;
+   color: #999;
+   // margin-top: 15px;
+   padding-top: 15px;
 }

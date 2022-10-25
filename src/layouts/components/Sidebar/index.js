@@ -93,7 +93,30 @@ function Sidebar() {
             </Button>
          </div>
 
-         <div className={cx("sidebar-footer")}></div>
+         <div className={cx("sidebar-footer", "seperate")}>
+            <div className={cx("link-container")}>
+               <a>About</a>
+               <a>Newsroom</a>
+               <a>Contact</a>
+               <a>Careers</a>
+               <a>ByteDance</a>
+            </div>
+            <div className={cx("link-container")}>
+               <a>TickTok for Good</a>
+               <a>Advertise</a>
+               <a>Developers</a>
+               <a>Transperancy</a>
+            </div>
+            <div className={cx("link-container")}>
+               <a>Help</a>
+               <a>Safety</a>
+               <a>Terms</a>
+               <a>Privacy</a>
+               <a>Creator</a>
+               <a>Portal</a>
+            </div>
+            <span className={cx("span-copyrihgt")}>© 2022 Nguyenhuudat</span>
+         </div>
       </div>
    );
 }
