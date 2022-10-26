@@ -22,6 +22,7 @@ const cx_accountItem = classNames.bind(styles_from_accountItem);
 function Contentdata({ data }) {
    return (
       <>
+         {console.log("render")}
          {data &&
             data.map((data) => {
                if (!data.popular_video) return;
@@ -82,21 +83,13 @@ function Contentdata({ data }) {
                                  <FontAwesomeIcon icon={faMessage} />
                               </button>
                               <span className={cx("share-number")}>212</span>
-                              <Menu
-                                 content={<ShareContainer />}
-                                 option={{
-                                    placement: "top-start",
-                                    offset: [-10, 10],
-                                    delay: [0, 500],
-                                    hideOnClick: false,
-                                    trigger: "click",
-                                    appendTo: () => document.body,
-                                 }}
-                              >
+
+                              <ShareContainer>
                                  <button>
                                     <FontAwesomeIcon icon={faShare} />
                                  </button>
-                              </Menu>
+                              </ShareContainer>
+
                               <span className={cx("share-number")}>547</span>
                            </div>
                         </div>

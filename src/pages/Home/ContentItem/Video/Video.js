@@ -1,7 +1,7 @@
 import { faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./Video.module.scss";
 import { useElementOnScreen } from "~/hook";
 const cx = classNames.bind(styles);
