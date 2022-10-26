@@ -1,5 +1,5 @@
 import { icon } from "@fortawesome/fontawesome-svg-core";
-import { faEmber, faFacebook, faUbuntu, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import { faEmber, faFacebook, faFacebookF, faUbuntu, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { faClosedCaptioning } from "@fortawesome/free-regular-svg-icons";
 import {
    faUser,
@@ -13,6 +13,9 @@ import {
    faCopy,
    faCodeCommit,
    faCodeBranch,
+   faPaperPlane,
+   faCode,
+   faChevronCircleDown,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -90,10 +93,10 @@ const USER_ITEMS = [
    },
 ];
 const SHARE_ITEMS = [
-   { icon: <FontAwesomeIcon icon={faCodeBranch} />, title: "Embed" },
-   { icon: <FontAwesomeIcon icon={faUbuntu} />, title: "Send to Friend" },
-   { icon: <FontAwesomeIcon icon={faFacebook} />, title: "Share to Facebook" },
-   { icon: <FontAwesomeIcon icon={faWhatsapp} />, title: "Share to WhatsApp" },
-   { icon: <FontAwesomeIcon icon={faCopy} />, title: "Copy Link" },
+   { icon: <FontAwesomeIcon icon={faCode} />, title: "Embed", name: "embed-icon" },
+   { icon: <FontAwesomeIcon icon={faPaperPlane} />, title: "Send to Friend", name: "send-icon" },
+   { icon: <FontAwesomeIcon icon={faFacebookF} />, title: "Share to Facebook", name: "facebook-icon" },
+   { icon: <FontAwesomeIcon icon={faWhatsapp} />, title: "Share to WhatsApp", name: "whatsapp-icon" },
+   { icon: <FontAwesomeIcon icon={faCopy} />, title: "Copy Link", name: "copy-icon" },
 ];
 export { MENU_ITEMS, USER_ITEMS, SHARE_ITEMS };

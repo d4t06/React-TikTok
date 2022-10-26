@@ -1,0 +1,18 @@
+.share-item {
+   span {
+      color: #fff;
+      height: 28px;
+      width: 28px;
+      border-radius: 50%;
+      display: inline-flex !important;
+      align-items: center;
+      justify-content: center;
+      transform: translateY(2px);
+   }
+}
+.more-share-btn {
+   width: 100%;
+   padding: 5px 0;
+   text-align: center;
+   font-size: 1.6rem;
+}

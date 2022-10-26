@@ -6,17 +6,16 @@ import styles from "./Video.module.scss";
 import { useElementOnScreen } from "~/hook";
 const cx = classNames.bind(styles);
 
-function Video(props, ref) {
+function Video(props) {
    const videoRef = useRef();
    const [status, setStatus] = useState("pause");
 
-   const handlePlay = (target) => {
-      // console.log(target);
-      target.play();
+   const handlePlay = () => {
+      videoRef.current.play();
       setStatus("play");
    };
    const handlePause = (target) => {
-      target.pause();
+      videoRef.current.pause();
       setStatus("pause");
    };
 
@@ -24,12 +23,12 @@ function Video(props, ref) {
       const [entry] = entries;
       // entries.forEach((entry) => {
       // });
-      entry.isIntersecting ? handlePlay(entry.target) : handlePause(entry.target);
+      entry.isIntersecting ? handlePlay() : handlePause();
    };
 
    useEffect(() => {
       const observer = new IntersectionObserver(callbackFunction, {
-         threshold: 0.7,
+         threshold: 0.8,
       });
       observer.observe(videoRef.current);
    }, [videoRef]);
@@ -41,12 +40,12 @@ function Video(props, ref) {
             <video className={cx("video")} ref={videoRef} src={props.src} />
             <button className={cx("play-btn")}>
                {status == "pause" && (
-                  <span className={cx("paused-icon", "btn")} onClick={(e) => handlePlay(e)}>
+                  <span className={cx("paused-icon", "btn")} onClick={() => handlePlay()}>
                      <FontAwesomeIcon icon={faPlay} />
                   </span>
                )}
                {status == "play" && (
-                  <span className={cx("play-icon", "btn")} onClick={(e) => handlePause(e)}>
+                  <span className={cx("play-icon", "btn")} onClick={() => handlePause()}>
                      <FontAwesomeIcon icon={faPause} />
                   </span>
                )}
@@ -55,4 +54,4 @@ function Video(props, ref) {
       </>
    );
 }
-export default forwardRef(Video);
+export default Video;

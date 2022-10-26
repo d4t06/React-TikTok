@@ -4,19 +4,29 @@ import { forwardRef } from "react";
 
 const cx = classNames.bind(styles);
 
-function PopupItem({ item = false, type, icon, children, primary, onClick }, ref) {
+function PopupItem({ item = false, type, icon, children, primary, onClick, className }, ref) {
    const classes = cx("item", {
       [type]: type,
+      [className]: className,
+      // [item.name]: item.name,
       primary,
       seperate: item.seperate,
    });
    return (
       <li ref={ref} className={classes} onClick={onClick}>
          <a>
-            <span>{icon}</span>
-            <p>{children}</p>
+            {icon && <span>{icon}</span>}
+            {!item && <p>{children}</p>}
 
-            {item && <span className={cx("popup-icon")}>{item.icon}</span>}
+            {item && (
+               <span
+                  className={cx("popup-icon", {
+                     [item.name]: item.name,
+                  })}
+               >
+                  {item.icon}
+               </span>
+            )}
             {item && item.title}
          </a>
       </li>
