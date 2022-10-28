@@ -1,6 +1,15 @@
 import { icon } from "@fortawesome/fontawesome-svg-core";
-import { faEmber, faFacebook, faFacebookF, faUbuntu, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
-import { faClosedCaptioning } from "@fortawesome/free-regular-svg-icons";
+import {
+   faEmber,
+   faFacebook,
+   faFacebookF,
+   faPinterestP,
+   faTelegram,
+   faTwitter,
+   faUbuntu,
+   faWhatsapp,
+} from "@fortawesome/free-brands-svg-icons";
+import { faClosedCaptioning, faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import {
    faUser,
    faCamera,
@@ -99,4 +108,11 @@ const SHARE_ITEMS = [
    { icon: <FontAwesomeIcon icon={faWhatsapp} />, title: "Share to WhatsApp", name: "whatsapp-icon" },
    { icon: <FontAwesomeIcon icon={faCopy} />, title: "Copy Link", name: "copy-icon" },
 ];
-export { MENU_ITEMS, USER_ITEMS, SHARE_ITEMS };
+const SHARE_ITEMS_EXPAND = [
+   { icon: <FontAwesomeIcon icon={faTwitter} />, title: "Share to Twitter", name: "twitter-icon" },
+   { icon: <FontAwesomeIcon icon={faEnvelope} />, title: "Share to Email", name: "email-icon" },
+   { icon: <FontAwesomeIcon icon={faPinterestP} />, title: "Share to Pinterest", name: "pinterest-icon" },
+   { icon: <FontAwesomeIcon icon={faTelegram} />, title: "Share to Telegram", name: "telegram-icon" },
+];
+
+export { MENU_ITEMS, USER_ITEMS, SHARE_ITEMS, SHARE_ITEMS_EXPAND };

@@ -24,9 +24,7 @@ const cy = classNames.bind(stylesx);
 function Header() {
    // const currentUser = true;
 
-   const [history, setHistory] = useState(
-      config.isUser ? [{ data: USER_ITEMS }] : [{ data: MENU_ITEMS }]
-   );
+   const [history, setHistory] = useState(config.isUser ? [{ data: USER_ITEMS }] : [{ data: MENU_ITEMS }]);
 
    const current = history[history.length - 1];
    const handleItem = (item) => {
@@ -72,11 +70,7 @@ function Header() {
             <div className={config.isUser ? cx("cta", "cta-user") : cx("cta")}>
                {config.isUser ? (
                   <>
-                     <Button
-                        normal
-                        long
-                        leftIcon={<FontAwesomeIcon className={cx("plus-icon")} icon={faPlus} />}
-                     >
+                     <Button normal long leftIcon={<FontAwesomeIcon className={cx("plus-icon")} icon={faPlus} />}>
                         Upload
                      </Button>
 
@@ -124,6 +118,7 @@ function Header() {
                            trigger: "mouseenter",
                            hideOnClick: false,
                         }}
+                        onHide={() => setHistory(config.isUser ? [{ data: USER_ITEMS }] : [{ data: MENU_ITEMS }])}
                      >
                         <div className={cy("avatar-frame", "img-only")}>
                            <Image src={require("~/assets/images/avatar.jpg")} />
@@ -132,11 +127,7 @@ function Header() {
                   </>
                ) : (
                   <>
-                     <Button
-                        normal
-                        long
-                        leftIcon={<FontAwesomeIcon className={cx("plus-icon")} icon={faPlus} />}
-                     >
+                     <Button normal long leftIcon={<FontAwesomeIcon className={cx("plus-icon")} icon={faPlus} />}>
                         Upload
                      </Button>
                      <Button normal primary>

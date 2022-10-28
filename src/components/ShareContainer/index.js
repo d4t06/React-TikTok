@@ -6,7 +6,7 @@ import styles from "./ShareContainer.module.scss";
 import PopupItem from "../PopupItem";
 import { Wrapper as PopperWrapper } from "~/components/Popper";
 
-import { SHARE_ITEMS } from "~/assets/items/menuItem";
+import { SHARE_ITEMS, SHARE_ITEMS_EXPAND } from "~/assets/items/menuItem";
 import classNames from "classnames/bind";
 import Menu from "../Menu";
 
@@ -19,7 +19,7 @@ function ShareContainer({ children }) {
    return (
       <Menu
          content={
-            <PopperWrapper styles={{ width: "230px", maxHeight: "60vh" }}>
+            <PopperWrapper styles={{ width: "230px", maxHeight: "50vh" }}>
                {!!items &&
                   items.map((item, index) => {
                      return <PopupItem className={cx("share-item")} key={index} item={item} />;
@@ -28,7 +28,7 @@ function ShareContainer({ children }) {
                   <button
                      button
                      className={cx("more-share-btn")}
-                     onClick={() => setItems((item) => [...item, ...items])}
+                     onClick={() => setItems((item) => [...item, ...SHARE_ITEMS_EXPAND])}
                   >
                      <FontAwesomeIcon icon={faChevronDown} />
                   </button>
@@ -38,7 +38,7 @@ function ShareContainer({ children }) {
          option={{
             placement: "top-start",
             offset: [-5, 10],
-            delay: [0, 500],
+            delay: [50, 500],
             hideOnClick: false,
             appendTo: () => document.body,
          }}

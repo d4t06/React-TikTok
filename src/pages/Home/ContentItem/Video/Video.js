@@ -11,6 +11,7 @@ function Video(props) {
    const [status, setStatus] = useState("pause");
 
    const handlePlay = () => {
+      // videoRef.current.load();
       videoRef.current.play();
       setStatus("play");
    };
@@ -35,7 +36,7 @@ function Video(props) {
 
    return (
       <>
-         {console.log("render")}
+         {console.log("video-render")}
          <div className={cx("video-frame")}>
             <video className={cx("video")} ref={videoRef} src={props.src} />
             <button className={cx("play-btn")}>
