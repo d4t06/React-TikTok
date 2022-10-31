@@ -20,7 +20,7 @@ function ShareContainer({ children }) {
       <Menu
          content={
             <PopperWrapper styles={{ width: "230px", maxHeight: "50vh" }}>
-               {!!items &&
+               {items &&
                   items.map((item, index) => {
                      return <PopupItem className={cx("share-item")} key={index} item={item} />;
                   })}

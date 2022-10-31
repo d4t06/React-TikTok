@@ -68,41 +68,7 @@
    height: 467px;
    margin-top: calc(var(--elementsGap) + 2px);
 }
+
 .video-action {
    display: flex;
-   flex-direction: column;
-   justify-content: flex-end;
-   margin-left: 15px;
-   button {
-      height: 48px;
-      width: 48px;
-      font-size: 1.9rem;
-      border-radius: 50%;
-      margin-top: 8px;
-      margin-bottom: 6px;
-   }
-
-   span {
-      font-size: 1.2rem;
-      font-weight: 600;
-      text-align: center;
-   }
-}
-.share-item {
-   span {
-      color: #fff;
-      height: 28px;
-      width: 28px;
-      border-radius: 50%;
-      display: inline-flex !important;
-      align-items: center;
-      justify-content: center;
-      transform: translateY(2px);
-   }
-}
-.more-share-btn {
-   width: 100%;
-   padding: 5px 0;
-   text-align: center;
-   font-size: 1.6rem;
 }

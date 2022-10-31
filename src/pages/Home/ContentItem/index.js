@@ -1,6 +1,6 @@
 import { faMusic, faCircleCheck, faShare, faHeart, faMessage, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRef, useEffect, useState } from "react";
+
 import classNames from "classnames/bind";
 import Button from "~/components/Button";
 import Menu from "~/components/Menu";
@@ -9,11 +9,9 @@ import styles from "./ContentItem.module.scss";
 import styles_from_cx_suggestedUser from "~/layouts/components/Sidebar/Sidebar.module.scss";
 import styles_from_accountItem from "~/components/AccountsItem/AccountItem.module.scss";
 import UserPreview from "~/components/UserPreview";
-import Video from "./Video/Video";
-import { SHARE_ITEMS } from "~/assets/items/menuItem";
-import PopupItem from "~/components/PopupItem";
-import { Wrapper as PopperWrapper } from "~/components//Popper";
-import ShareContainer from "~/components/ShareContainer";
+
+import VideoCta from "./VideoItem/VideoCta";
+import VideoItem from "./VideoItem";
 
 const cx = classNames.bind(styles);
 const cx_suggestedUser = classNames.bind(styles_from_cx_suggestedUser);
@@ -72,26 +70,8 @@ function Contentdata({ data }) {
                            </Button>
                         </div>
                         <div className={cx("video-wrapper")}>
-                           <Video src={data.popular_video.file_url} />
-                           <div className={cx("video-action")}>
-                              <button>
-                                 <FontAwesomeIcon icon={faHeart} />
-                              </button>
-                              <span className={cx("share-number")}>827</span>
-
-                              <button>
-                                 <FontAwesomeIcon icon={faMessage} />
-                              </button>
-                              <span className={cx("share-number")}>212</span>
-
-                              <ShareContainer>
-                                 <button>
-                                    <FontAwesomeIcon icon={faShare} />
-                                 </button>
-                              </ShareContainer>
-
-                              <span className={cx("share-number")}>547</span>
-                           </div>
+                           <VideoItem src={data.popular_video.file_url} />
+                           <VideoCta />
                         </div>
                      </div>
                   </div>
