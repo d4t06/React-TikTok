@@ -27,7 +27,7 @@
    }
 }
 .video-duration {
-   width: 160px;
+   width: 180px;
    height: 2px;
 
    background-color: #ccc;
@@ -44,7 +44,6 @@
 }
 .time-text {
    margin-left: auto;
-   // margin-right: 5px;
    span {
       font-size: 1rem;
       color: #fff;
@@ -54,14 +53,16 @@
 //volume
 .volume-slider {
    height: 60px;
-   width: 20px;
+   width: 18px;
    border-radius: 10px;
-   background-color: rgba($color: #000, $alpha: 0.4);
+   background-color: rgba($color: #000, $alpha: 0.25);
    display: flex;
-   flex-direction: column-reverse;
-   justify-content: flex-end;
-   align-items: center;
+   justify-content: center;
    position: relative;
+   transform: rotate(180deg);
+   &:hover .volume-duration {
+      width: 4px;
+   }
 }
 
 .volume-duration {
@@ -70,10 +71,25 @@
    bottom: 8px;
    background-color: #ccc;
    width: 2px;
+   border-radius: 4px;
+   // overflow: hidden;
 }
 
 .volume-current {
    height: 50%;
-   width: 2px;
+   width: 100%;
    background-color: var(--primary-color);
+   position: relative;
+   &::before {
+      content: "";
+      height: 10px;
+      width: 10px;
+      position: absolute;
+      border-radius: 50%;
+      background-color: #fff;
+      bottom: 0;
+      // top: 50%;
+      left: 50%;
+      transform: translate(-50%, 0);
+   }
 }

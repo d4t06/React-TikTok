@@ -15,19 +15,20 @@ function VideoItem(props) {
    const currentTimeEl = useRef();
    const timeSlider = useRef();
    const timeDuration = useRef();
+   const currentVolume = useRef();
 
    const handlePlayPause = () => {
-      setIsPlaying(!isPlaying);
       !isPlaying ? videoRef.current.play() : videoRef.current.pause();
    };
+
    const handlePlay = () => {
       videoRef.current.play();
-      setIsPlaying(true);
+      // setIsPlaying(true);
    };
 
    const handlePause = () => {
       videoRef.current.pause();
-      setIsPlaying(false);
+      // setIsPlaying(false);
    };
 
    const callbackFunction = (entries) => {
@@ -38,6 +39,7 @@ function VideoItem(props) {
    };
    const handleMute = () => {
       setIsMute(!isMute);
+
       !isMute ? (videoRef.current.muted = true) : (videoRef.current.muted = false);
    };
 
@@ -53,25 +55,42 @@ function VideoItem(props) {
       const currentTime = videoRef.current.currentTime;
       currentTimeEl.current.innerText = `00:${currentTime.toFixed(0) >= 10 ? "" : "0"}${currentTime.toFixed(0)}`;
 
-      // console.log((currentTime / duration) * 180);
-
-      timeSlider.current.style.width = (currentTime / duration) * 160 + "px";
+      timeSlider.current.style.width = (currentTime / duration) * 180 + "px";
    };
-
+   // const handleOnPause = () => {
+   //    setIsPlaying(false);
+   // };
+   // const handleOnPause = () => {
+   //    setIsPlaying(false);
+   // };
    const handleSeek = (e) => {
       const rect = e.target.getBoundingClientRect();
-      // const timeSliderWidth = timeDuration.current.offsetWidth;
-      const seekTime = ((e.clientX - rect.left) / 160) * videoRef.current.duration;
-      // console.log(seekTime);
+      const seekTime = ((e.clientX - rect.left) / 180) * videoRef.current.duration;
       videoRef.current.currentTime = seekTime.toFixed(1);
-      videoRef.current.play();
+
+      if (!isPlaying) videoRef.current.play();
+   };
+
+   const handleVolume = (e) => {
+      const rect = e.target.getBoundingClientRect();
+      const volume = (rect.bottom.toFixed(0) - e.clientY) / 44;
+
+      videoRef.current.volume = volume.toFixed(1) / 2;
+      currentVolume.current.style.height = volume.toFixed(2) * 100 + "%";
+      // console.log(volume.toFixed(2) * 100 + "%");
    };
 
    useEffect(() => {
       const videoEl = videoRef.current;
       videoEl.onloadedmetadata = () => {
          durationEl.current.innerText = `/00:${videoEl.duration.toFixed(0)}`;
-         videoEl.volume = 0.1;
+         videoEl.volume = 0.25;
+      };
+      videoEl.onplaying = () => {
+         setIsPlaying(true);
+      };
+      videoEl.onpause = () => {
+         setIsPlaying(false);
       };
    }, []);
 
@@ -84,15 +103,17 @@ function VideoItem(props) {
 
             src={props.src}
             onTimeUpdate={() => handlePlaying()}
+            // onPause={() => handleOnPause()}
          />
          <Player
-            ref={{ duration: durationEl, currentTime: currentTimeEl, timeSlider: timeSlider, timeDuration }}
+            ref={{ duration: durationEl, currentTime: currentTimeEl, timeSlider, timeDuration, currentVolume }}
             handlePlayPause={handlePlayPause}
             isPlaying={isPlaying}
             setIsPlaying={setIsPlaying}
             isMute={isMute}
             handleMute={handleMute}
             handleSeek={handleSeek}
+            handleVolume={handleVolume}
          />
       </div>
    );

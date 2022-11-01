@@ -8,7 +8,7 @@ import Menu from "~/components/Menu";
 
 const cx = classNames.bind(styles);
 
-function Player({ isPlaying, isMute, handleMute, handlePlayPause, handleSeek }, ref) {
+function Player({ isPlaying, isMute, handleMute, handlePlayPause, handleSeek, handleVolume }, ref) {
    return (
       <>
          <button className={cx("play-btn")} onClick={() => handlePlayPause()}>
@@ -25,13 +25,16 @@ function Player({ isPlaying, isMute, handleMute, handlePlayPause, handleSeek }, 
          <Menu
             content={
                <div className={cx("volume-slider")}>
-                  <div className={cx("volume-duration")}>
-                     <div className={cx("volume-current")}></div>
+                  <div className={cx("volume-duration")} onClick={(e) => handleVolume(e)}>
+                     <div className={cx("volume-current")} ref={ref.currentVolume}></div>
                   </div>
                </div>
             }
             option={{
                placement: "top",
+               // delay: [200, 0],
+               hideOnClick: false,
+               // appendTo: () => document.body,
             }}
          >
             <button onClick={() => handleMute()} className={cx("btn", "volume-icon")}>

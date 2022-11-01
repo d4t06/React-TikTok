@@ -1,6 +1,6 @@
 import * as request from "../utilities/request.js";
 
-export const getSuggested = async (page = 1, perPage = 5) => {
+export const getSuggested = async (page = 1, perPage = 4) => {
    try {
       const res = await request.get("users/suggested", {
          params: {
