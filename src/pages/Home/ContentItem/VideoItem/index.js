@@ -51,16 +51,17 @@ function VideoItem(props) {
    const handlePlaying = () => {
       const duration = videoRef.current.duration;
       const currentTime = videoRef.current.currentTime;
-      currentTimeEl.current.innerText = currentTime.toFixed(0);
+      currentTimeEl.current.innerText = `00:${currentTime.toFixed(0) >= 10 ? "" : "0"}${currentTime.toFixed(0)}`;
 
-      // console.log((currentTime / duration) * 100);
-      timeSlider.current.style.width = (currentTime / duration) * 100 + "%";
+      // console.log((currentTime / duration) * 180);
+
+      timeSlider.current.style.width = (currentTime / duration) * 160 + "px";
    };
 
    const handleSeek = (e) => {
       const rect = e.target.getBoundingClientRect();
       // const timeSliderWidth = timeDuration.current.offsetWidth;
-      const seekTime = ((e.clientX - rect.left) / 180) * videoRef.current.duration;
+      const seekTime = ((e.clientX - rect.left) / 160) * videoRef.current.duration;
       // console.log(seekTime);
       videoRef.current.currentTime = seekTime.toFixed(1);
       videoRef.current.play();
@@ -69,7 +70,7 @@ function VideoItem(props) {
    useEffect(() => {
       const videoEl = videoRef.current;
       videoEl.onloadedmetadata = () => {
-         durationEl.current.innerText = `/${videoEl.duration.toFixed(0)}`;
+         durationEl.current.innerText = `/00:${videoEl.duration.toFixed(0)}`;
          videoEl.volume = 0.1;
       };
    }, []);

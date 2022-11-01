@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
 import { forwardRef, useEffect, useRef, useState } from "react";
 import styles from "./Player.module.scss";
+import Menu from "~/components/Menu";
 
 const cx = classNames.bind(styles);
 
@@ -21,18 +22,32 @@ function Player({ isPlaying, isMute, handleMute, handlePlayPause, handleSeek }, 
                </span>
             )}
          </button>
-         <button onClick={() => handleMute()} className={cx("btn", "volume-icon")}>
-            {!isMute && (
-               <span>
-                  <FontAwesomeIcon icon={faVolumeHigh} />
-               </span>
-            )}
-            {isMute && (
-               <span>
-                  <FontAwesomeIcon icon={faVolumeXmark} />
-               </span>
-            )}
-         </button>
+         <Menu
+            content={
+               <div className={cx("volume-slider")}>
+                  <div className={cx("volume-duration")}>
+                     <div className={cx("volume-current")}></div>
+                  </div>
+               </div>
+            }
+            option={{
+               placement: "top",
+            }}
+         >
+            <button onClick={() => handleMute()} className={cx("btn", "volume-icon")}>
+               {!isMute && (
+                  <span>
+                     <FontAwesomeIcon icon={faVolumeHigh} />
+                  </span>
+               )}
+               {isMute && (
+                  <span>
+                     <FontAwesomeIcon icon={faVolumeXmark} />
+                  </span>
+               )}
+            </button>
+         </Menu>
+
          <div className={cx("time-slider")}>
             <div className={cx("video-duration")} onClick={(e) => handleSeek(e)} ref={ref.timeDuration}>
                <div className={cx("time-current")} ref={ref.timeSlider}></div>
