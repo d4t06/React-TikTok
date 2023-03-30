@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/React-TikTok/static/css/main.d877bfa5.css",
-    "main.js": "/React-TikTok/static/js/main.b7fa1c58.js",
+    "main.js": "/React-TikTok/static/js/main.bac173b5.js",
     "static/js/787.fe00223f.chunk.js": "/React-TikTok/static/js/787.fe00223f.chunk.js",
     "static/media/sofiapro-semibold.otf": "/React-TikTok/static/media/sofiapro-semibold.a9a8148f7d5d0db20db8.otf",
     "static/media/avatar.jpg": "/React-TikTok/static/media/avatar.e2808c655aee1b27f09b.jpg",
@@ -11,11 +11,11 @@
     "static/media/logo.svg": "/React-TikTok/static/media/logo.e99542d04d384fb5d3eff32e6e27178a.svg",
     "index.html": "/React-TikTok/index.html",
     "main.d877bfa5.css.map": "/React-TikTok/static/css/main.d877bfa5.css.map",
-    "main.b7fa1c58.js.map": "/React-TikTok/static/js/main.b7fa1c58.js.map",
+    "main.bac173b5.js.map": "/React-TikTok/static/js/main.bac173b5.js.map",
     "787.fe00223f.chunk.js.map": "/React-TikTok/static/js/787.fe00223f.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d877bfa5.css",
-    "static/js/main.b7fa1c58.js"
+    "static/js/main.bac173b5.js"
   ]
 }
