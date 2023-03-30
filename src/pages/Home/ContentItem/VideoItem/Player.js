@@ -34,7 +34,7 @@ function Player({ isPlaying, isMute, handleMute, handlePlayPause, handleSeek, ha
                placement: "top",
                // delay: [200, 0],
                hideOnClick: false,
-               // appendTo: () => document.body,
+               appendTo: () => document.body,
             }}
          >
             <button onClick={() => handleMute()} className={cx("btn", "volume-icon")}>

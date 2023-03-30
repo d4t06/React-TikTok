@@ -4,7 +4,10 @@ import { forwardRef } from "react";
 
 const cx = classNames.bind(styles);
 
-function PopupItem({ item = false, type, icon, children, primary, onClick, className }, ref) {
+function PopupItem(
+   { item = false, type, icon, children, primary, onClick, className },
+   ref
+) {
    const classes = cx("item", {
       [type]: type,
       [className]: className,
@@ -12,6 +15,7 @@ function PopupItem({ item = false, type, icon, children, primary, onClick, class
       primary,
       seperate: item.seperate,
    });
+
    return (
       <li ref={ref} className={classes} onClick={onClick}>
          <a>
@@ -29,6 +33,7 @@ function PopupItem({ item = false, type, icon, children, primary, onClick, class
             )}
             {item && item.title}
          </a>
+         {item.status && <a className={cx("status")}>{item.status}</a>}
       </li>
    );
 }

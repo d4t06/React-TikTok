@@ -2,11 +2,12 @@ import { Fragment } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { publicRoutes } from "~/routes/index";
 import DefaultLayout from "~/layouts";
+import useTheme from "./hook/useTheme";
 
 function App() {
    return (
       <Router>
-         <div className="App">
+         <div className="App dark">
             <Routes>
                {publicRoutes.map((route, index) => {
                   // NGU: let Layout chứ không phải const layout

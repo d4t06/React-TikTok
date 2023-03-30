@@ -2,7 +2,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import classNames from "classnames/bind";
 
-import { faEllipsisVertical, faPlus, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import {
+   faEllipsisVertical,
+   faPlus,
+   faChevronLeft,
+} from "@fortawesome/free-solid-svg-icons";
 import { MessageIcon, InboxIcon } from "~/assets/icons";
 
 import { Wrapper as PopperWrapper } from "~/components//Popper";
@@ -18,17 +22,26 @@ import Search from "../Search";
 
 import styles from "./Header.module.scss";
 import stylesx from "~/components//AccountsItem/AccountItem.module.scss";
+import useTheme from "~/hook/useTheme";
 const cx = classNames.bind(styles);
 const cy = classNames.bind(stylesx);
 
 function Header() {
+   const { darkTheme, setDarkTheme } = useTheme();
+
    // const currentUser = true;
 
-   const [history, setHistory] = useState(config.isUser ? [{ data: USER_ITEMS }] : [{ data: MENU_ITEMS }]);
+   const [history, setHistory] = useState(
+      config.isUser ? [{ data: USER_ITEMS }] : [{ data: MENU_ITEMS }]
+   );
 
    const current = history[history.length - 1];
    const handleItem = (item) => {
-      console.log(item);
+      // console.log(item);
+      if (item.action === "SET_THEME") {
+         setDarkTheme(!darkTheme);
+         item.status = darkTheme ? "Off" : "On";
+      }
    };
 
    const renderItem = (data) => {
@@ -56,11 +69,14 @@ function Header() {
    }
 
    return (
-      <header className={cx("wrapper")}>
+      <header className={cx("wrapper", darkTheme ? "dark" : "")}>
          <div className={cx("inner")}>
             {/* logo */}
             <Button to={routesConfig.home} className={cx("logo")}>
-               <Image src={require("~/assets/images/logo.svg").default} alt="logo" />
+               <Image
+                  src={require("~/assets/images/logo.svg").default}
+                  alt="logo"
+               />
             </Button>
 
             {/* Search */}
@@ -70,7 +86,16 @@ function Header() {
             <div className={config.isUser ? cx("cta", "cta-user") : cx("cta")}>
                {config.isUser ? (
                   <>
-                     <Button normal long leftIcon={<FontAwesomeIcon className={cx("plus-icon")} icon={faPlus} />}>
+                     <Button
+                        normal
+                        long
+                        leftIcon={
+                           <FontAwesomeIcon
+                              className={cx("plus-icon")}
+                              icon={faPlus}
+                           />
+                        }
+                     >
                         Upload
                      </Button>
 
@@ -103,11 +128,16 @@ function Header() {
                            <PopperWrapper className={cx("sort")}>
                               {history.length > 1 && (
                                  <div className={cx("menu-header")}>
-                                    <span className={cx("header-icon")} onClick={() => backMenu()}>
+                                    <span
+                                       className={cx("header-icon")}
+                                       onClick={() => backMenu()}
+                                    >
                                        <FontAwesomeIcon icon={faChevronLeft} />
                                     </span>
 
-                                    <h4 className={cx("header-title")}>Language</h4>
+                                    <h4 className={cx("header-title")}>
+                                       Language
+                                    </h4>
                                  </div>
                               )}
                               {renderItem(USER_ITEMS)}
@@ -118,7 +148,13 @@ function Header() {
                            trigger: "mouseenter",
                            hideOnClick: false,
                         }}
-                        onHide={() => setHistory(config.isUser ? [{ data: USER_ITEMS }] : [{ data: MENU_ITEMS }])}
+                        onHide={() =>
+                           setHistory(
+                              config.isUser
+                                 ? [{ data: USER_ITEMS }]
+                                 : [{ data: MENU_ITEMS }]
+                           )
+                        }
                      >
                         <div className={cy("avatar-frame", "img-only")}>
                            <Image src={require("~/assets/images/avatar.jpg")} />
@@ -127,7 +163,16 @@ function Header() {
                   </>
                ) : (
                   <>
-                     <Button normal long leftIcon={<FontAwesomeIcon className={cx("plus-icon")} icon={faPlus} />}>
+                     <Button
+                        normal
+                        long
+                        leftIcon={
+                           <FontAwesomeIcon
+                              className={cx("plus-icon")}
+                              icon={faPlus}
+                           />
+                        }
+                     >
                         Upload
                      </Button>
                      <Button normal primary>
@@ -140,11 +185,16 @@ function Header() {
                               {/* Header */}
                               {history.length > 1 && (
                                  <div className={cx("menu-header")}>
-                                    <span className={cx("header-icon")} onClick={() => backMenu()}>
+                                    <span
+                                       className={cx("header-icon")}
+                                       onClick={() => backMenu()}
+                                    >
                                        <FontAwesomeIcon icon={faChevronLeft} />
                                     </span>
 
-                                    <h4 className={cx("header-title")}>Language</h4>
+                                    <h4 className={cx("header-title")}>
+                                       Language
+                                    </h4>
                                  </div>
                               )}
 

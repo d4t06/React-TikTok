@@ -26,7 +26,6 @@ function ShareContainer({ children }) {
                   })}
                {items.length <= 5 && (
                   <button
-                     button
                      className={cx("more-share-btn")}
                      onClick={() => setItems((item) => [...item, ...SHARE_ITEMS_EXPAND])}
                   >
