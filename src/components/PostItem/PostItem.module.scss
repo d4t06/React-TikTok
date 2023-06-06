@@ -1,0 +1,60 @@
+.content-header {
+   display: flex;
+   .content-text {
+      max-width: 80%;
+   }
+}
+
+.avatarframe-main-container {
+   height: 56px;
+   width: 56px;
+}
+.nick-name {
+   font-size: 1.8rem;
+   font-weight: 600;
+   margin-right: 5px;
+   cursor: pointer;
+   &:hover {
+      text-decoration: underline;
+   }
+}
+.full-name {
+   font-size: 1.4rem;
+}
+.check-icon {
+   margin-left: 5px;
+   color: rgb(32, 213, 236);
+}
+.follow-btn {
+   height: 28px;
+   margin-left: auto;
+   // margin: 0 0 0 20px;
+}
+.content-desc {
+   font-size: 1.6rem;
+   margin-top: var(--elementsGap);
+   span {
+      font-weight: 600;
+      margin-left: 5px;
+   }
+   margin-bottom: var(--elementsGap);
+}
+.music-info {
+   font-size: 1.5rem;
+   font-weight: 600;
+   span {
+      margin-right: 5px;
+   }
+}
+.video-wrapper {
+   display: flex;
+}
+.video-frame {
+   display: inline-block;
+   height: 467px;
+   margin-top: calc(var(--elementsGap) + 2px);
+}
+
+.video-action {
+   display: flex;
+}

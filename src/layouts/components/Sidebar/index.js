@@ -5,7 +5,12 @@ import classNames from "classnames/bind";
 import { useState, useEffect } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHashtag, faMusic, faHome, faUserGroup } from "@fortawesome/free-solid-svg-icons";
+import {
+   faHashtag,
+   faMusic,
+   faHome,
+   faUserGroup,
+} from "@fortawesome/free-solid-svg-icons";
 import { CameraIcon } from "~/assets/icons";
 
 import Button from "../../../components/Button";
@@ -27,7 +32,7 @@ function Sidebar() {
          // console.log(result);
          setSuggestedUser(result);
       };
-      fecthApi();
+      // fecthApi();
    }, []);
 
    return (
@@ -36,10 +41,16 @@ function Sidebar() {
             {/* <PopupItem primary type={"sidebar"} large icon={<FontAwesomeIcon icon={faHome} />}>
                For You
             </PopupItem> */}
-            <NavItem to={config.routes.home} icon={<FontAwesomeIcon icon={faHome} />}>
+            <NavItem
+               to={config.routes.home}
+               icon={<FontAwesomeIcon icon={faHome} />}
+            >
                For You
             </NavItem>
-            <NavItem to={config.routes.following} icon={<FontAwesomeIcon icon={faUserGroup} />}>
+            <NavItem
+               to={config.routes.following}
+               icon={<FontAwesomeIcon icon={faUserGroup} />}
+            >
                Following
             </NavItem>
             <NavItem to={config.routes.live} icon={<CameraIcon />}>
@@ -49,7 +60,9 @@ function Sidebar() {
 
          {!config.isUser && (
             <div className={cx("login-frame")}>
-               <p className={cx("login-hint")}>Log in to follow creators, like videos, and view comments.</p>
+               <p className={cx("login-hint")}>
+                  Log in to follow creators, like videos, and view comments.
+               </p>
                <Button full outline nopos className={cx("login-btn")}>
                   Log in
                </Button>

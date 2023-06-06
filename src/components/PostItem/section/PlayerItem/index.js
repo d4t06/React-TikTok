@@ -1,14 +1,22 @@
-import { faPause, faPlay, faVolumeHigh, faVolumeXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+   faPause,
+   faPlay,
+   faVolumeHigh,
+   faVolumeXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import classNames from "classnames/bind";
 import { forwardRef, useEffect, useRef, useState } from "react";
-import styles from "./Player.module.scss";
+import styles from "./PlayerItem.module.scss";
 import Menu from "~/components/Menu";
 
 const cx = classNames.bind(styles);
 
-function Player({ isPlaying, isMute, handleMute, handlePlayPause, handleSeek, handleVolume }, ref) {
+function PlayerItem(
+   { isPlaying, isMute, handleMute, handlePlayPause, handleSeek, handleVolume },
+   ref
+) {
    return (
       <>
          <button className={cx("play-btn")} onClick={() => handlePlayPause()}>
@@ -25,8 +33,14 @@ function Player({ isPlaying, isMute, handleMute, handlePlayPause, handleSeek, ha
          <Menu
             content={
                <div className={cx("volume-slider")}>
-                  <div className={cx("volume-duration")} onClick={(e) => handleVolume(e)}>
-                     <div className={cx("volume-current")} ref={ref.currentVolume}></div>
+                  <div
+                     className={cx("volume-duration")}
+                     onClick={(e) => handleVolume(e)}
+                  >
+                     <div
+                        className={cx("volume-current")}
+                        ref={ref.currentVolume}
+                     ></div>
                   </div>
                </div>
             }
@@ -37,7 +51,10 @@ function Player({ isPlaying, isMute, handleMute, handlePlayPause, handleSeek, ha
                appendTo: () => document.body,
             }}
          >
-            <button onClick={() => handleMute()} className={cx("btn", "volume-icon")}>
+            <button
+               onClick={() => handleMute()}
+               className={cx("btn", "volume-icon")}
+            >
                {!isMute && (
                   <span>
                      <FontAwesomeIcon icon={faVolumeHigh} />
@@ -52,7 +69,11 @@ function Player({ isPlaying, isMute, handleMute, handlePlayPause, handleSeek, ha
          </Menu>
 
          <div className={cx("time-slider")}>
-            <div className={cx("video-duration")} onClick={(e) => handleSeek(e)} ref={ref.timeDuration}>
+            <div
+               className={cx("video-duration")}
+               onClick={(e) => handleSeek(e)}
+               ref={ref.timeDuration}
+            >
                <div className={cx("time-current")} ref={ref.timeSlider}></div>
             </div>
             <div className={cx("time-text")}>
@@ -69,4 +90,4 @@ function Player({ isPlaying, isMute, handleMute, handlePlayPause, handleSeek, ha
    );
 }
 
-export default forwardRef(Player);
+export default forwardRef(PlayerItem);

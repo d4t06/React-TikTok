@@ -1,12 +1,12 @@
 import styles from "./VideoItem.module.scss";
 import classNames from "classnames/bind";
-import Player from "./Player";
+import PlayerItem from "../PlayerItem";
 import { useEffect, useRef, useState } from "react";
 
 const cx = classNames.bind(styles);
 
 function VideoItem(props) {
-   console.log("video-render");
+   // console.log("video-render");
    const [isPlaying, setIsPlaying] = useState(false);
    const [isMute, setIsMute] = useState(false);
 
@@ -40,7 +40,9 @@ function VideoItem(props) {
    const handleMute = () => {
       setIsMute(!isMute);
 
-      !isMute ? (videoRef.current.muted = true) : (videoRef.current.muted = false);
+      !isMute
+         ? (videoRef.current.muted = true)
+         : (videoRef.current.muted = false);
    };
 
    useEffect(() => {
@@ -53,7 +55,9 @@ function VideoItem(props) {
    const handlePlaying = () => {
       const duration = videoRef.current.duration;
       const currentTime = videoRef.current.currentTime;
-      currentTimeEl.current.innerText = `00:${currentTime.toFixed(0) >= 10 ? "" : "0"}${currentTime.toFixed(0)}`;
+      currentTimeEl.current.innerText = `00:${
+         currentTime.toFixed(0) >= 10 ? "" : "0"
+      }${currentTime.toFixed(0)}`;
 
       timeSlider.current.style.width = (currentTime / duration) * 180 + "px";
    };
@@ -65,7 +69,8 @@ function VideoItem(props) {
    // };
    const handleSeek = (e) => {
       const rect = e.target.getBoundingClientRect();
-      const seekTime = ((e.clientX - rect.left) / 180) * videoRef.current.duration;
+      const seekTime =
+         ((e.clientX - rect.left) / 180) * videoRef.current.duration;
       videoRef.current.currentTime = seekTime.toFixed(1);
 
       if (!isPlaying) videoRef.current.play();
@@ -105,8 +110,14 @@ function VideoItem(props) {
             onTimeUpdate={() => handlePlaying()}
             // onPause={() => handleOnPause()}
          />
-         <Player
-            ref={{ duration: durationEl, currentTime: currentTimeEl, timeSlider, timeDuration, currentVolume }}
+         <PlayerItem
+            ref={{
+               duration: durationEl,
+               currentTime: currentTimeEl,
+               timeSlider,
+               timeDuration,
+               currentVolume,
+            }}
             handlePlayPause={handlePlayPause}
             isPlaying={isPlaying}
             setIsPlaying={setIsPlaying}

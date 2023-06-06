@@ -1,12 +1,14 @@
 import { faShare, faHeart, faMessage } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styles from "./VideoCta.module.scss";
-import classNames from "classnames/bind";
-import ShareContainer from "~/components/ShareContainer";
 import { useState } from "react";
+import classNames from "classnames/bind";
+
+import ShareContainer from "~/components/ShareContainer";
+
+import styles from "./VideoControll.module.scss";
 
 const cx = classNames.bind(styles);
-function VideoCta() {
+function VideoControl() {
    const [isLike, setIsLike] = useState(false);
    const [likeCount, setLikeCount] = useState(827);
 
@@ -24,7 +26,10 @@ function VideoCta() {
 
    return (
       <div className={cx("video-action")}>
-         <button className={cx(isLike ? "liked" : "")} onClick={() => handleLike()}>
+         <button
+            className={cx(isLike ? "liked" : "")}
+            onClick={() => handleLike()}
+         >
             <FontAwesomeIcon icon={faHeart} />
          </button>
          <span className={cx("share-number")}>{likeCount}</span>
@@ -43,4 +48,4 @@ function VideoCta() {
       </div>
    );
 }
-export default VideoCta;
+export default VideoControl;
