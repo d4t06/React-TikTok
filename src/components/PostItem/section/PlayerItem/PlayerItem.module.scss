@@ -26,53 +26,106 @@
       height: 4px;
    }
 }
-.video-duration {
-   width: 180px;
-   height: 2px;
 
+@mixin for-hover-better {
+   content: "";
+   position: absolute;
+   background-color: transparent;
+   left: 0;
+   right: 0;
+}
+.video-duration {
+   flex: 1;
+   height: 2px;
+   position: relative;
    background-color: #ccc;
-   border-radius: 5px;
-   overflow: hidden;
+   border-radius: 99px;
+
    cursor: pointer;
-   // border: 1px solid transparent;
+   &::before {
+      @include for-hover-better();
+      bottom: 100%;
+      height: 15px;
+   }
+   &::after {
+      @include for-hover-better();
+      top: 100%;
+      height: 15px;
+   }
 }
 .time-current {
    width: 0;
    height: 100%;
-   background-color: var(--primary-color);
    z-index: 5;
+   background-color: var(--primary-color);
+   border-radius: 99px;
+}
+.time-text-wrapper {
+   width: 80px;
+   padding-left: 10px;
+   margin-left: auto;
+   text-align: right;
 }
 .time-text {
-   margin-left: auto;
+   display: flex;
+   justify-content: space-between;
+   text-align: right;
    span {
-      font-size: 1rem;
+      font-size: 1.2rem;
       color: #fff;
+      text-shadow: 2px 2px 5px #333;
    }
 }
+.time-current-wrapper {
+   width: 35px;
+   text-align: left;
+   flex-shrink: 0;
+}
 
-//volume
 .volume-slider {
-   height: 60px;
+   height: 80px;
+   padding: 8px 0;
    width: 18px;
    border-radius: 10px;
    background-color: rgba($color: #000, $alpha: 0.25);
    display: flex;
    justify-content: center;
-   position: relative;
    transform: rotate(180deg);
-   &:hover .volume-duration {
-      width: 4px;
+   &:hover {
+      .volume-duration {
+         width: 4px;
+      }
+      .volume-current {
+         &::before {
+            left: calc(50% + 1px);
+         }
+      }
    }
 }
 
-.volume-duration {
+@mixin volume-duration-hover {
+   content: "";
    position: absolute;
-   top: 8px;
-   bottom: 8px;
+   top: 0;
+   bottom: 0;
+   width: 20px;
+   background-color: transparent;
+}
+.volume-duration {
+   position: relative;
+   height: 100%;
    background-color: #ccc;
    width: 2px;
    border-radius: 4px;
-   // overflow: hidden;
+   cursor: pointer;
+   &::before {
+      @include volume-duration-hover();
+      right: 100%;
+   }
+   &::after {
+      @include volume-duration-hover();
+      left: 100%;
+   }
 }
 
 .volume-current {
@@ -88,7 +141,6 @@
       border-radius: 50%;
       background-color: #fff;
       bottom: 0;
-      // top: 50%;
       left: 50%;
       transform: translate(-50%, 0);
    }

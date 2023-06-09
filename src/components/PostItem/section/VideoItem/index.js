@@ -11,66 +11,49 @@ function VideoItem(props) {
    const [isMute, setIsMute] = useState(false);
 
    const videoRef = useRef();
-   const durationEl = useRef();
-   const currentTimeEl = useRef();
-   const timeSlider = useRef();
-   const timeDuration = useRef();
+   const durationText = useRef();
+   const currentTimeText = useRef();
    const currentVolume = useRef();
 
+   const currentTimeLine = useRef();
+   const durationLine = useRef();
+   const durationLineWidth = useRef();
+
    const handlePlayPause = () => {
-      !isPlaying ? videoRef.current.play() : videoRef.current.pause();
+      !isPlaying ? play() : pause();
    };
 
-   const handlePlay = () => {
-      videoRef.current.play();
-      // setIsPlaying(true);
-   };
+   const play = () => videoRef.current.play();
+   const pause = () => videoRef.current.pause();
 
-   const handlePause = () => {
-      videoRef.current.pause();
-      // setIsPlaying(false);
-   };
+   const handleTimeText = (duration) => {
+      let minute = 0;
+      while (duration > 60) {
+         duration -= 60;
+         minute++;
+      }
 
-   const callbackFunction = (entries) => {
-      const [entry] = entries;
-      // entries.forEach((entry) => {
-      // });
-      entry.isIntersecting ? handlePlay() : handlePause();
+      if (duration > 10) {
+         return `0${minute}:${Number.parseInt(duration)}`;
+      }
+      return `0${minute}:0${Number.parseInt(duration)}`;
    };
-   const handleMute = () => {
-      setIsMute(!isMute);
-
-      !isMute
-         ? (videoRef.current.muted = true)
-         : (videoRef.current.muted = false);
-   };
-
-   useEffect(() => {
-      const observer = new IntersectionObserver(callbackFunction, {
-         threshold: 0.8,
-      });
-      observer.observe(videoRef.current);
-   }, []);
 
    const handlePlaying = () => {
       const duration = videoRef.current.duration;
       const currentTime = videoRef.current.currentTime;
-      currentTimeEl.current.innerText = `00:${
-         currentTime.toFixed(0) >= 10 ? "" : "0"
-      }${currentTime.toFixed(0)}`;
 
-      timeSlider.current.style.width = (currentTime / duration) * 180 + "px";
+      currentTimeText.current.innerText = handleTimeText(currentTime);
+
+      currentTimeLine.current.style.width =
+         (currentTime / duration) * durationLineWidth.current + "px";
    };
-   // const handleOnPause = () => {
-   //    setIsPlaying(false);
-   // };
-   // const handleOnPause = () => {
-   //    setIsPlaying(false);
-   // };
+
    const handleSeek = (e) => {
       const rect = e.target.getBoundingClientRect();
       const seekTime =
-         ((e.clientX - rect.left) / 180) * videoRef.current.duration;
+         ((e.clientX - rect.left) / durationLineWidth.current) *
+         videoRef.current.duration;
       videoRef.current.currentTime = seekTime.toFixed(1);
 
       if (!isPlaying) videoRef.current.play();
@@ -85,18 +68,37 @@ function VideoItem(props) {
       // console.log(volume.toFixed(2) * 100 + "%");
    };
 
+   const handleMute = () => {
+      setIsMute(!isMute);
+
+      !isMute
+         ? (videoRef.current.muted = true)
+         : (videoRef.current.muted = false);
+   };
+
    useEffect(() => {
       const videoEl = videoRef.current;
       videoEl.onloadedmetadata = () => {
-         durationEl.current.innerText = `/00:${videoEl.duration.toFixed(0)}`;
          videoEl.volume = 0.25;
+
+         durationText.current.innerText =
+            "/" + handleTimeText(videoEl.duration);
+         durationLineWidth.current = durationLine.current.offsetWidth;
       };
-      videoEl.onplaying = () => {
-         setIsPlaying(true);
+   }, []);
+
+   useEffect(() => {
+      const callbackFunction = (entries) => {
+         const [entry] = entries;
+         const isIntoView = entry.isIntersecting;
+
+         isIntoView ? play() : pause();
       };
-      videoEl.onpause = () => {
-         setIsPlaying(false);
-      };
+
+      const observer = new IntersectionObserver(callbackFunction, {
+         threshold: 0.8,
+      });
+      observer.observe(videoRef.current);
    }, []);
 
    return (
@@ -104,24 +106,24 @@ function VideoItem(props) {
          <video
             className={cx("video")}
             ref={videoRef}
-            // src={require("~/assets/videos/test.mp4")}
-
-            src={props.src}
+            onPlaying={() => setIsPlaying(true)}
+            onPause={() => setIsPlaying(false)}
             onTimeUpdate={() => handlePlaying()}
-            // onPause={() => handleOnPause()}
+            src={props.src}
          />
          <PlayerItem
             ref={{
-               duration: durationEl,
-               currentTime: currentTimeEl,
-               timeSlider,
-               timeDuration,
+               durationText,
+               currentTimeText,
+
+               currentTimeLine,
+               durationLine,
+
                currentVolume,
             }}
-            handlePlayPause={handlePlayPause}
             isPlaying={isPlaying}
-            setIsPlaying={setIsPlaying}
             isMute={isMute}
+            handlePlayPause={handlePlayPause}
             handleMute={handleMute}
             handleSeek={handleSeek}
             handleVolume={handleVolume}

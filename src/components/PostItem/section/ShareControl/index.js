@@ -5,10 +5,10 @@ import classNames from "classnames/bind";
 
 import ShareContainer from "~/components/ShareContainer";
 
-import styles from "./VideoControll.module.scss";
+import styles from "./ShareControl.module.scss";
 
 const cx = classNames.bind(styles);
-function VideoControl() {
+function ShareControl() {
    const [isLike, setIsLike] = useState(false);
    const [likeCount, setLikeCount] = useState(827);
 
@@ -48,4 +48,4 @@ function VideoControl() {
       </div>
    );
 }
-export default VideoControl;
+export default ShareControl;

@@ -5,7 +5,7 @@ import classNames from "classnames/bind";
 import UserPreview from "../UserPreview";
 import Menu from "../Menu";
 import Button from "../Button";
-import VideoControl from "./section/VideoControl";
+import ShareControl from "./section/ShareControl";
 import VideoItem from "./section/VideoItem";
 
 import styles from "./PostItem.module.scss";
@@ -65,7 +65,7 @@ function PostItem({ data }) {
          </div>
          <div className={cx("video-wrapper")}>
             <VideoItem src={data.popular_video.file_url} />
-            <VideoControl />
+            <ShareControl />
          </div>
       </>
    );

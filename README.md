@@ -7,6 +7,10 @@
 
 -  Thêm biến môi trường phải restart server
 
-### update thứ 3 6/62023
+### update thứ 3 6/6 2023
 
 -  Infinity scroll bằng interSectionObserve
+
+### update thứ 6 9/6/2023
+
+-  Chinh css để tua video, chỉnh âm lượng dẽ hơn
