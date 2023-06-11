@@ -7,24 +7,15 @@ const cx = classNames.bind(styles);
 
 function VideoItem(props) {
    // console.log("video-render");
-   const [isPlaying, setIsPlaying] = useState(false);
-   const [isMute, setIsMute] = useState(false);
+   const [isLoadingVideo, setIsLoadingVideo] = useState(true);
 
    const videoRef = useRef();
+
+   const durationLine = useRef();
    const durationText = useRef();
-   const currentTimeText = useRef();
-   const currentVolume = useRef();
 
    const currentTimeLine = useRef();
-   const durationLine = useRef();
-   const durationLineWidth = useRef();
-
-   const handlePlayPause = () => {
-      !isPlaying ? play() : pause();
-   };
-
-   const play = () => videoRef.current.play();
-   const pause = () => videoRef.current.pause();
+   const currentTimeText = useRef();
 
    const handleTimeText = (duration) => {
       let minute = 0;
@@ -39,96 +30,57 @@ function VideoItem(props) {
       return `0${minute}:0${Number.parseInt(duration)}`;
    };
 
+   // when video playing
    const handlePlaying = () => {
-      const duration = videoRef.current.duration;
-      const currentTime = videoRef.current.currentTime;
+      const videoEl = videoRef.current;
+      const duration = videoEl.duration;
+      const currentTime = videoEl.currentTime;
 
       currentTimeText.current.innerText = handleTimeText(currentTime);
+      const newWidth =
+         (currentTime / duration) * videoRef.current.durationLineWidth;
 
-      currentTimeLine.current.style.width =
-         (currentTime / duration) * durationLineWidth.current + "px";
+      currentTimeLine.current.style.width = newWidth + "px";
    };
 
-   const handleSeek = (e) => {
-      const rect = e.target.getBoundingClientRect();
-      const seekTime =
-         ((e.clientX - rect.left) / durationLineWidth.current) *
-         videoRef.current.duration;
-      videoRef.current.currentTime = seekTime.toFixed(1);
-
-      if (!isPlaying) videoRef.current.play();
-   };
-
-   const handleVolume = (e) => {
-      const rect = e.target.getBoundingClientRect();
-      const volume = (rect.bottom.toFixed(0) - e.clientY) / 44;
-
-      videoRef.current.volume = volume.toFixed(1) / 2;
-      currentVolume.current.style.height = volume.toFixed(2) * 100 + "%";
-      // console.log(volume.toFixed(2) * 100 + "%");
-   };
-
-   const handleMute = () => {
-      setIsMute(!isMute);
-
-      !isMute
-         ? (videoRef.current.muted = true)
-         : (videoRef.current.muted = false);
-   };
-
+   // update text and get duration width when playing
    useEffect(() => {
-      const videoEl = videoRef.current;
-      videoEl.onloadedmetadata = () => {
-         videoEl.volume = 0.25;
+      if (isLoadingVideo) return;
 
-         durationText.current.innerText =
-            "/" + handleTimeText(videoEl.duration);
-         durationLineWidth.current = durationLine.current.offsetWidth;
-      };
-   }, []);
+      videoRef.current.volume = 0.5;
 
-   useEffect(() => {
-      const callbackFunction = (entries) => {
-         const [entry] = entries;
-         const isIntoView = entry.isIntersecting;
+      durationText.current.innerText =
+         "/" + handleTimeText(videoRef.current.duration);
+      videoRef.current["durationLineWidth"] = durationLine.current.offsetWidth;
 
-         isIntoView ? play() : pause();
-      };
-
-      const observer = new IntersectionObserver(callbackFunction, {
-         threshold: 0.8,
-      });
-      observer.observe(videoRef.current);
-   }, []);
+      setIsLoadingVideo(false);
+   }, [isLoadingVideo]);
 
    return (
-      <div className={cx("video-frame")}>
-         <video
-            className={cx("video")}
-            ref={videoRef}
-            onPlaying={() => setIsPlaying(true)}
-            onPause={() => setIsPlaying(false)}
-            onTimeUpdate={() => handlePlaying()}
-            src={props.src}
-         />
-         <PlayerItem
-            ref={{
-               durationText,
-               currentTimeText,
+      <>
+         {console.log("video item render")}
+         <div className={cx("video-frame")}>
+            <video
+               className={cx("video")}
+               ref={videoRef}
+               onTimeUpdate={() => handlePlaying()}
+               src={props.src}
+               onLoadedMetadata={() => setIsLoadingVideo(false)}
+            />
+            {videoRef.current && (
+               <PlayerItem
+                  ref={{
+                     durationLine,
+                     durationText,
 
-               currentTimeLine,
-               durationLine,
-
-               currentVolume,
-            }}
-            isPlaying={isPlaying}
-            isMute={isMute}
-            handlePlayPause={handlePlayPause}
-            handleMute={handleMute}
-            handleSeek={handleSeek}
-            handleVolume={handleVolume}
-         />
-      </div>
+                     currentTimeLine,
+                     currentTimeText,
+                  }}
+                  videoEl={videoRef.current}
+               />
+            )}
+         </div>
+      </>
    );
 }
 

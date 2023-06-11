@@ -1,4 +1,8 @@
-import { faCircleXmark, faMagnifyingGlass, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import {
+   faCircleXmark,
+   faMagnifyingGlass,
+   faSpinner,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react";
 import classNames from "classnames/bind";
@@ -12,7 +16,7 @@ import * as searchService from "~/services/searchService";
 
 const cx = classNames.bind(styles);
 
-function Search() {
+function Search({}) {
    const searchRef = useRef();
    const loadingRef = useRef();
    const clearRef = useRef();
@@ -98,7 +102,7 @@ function Search() {
             appendTo: () => document.body,
          }}
       >
-         <div className={cx("search")} onSubmit={submit}>
+         <div className={cx("search", "hide-for-medium")} onSubmit={submit}>
             <input
                ref={searchRef}
                value={searchValue}
@@ -109,7 +113,11 @@ function Search() {
             />
 
             {!!searchValue && (
-               <button ref={clearRef} className={cx("clear")} onClick={() => handleClear()}>
+               <button
+                  ref={clearRef}
+                  className={cx("clear")}
+                  onClick={() => handleClear()}
+               >
                   <FontAwesomeIcon icon={faCircleXmark} />
                </button>
             )}

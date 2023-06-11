@@ -1,5 +1,22 @@
+@mixin box-shadow {
+   box-shadow: 2px 2px 5px rgba($color: #000, $alpha: 0.5);
+}
+.wrapper {
+   position: absolute;
+   top: 0;
+   left: 0;
+   height: 100%;
+   width: 100%;
+
+   &:hover {
+      .time-slider {
+         opacity: 1;
+         visibility: visible;
+      }
+   }
+}
 .btn {
-   font-size: 2.2rem;
+   font-size: 2.5rem;
    color: #fff;
    cursor: pointer;
 }
@@ -9,12 +26,18 @@
    position: absolute;
    bottom: 45px;
    left: 20px;
+   padding: 5px;
 }
 .volume-icon {
    left: unset;
    right: 20px;
 }
 .time-slider {
+   opacity: 0;
+   visibility: hidden;
+
+   transition: opacity 0.15s linear;
+
    display: flex;
    align-items: center;
    height: 12px;
@@ -35,6 +58,7 @@
    right: 0;
 }
 .video-duration {
+   @include box-shadow();
    flex: 1;
    height: 2px;
    position: relative;
@@ -61,19 +85,21 @@
    border-radius: 99px;
 }
 .time-text-wrapper {
-   width: 80px;
+   width: 85px;
    padding-left: 10px;
    margin-left: auto;
    text-align: right;
+   padding-top: 2px;
 }
 .time-text {
    display: flex;
    justify-content: space-between;
    text-align: right;
+
    span {
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       color: #fff;
-      text-shadow: 2px 2px 5px #333;
+      text-shadow: 1px 0 2px #000;
    }
 }
 .time-current-wrapper {

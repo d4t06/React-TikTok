@@ -6,17 +6,32 @@
    // background-color: #222;
 }
 .Container {
-   display: flex;
+   // display: flex;
    min-height: calc(100vh - 60px);
    width: 1150px;
    padding: 5px 5px;
+   @media screen and (max-width: 1023px) {
+      width: 100%;
+   }
 }
 .Content {
    // height: auto;
-   width: 692px;
+   min-width: 692px;
    max-width: 692px;
    position: relative;
    left: 456px;
+   @media screen and (max-width: 1023px) {
+      left: 72px;
+      max-width: calc(100% - 72px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+   }
+   @media screen and (max-width: 550px) {
+      left: unset;
+      max-width: 100%;
+      min-width: 100%;
+   }
 }
 .wrapper.dark {
    background-color: #333;

@@ -2,6 +2,7 @@ import { useState, useRef, useCallback } from "react";
 
 import useVideo from "~/hook/useVideo";
 import ContentItem from "./ContentItem";
+import ContentItemSkeleton from "~/components/Skeleton/ContentItemSkeleton";
 
 function Home() {
    const [pageNum, setPageNum] = useState(1);
@@ -26,8 +27,6 @@ function Home() {
       [isLoading, hasNextPage]
    );
 
-   if (isError) return <h1>Error when fetching</h1>;
-
    const renderContent = () => {
       return results.map((item, index) => {
          if (results.length === index + 1) {
@@ -37,10 +36,16 @@ function Home() {
       });
    };
 
+   const skeletons = [...Array(4).keys()].map((index) => {
+      return <ContentItem skeleton key={index} />;
+   });
+
+   let content;
+   if (isError) content = <h1>Error</h1>;
+   else content = renderContent();
    return (
       <>
-         {isLoading && <h1>Loading more video...</h1>}
-         {!!results.length && renderContent()}
+         {content} {isLoading && skeletons}
       </>
    );
 }

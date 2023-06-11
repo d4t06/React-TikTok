@@ -36,7 +36,7 @@ function Sidebar() {
    }, []);
 
    return (
-      <div className={cx("sidebar-container")}>
+      <div className={cx("sidebar-container", "hide-for-small")}>
          <nav className={cx("cta")}>
             {/* <PopupItem primary type={"sidebar"} large icon={<FontAwesomeIcon icon={faHome} />}>
                For You
@@ -45,16 +45,16 @@ function Sidebar() {
                to={config.routes.home}
                icon={<FontAwesomeIcon icon={faHome} />}
             >
-               For You
+               <p className={cx("hide-for-medium")}>For You</p>
             </NavItem>
             <NavItem
                to={config.routes.following}
                icon={<FontAwesomeIcon icon={faUserGroup} />}
             >
-               Following
+               <p className={cx("hide-for-medium")}>Following</p>
             </NavItem>
             <NavItem to={config.routes.live} icon={<CameraIcon />}>
-               LIVE
+               <p className={cx("hide-for-medium")}>LIVE</p>
             </NavItem>
          </nav>
 
@@ -69,7 +69,9 @@ function Sidebar() {
             </div>
          )}
 
-         <div className={cx("suggested-account", "seperate")}>
+         <div
+            className={cx("suggested-account", "seperate", "hide-for-medium")}
+         >
             <label>Suggested accounts</label>
 
             <SuggestedUser data={suggestedUser} />
@@ -77,7 +79,9 @@ function Sidebar() {
             <button className={cx("see-all")}>See all</button>
          </div>
 
-         <div className={cx("suggested-account", "seperate")}>
+         <div
+            className={cx("suggested-account", "seperate", "hide-for-medium")}
+         >
             <label>Following accounts</label>
 
             {suggestedUser &&
@@ -87,7 +91,9 @@ function Sidebar() {
             <button className={cx("see-all")}>See all</button>
          </div>
 
-         <div className={cx("discover-container", "seperate")}>
+         <div
+            className={cx("discover-container", "seperate", "hide-for-medium")}
+         >
             <label>Discover</label>
             <Button tag round leftIcon={<FontAwesomeIcon icon={faHashtag} />}>
                suthatla
@@ -106,7 +112,7 @@ function Sidebar() {
             </Button>
          </div>
 
-         <div className={cx("sidebar-footer", "seperate")}>
+         <div className={cx("sidebar-footer", "seperate", "hide-for-medium")}>
             <div className={cx("link-container")}>
                <a>About</a>
                <a>Newsroom</a>

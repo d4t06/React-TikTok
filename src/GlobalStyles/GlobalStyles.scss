@@ -123,18 +123,19 @@ a {
    border-radius: 10px;
    margin-top: 10px !important;
 }
-.vjs-control-bar {
-   background-color: transparent !important;
-   bottom: 35px !important;
-   justify-content: space-between;
+// responsive
+.hide-for-medium {
+   @media screen and (max-width: 1023px) {
+      display: none;
+   }
 }
-.vjs-tech {
-   border-radius: 8px;
+.hide-for-small {
+   @media screen and (max-width: 550px) {
+      display: none;
+   }
 }
-
-.vjs-time-control,
-.vjs-time-control,
-.vjs-progress-control,
-.vjs-fullscreen-control {
-   display: none !important;
+.hide-for-large {
+   @media screen and (min-width: 1023px) {
+      display: none;
+   }
 }

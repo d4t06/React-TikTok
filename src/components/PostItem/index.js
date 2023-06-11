@@ -59,7 +59,7 @@ function PostItem({ data }) {
                   Music - Steal My Girls
                </a>
             </div>
-            <Button outline className={cx("follow-btn")}>
+            <Button outline className={cx("follow-btn", "hide-for-small")}>
                Follow
             </Button>
          </div>

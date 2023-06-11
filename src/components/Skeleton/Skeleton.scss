@@ -1,0 +1,42 @@
+.skeleton {
+   background-color: #ccc;
+   border-radius: 4px;
+}
+.width-100 {
+   width: 100%;
+}
+.width-50 {
+   width: 50%;
+}
+.width-25 {
+   width: 25%;
+}
+.avatar-circle {
+   width: 46px;
+   height: 46px;
+   border-radius: 50%;
+   flex-shrink: 0;
+}
+.name {
+   height: 20px;
+   margin-bottom: 8px;
+}
+.text {
+   height: 36px;
+   margin-bottom: 8px;
+}
+.video {
+   height: 480px;
+   width: 270px;
+   margin-bottom: 8px;
+}
+
+@keyframes pulse {
+   50% {
+      opacity: 0.5;
+   }
+}
+
+.animation-pulse {
+   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

@@ -33,6 +33,8 @@
 .content-desc {
    font-size: 1.6rem;
    margin-top: var(--elementsGap);
+   display: flex;
+   flex-wrap: wrap;
    span {
       font-weight: 600;
       margin-left: 5px;
@@ -48,6 +50,9 @@
 }
 .video-wrapper {
    display: flex;
+   @media screen and (max-width: 1023px) {
+      justify-content: center;
+   }
 }
 .video-frame {
    display: inline-block;

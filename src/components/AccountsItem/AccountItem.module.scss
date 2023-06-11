@@ -9,9 +9,10 @@
 }
 .avatar-frame-preview,
 .avatar-frame {
-   width: 32px;
-   height: 32px;
+   width: 42px;
+   height: 42px;
    margin-right: 10px;
+   flex-shrink: 0;
    img {
       width: 100%;
       height: 100%;

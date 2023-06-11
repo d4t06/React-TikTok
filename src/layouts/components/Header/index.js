@@ -106,7 +106,7 @@ function Header() {
                            appendTo: () => document.body,
                         }}
                      >
-                        <Button pd-t icon>
+                        <Button pd-t icon className="hide-for-medium">
                            <InboxIcon />
                         </Button>
                      </Menu>
@@ -118,7 +118,7 @@ function Header() {
                            appendTo: () => document.body,
                         }}
                      >
-                        <Button icon pseudo>
+                        <Button icon pseudo className="hide-for-medium">
                            <MessageIcon />
                         </Button>
                      </Menu>
