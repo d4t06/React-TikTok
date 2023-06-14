@@ -3,9 +3,8 @@
 }
 .wrapper {
    position: absolute;
-   top: 0;
-   left: 0;
-   height: 100%;
+   bottom: 0;
+   height: 100px;
    width: 100%;
 
    &:hover {
@@ -14,6 +13,9 @@
          visibility: visible;
       }
    }
+}
+.wrapper.preview {
+   bottom: 20px;
 }
 .btn {
    font-size: 2.5rem;
@@ -27,6 +29,7 @@
    bottom: 45px;
    left: 20px;
    padding: 5px;
+   // z-index: 5;
 }
 .volume-icon {
    left: unset;

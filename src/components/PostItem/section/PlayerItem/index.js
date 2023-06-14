@@ -13,12 +13,13 @@ import Menu from "~/components/Menu";
 
 const cx = classNames.bind(styles);
 
-function PlayerItem({ videoEl }, ref) {
+function PlayerItem({ videoEl, preview }, ref) {
    const [isIntoView, setIsIntoView] = useState(false);
    const [isPlaying, setIsPlaying] = useState(false);
    const [isMute, setIsMute] = useState(false);
 
    const currentVolumeLine = useRef();
+   const currentVideoEl = useRef();
    const timerId = useRef();
 
    const handlePlayPause = () => {
@@ -49,7 +50,7 @@ function PlayerItem({ videoEl }, ref) {
       const volume =
          (rect.bottom.toFixed(0) - e.clientY) / e.target.offsetHeight;
 
-      videoEl.volume = volume.toFixed(1) / 2;
+      videoEl.volume = volume.toFixed(1);
       currentVolumeLine.current.style.height = volume.toFixed(2) * 100 + "%";
    };
 
@@ -60,17 +61,18 @@ function PlayerItem({ videoEl }, ref) {
    };
 
    // auto play video when scroll in to view
-   useEffect(() => {
-      const callbackFunction = (entries) => {
-         const [entry] = entries;
-         setIsIntoView(entry.isIntersecting);
-      };
+   // useEffect(() => {
+   //    const callbackFunction = (entries) => {
+   //       const [entry] = entries;
+   //       setIsIntoView(entry.isIntersecting);
+   //       currentVideoEl.current = entry.target;
+   //    };
 
-      const observer = new IntersectionObserver(callbackFunction, {
-         threshold: 0.8,
-      });
-      observer.observe(videoEl);
-   }, []);
+   //    const observer = new IntersectionObserver(callbackFunction, {
+   //       threshold: 0.8,
+   //    });
+   //    observer.observe(videoEl);
+   // }, []);
 
    // play video denounce
    useEffect(() => {
@@ -78,9 +80,13 @@ function PlayerItem({ videoEl }, ref) {
          if (!isIntoView) {
             pause();
             return;
+         } else {
+            console.log("play");
+            if (currentVideoEl.current) {
+               currentVideoEl.current.pause();
+            }
+            play();
          }
-         console.log("play");
-         play();
       }, 600);
 
       return () => {
@@ -92,21 +98,26 @@ function PlayerItem({ videoEl }, ref) {
 
    return (
       <>
-         <div className={cx("wrapper")}>
+         <div className={cx("wrapper", preview ? "preview" : "")}>
             <div className={cx("cta")}>
                <button
                   className={cx("play-btn")}
-                  onClick={() => handlePlayPause()}
+                  onClick={(e) => {
+                     e.stopPropagation();
+                     handlePlayPause();
+                  }}
                >
                   {isPlaying ? (
                      <span
+                        ref={ref.playBtn}
                         className={cx("play-icon", "btn")}
-                        onClick={() => setIsPlaying(false)}
+                        onClick={(e) => setIsPlaying(false)}
                      >
                         <FontAwesomeIcon icon={faPause} />
                      </span>
                   ) : (
                      <span
+                        ref={ref.playBtn}
                         className={cx("paused-icon", "btn")}
                         onClick={() => setIsPlaying(true)}
                      >
@@ -119,7 +130,10 @@ function PlayerItem({ videoEl }, ref) {
                      <div className={cx("volume-slider")}>
                         <div
                            className={cx("volume-duration")}
-                           onClick={(e) => handleVolume(e)}
+                           onClick={(e) => {
+                              e.stopPropagation();
+                              handleVolume(e);
+                           }}
                            ref={ref.volumeLine}
                         >
                            <div
@@ -137,7 +151,11 @@ function PlayerItem({ videoEl }, ref) {
                   }}
                >
                   <button
-                     onClick={() => handleMute()}
+                     ref={ref.volumeBtn}
+                     onClick={(e) => {
+                        e.stopPropagation();
+                        handleMute();
+                     }}
                      className={cx("btn", "volume-icon")}
                   >
                      {!isMute && (

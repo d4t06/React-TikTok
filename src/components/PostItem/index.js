@@ -64,7 +64,7 @@ function PostItem({ data }) {
             </Button>
          </div>
          <div className={cx("video-wrapper")}>
-            <VideoItem src={data.popular_video.file_url} />
+            <VideoItem src={data.popular_video.file_url} data={data} />
             <ShareControl />
          </div>
       </>

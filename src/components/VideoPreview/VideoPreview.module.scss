@@ -1,0 +1,73 @@
+.container {
+   position: fixed;
+   inset: 0;
+   display: flex;
+   z-index: 11;
+}
+.left {
+   width: 60%;
+   position: relative;
+   background-color: rgba($color: #000000, $alpha: 1);
+}
+.right {
+   width: 40%;
+   position: relative;
+   background-color: #fff;
+   padding: 40px 20px;
+}
+.video-overlay {
+   position: absolute;
+   width: 10%;
+   height: 10%;
+   top: 50%;
+   left: 50%;
+   background-size: cover;
+   background-position: center;
+   filter: blur(2px);
+   opacity: 0.3;
+   scale: 11;
+}
+.video-container {
+   height: 100%;
+   width: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+.header {
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   height: 85px;
+   padding: 0 20px;
+   z-index: 10;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   background-color: transparent;
+   .btn {
+      background: rgba(84, 84, 84, 0.5);
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: background-color linear 0.2s;
+      &:hover {
+         background-color: rgba(84, 84, 84, 0.3);
+      }
+   }
+   .close-btn {
+      height: 40px;
+      width: 40px;
+      background-color: rgba(84, 84, 84, 0.5);
+      border-radius: 50%;
+   }
+   .report-btn {
+      height: 40px;
+      border-radius: 99px;
+      padding: 0 20px;
+      svg {
+         margin-right: 10px;
+      }
+   }
+}
