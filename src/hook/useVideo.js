@@ -1,44 +1,51 @@
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 
+import { storingVideo } from "~/store/videoSlice";
 import * as userServices from "../services/userService";
 
 const useVideo = (pageNum = 1) => {
-   const [results, setResults] = useState([]);
-   const [isLoading, setIsLoading] = useState(false);
-   const [isError, setIsError] = useState(false);
-   const [hasNextPage, setHasNextPage] = useState(false);
+  const dispatch = useDispatch();
+  const [results, setResults] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [hasNextPage, setHasNextPage] = useState(false);
 
-   useEffect(() => {
-      const controller = new AbortController();
+  useEffect(() => {
+    const controller = new AbortController();
 
-      const fetch = async () => {
-         setIsLoading(true);
-         setIsError(false);
+    const fetch = async () => {
+      setIsLoading(true);
+      setIsError(false);
 
-         try {
-            const res = await userServices.getSuggested(pageNum, 4, {
-               signal: controller.signal,
-            });
-            if (!results.length) {
-               setResults(res);
-            } else {
-               setResults((prev) => [...prev, ...res]);
-            }
-            setHasNextPage(!!res.length);
-            setIsLoading(false);
-         } catch (error) {
-            console.log("useVideo error: ", error);
-            setIsLoading(false);
-            setIsError(true);
-         }
-      };
+      try {
+        const res = await userServices.getSuggested(pageNum, 4, {
+          signal: controller.signal,
+        });
 
-      fetch();
+        dispatch(
+          storingVideo({
+            videos: res,
+          })
+        );
 
-      return () => controller.abort();
-   }, [pageNum]);
+        setResults([])
 
-   return { results, isLoading, isError, hasNextPage };
+        setHasNextPage(!!res.length);
+        setIsLoading(false);
+      } catch (error) {
+        console.log("useVideo error: ", error);
+        setIsLoading(false);
+        setIsError(true);
+      }
+    };
+
+    fetch();
+
+    return () => controller.abort();
+  }, [pageNum]);
+
+  return { results, isLoading, isError, hasNextPage };
 };
 
 export default useVideo;

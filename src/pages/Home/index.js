@@ -1,12 +1,17 @@
 import { useState, useRef, useCallback } from "react";
+import { useSelector } from "react-redux";
 
+import { SelectAllVideo } from "~/store/videoSlice";
 import useVideo from "~/hook/useVideo";
+
 import ContentItem from "./ContentItem";
-import ContentItemSkeleton from "~/components/Skeleton/ContentItemSkeleton";
 
 function Home() {
+   const store = useSelector(SelectAllVideo);
    const [pageNum, setPageNum] = useState(1);
-   const { results, isLoading, isError, hasNextPage } = useVideo(pageNum);
+   const { isLoading, isError, hasNextPage } = useVideo(pageNum);
+
+   const {videos} = store;
 
    const intObserver = useRef();
    const lastElementRef = useCallback(
@@ -28,11 +33,11 @@ function Home() {
    );
 
    const renderContent = () => {
-      return results.map((item, index) => {
-         if (results.length === index + 1) {
-            return <ContentItem key={index} ref={lastElementRef} data={item} />;
+      return videos.map((item, index) => {
+         if (videos.length === index + 1) {
+            return <ContentItem index={index} key={index} ref={lastElementRef} data={item} />;
          }
-         return <ContentItem key={index} data={item} />;
+         return <ContentItem index={index} key={index} data={item} />;
       });
    };
 

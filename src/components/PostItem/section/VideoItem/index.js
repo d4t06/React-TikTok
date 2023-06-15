@@ -13,6 +13,7 @@ function VideoItem(props) {
    const [isLoadingVideo, setIsLoadingVideo] = useState(true);
 
    const videoRef = useRef();
+   const indexOfCurrent = useRef();
 
    const durationLine = useRef();
    const durationText = useRef();
@@ -54,6 +55,7 @@ function VideoItem(props) {
          playBtn.current.click();
          return;
       }
+      indexOfCurrent.current = props.index;
       setIsOpenModal(true);
    };
 
@@ -110,6 +112,7 @@ function VideoItem(props) {
                   end={props.end}
                   src={props.src}
                   data={props.data}
+                  index={indexOfCurrent.current}
                />
             </Modal>
          )}

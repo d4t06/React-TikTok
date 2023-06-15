@@ -9,7 +9,7 @@ import ContentItemSkeleton from "~/components/Skeleton/ContentItemSkeleton";
 import styles from "./ContentItem.module.scss";
 const cx = classNames.bind(styles);
 
-function ContentItem({ data, skeleton }, ref) {
+function ContentItem({ data, skeleton, index }, ref) {
    let body;
 
    if (skeleton) body = <ContentItemSkeleton />;
@@ -22,7 +22,7 @@ function ContentItem({ data, skeleton }, ref) {
                src={data.avatar}
             />
             <div className={cx("main-container")}>
-               <PostItem data={data} />
+               <PostItem index={index} data={data} />
             </div>
          </>
       );

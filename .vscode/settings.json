@@ -1,10 +1,5 @@
 {
-   "prettier.tabWidth": 3,
-   "editor.formatOnSave": true,
    "editor.defaultFormatter": "esbenp.prettier-vscode",
-   "editor.fontFamily": "Fira Code Medium",
-   "editor.fontSize": 15,
-   "prettier.printWidth": 80,
    "emmet.includeLanguages": {
       "javascript": "javascriptreact",
       "typescript": "typescriptreact"
