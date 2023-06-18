@@ -1,19 +1,17 @@
 import styles from "./VideoItem.module.scss";
+import videoPreviewStyles from "~/components/VideoPreview/VideoPreview.module.scss";
 import classNames from "classnames/bind";
+
+import VolumeControl from "../PlayerItem/section/VolumeControl";
 import PlayerItem from "../PlayerItem";
+
 import { useEffect, useRef, useState } from "react";
-import Modal from "~/components/Modal";
-import PostItem from "../..";
-import VideoPreview from "~/components/VideoPreview";
 
 const cx = classNames.bind(styles);
+const cy = classNames.bind(videoPreviewStyles);
 
-function VideoItem(props) {
-   const [isOpenModal, setIsOpenModal] = useState(false);
-   const [isLoadingVideo, setIsLoadingVideo] = useState(true);
-
+function VideoItem({end, index, data}) {
    const videoRef = useRef();
-   const indexOfCurrent = useRef();
 
    const durationLine = useRef();
    const durationText = useRef();
@@ -21,8 +19,7 @@ function VideoItem(props) {
    const currentTimeLine = useRef();
    const currentTimeText = useRef();
 
-   const playBtn = useRef();
-   const volumeBtn = useRef();
+   let videoControl;
 
    const handleTimeText = (duration) => {
       let minute = 0;
@@ -44,77 +41,62 @@ function VideoItem(props) {
       const currentTime = videoEl.currentTime;
 
       currentTimeText.current.innerText = handleTimeText(currentTime);
-      const newWidth =
-         (currentTime / duration) * videoRef.current.durationLineWidth;
+      const newWidth = (currentTime / duration) * videoRef.current.durationLineWidth;
 
       currentTimeLine.current.style.width = newWidth + "px";
    };
 
-   const handleOpenModal = (e) => {
-      if (props?.end) {
-         playBtn.current.click();
-         return;
-      }
-      indexOfCurrent.current = props.index;
-      setIsOpenModal(true);
-   };
+   videoControl = (
+      <PlayerItem
+         ref={{
+            durationLine,
+            durationText,
+
+            currentTimeLine,
+            currentTimeText,
+         }}
+         videoRef={videoRef}
+         end={end}
+         index={index}
+      />
+   );
 
    // update text and get duration width when playing
-   useEffect(() => {
-      if (isLoadingVideo) return;
+
+   const updatePlayerInfo = () => {
+
+      console.log(videoRef.current);
 
       videoRef.current.volume = 0.5;
       videoRef.current.loop = true;
 
-      durationText.current.innerText =
-         "/" + handleTimeText(videoRef.current.duration);
+      durationText.current.innerText = "/" + handleTimeText(videoRef.current.duration);
       videoRef.current["durationLineWidth"] = durationLine.current.offsetWidth;
 
-      setIsLoadingVideo(false);
-   }, [isLoadingVideo]);
+      currentTimeLine.current.style.width = "0px"
+
+   }
+
+   // console.log("isLoadingVideo =", isLoadingVideo);
+   console.log("video item render");
 
    return (
       <>
-         {console.log("video item render")}
-         <div
-            className={cx("video-frame", props.preview ? "preview" : "")}
-            onClick={(e) => handleOpenModal(e)}
-         >
+         <div className={cx("video-frame", end ? "preview" : "")}>
             <video
                className={cx("video")}
                ref={videoRef}
+               src={data.popular_video.file_url}
                onTimeUpdate={() => handlePlaying()}
-               src={props.src}
-               onLoadedMetadata={() => setIsLoadingVideo(false)}
-               onEnded={() => console.log({ a: videoRef.current })}
+               onLoadedMetadata={() => updatePlayerInfo()}
             />
-            {videoRef.current && (
-               <PlayerItem
-                  ref={{
-                     durationLine,
-                     durationText,
-
-                     currentTimeLine,
-                     currentTimeText,
-
-                     playBtn,
-                     volumeBtn,
-                  }}
-                  preview={props.preview}
-                  videoEl={videoRef.current}
-               />
-            )}
+            {videoRef  && videoControl}
          </div>
-         {isOpenModal && (
-            <Modal setIsOpenModal={setIsOpenModal}>
-               <VideoPreview
-                  setIsOpenModal={setIsOpenModal}
-                  end={props.end}
-                  src={props.src}
-                  data={props.data}
-                  index={indexOfCurrent.current}
-               />
-            </Modal>
+
+         {end && videoRef && (
+            <div className={cy("volume-slider-wrapper")}>
+               <VolumeControl videoEl={videoRef.current} />
+            </div>
          )}
       </>
    );

@@ -1,10 +1,11 @@
 @mixin box-shadow {
    box-shadow: 2px 2px 5px rgba($color: #000, $alpha: 0.5);
 }
-.wrapper {
+
+.overlay {
    position: absolute;
    bottom: 0;
-   height: 100px;
+   height: 100%;
    width: 100%;
 
    &:hover {
@@ -14,24 +15,29 @@
       }
    }
 }
-.wrapper.preview {
-   bottom: 20px;
+.overlay.preview {
+   bottom: 40px;
+   .time-text {
+      span {
+         font-size: 1.5rem;
+      }
+   }
 }
 .btn {
    font-size: 2.5rem;
    color: #fff;
+   background-color: transparent;
    cursor: pointer;
 }
 .play-btn,
-.volume-icon {
-   background-color: transparent;
+.volume-control-wrapper {
    position: absolute;
    bottom: 45px;
    left: 20px;
    padding: 5px;
    // z-index: 5;
 }
-.volume-icon {
+.volume-control-wrapper {
    left: unset;
    right: 20px;
 }
@@ -49,7 +55,7 @@
    right: 10px;
    bottom: 14px;
    &:hover .video-duration {
-      height: 4px;
+      height: 6px;
    }
 }
 
@@ -63,7 +69,7 @@
 .video-duration {
    @include box-shadow();
    flex: 1;
-   height: 2px;
+   height: 4px;
    position: relative;
    background-color: #ccc;
    border-radius: 99px;

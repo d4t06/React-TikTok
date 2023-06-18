@@ -6,7 +6,6 @@ import * as userServices from "../services/userService";
 
 const useVideo = (pageNum = 1) => {
   const dispatch = useDispatch();
-  const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [hasNextPage, setHasNextPage] = useState(false);
@@ -15,13 +14,17 @@ const useVideo = (pageNum = 1) => {
     const controller = new AbortController();
 
     const fetch = async () => {
-      setIsLoading(true);
-      setIsError(false);
-
+      
       try {
+        setIsLoading(true);
+
         const res = await userServices.getSuggested(pageNum, 4, {
           signal: controller.signal,
         });
+
+        setHasNextPage(!!res.length);
+        setIsLoading(false);
+
 
         dispatch(
           storingVideo({
@@ -29,10 +32,6 @@ const useVideo = (pageNum = 1) => {
           })
         );
 
-        setResults([])
-
-        setHasNextPage(!!res.length);
-        setIsLoading(false);
       } catch (error) {
         console.log("useVideo error: ", error);
         setIsLoading(false);
@@ -45,7 +44,9 @@ const useVideo = (pageNum = 1) => {
     return () => controller.abort();
   }, [pageNum]);
 
-  return { results, isLoading, isError, hasNextPage };
+  // console.log("usevideo")
+
+  return { isLoading, isError, hasNextPage };
 };
 
 export default useVideo;

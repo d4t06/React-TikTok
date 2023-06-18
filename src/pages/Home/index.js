@@ -8,6 +8,7 @@ import ContentItem from "./ContentItem";
 
 function Home() {
    const store = useSelector(SelectAllVideo);
+
    const [pageNum, setPageNum] = useState(1);
    const { isLoading, isError, hasNextPage } = useVideo(pageNum);
 
@@ -48,9 +49,22 @@ function Home() {
    let content;
    if (isError) content = <h1>Error</h1>;
    else content = renderContent();
+
+
+   // 4 lan render
    return (
       <>
          {content} {isLoading && skeletons}
+
+         {isOpenModal && (
+            <Modal setIsOpenModal={setIsOpenModal}>
+               <VideoPreview
+                  setIsOpenModal={setIsOpenModal}
+                  end={end}
+                  index={indexOfCurrent.current}
+               />
+            </Modal>
+         )}
       </>
    );
 }
