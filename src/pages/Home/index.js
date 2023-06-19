@@ -1,72 +1,85 @@
-import { useState, useRef, useCallback } from "react";
-import { useSelector } from "react-redux";
+import { useRef, useCallback, useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-import { SelectAllVideo } from "~/store/videoSlice";
+import { SelectAllVideoStore, nextPage } from "~/store/videoSlice";
+import { SelectAllModalStore } from "~/store/modalSlice";
 import useVideo from "~/hook/useVideo";
 
 import ContentItem from "./ContentItem";
+import Modal  from "~/components/Modal";
+import  VideoPreview  from "~/components/VideoPreview";
 
 function Home() {
-   const store = useSelector(SelectAllVideo);
+  const videoStore = useSelector(SelectAllVideoStore);
+  const modalStore = useSelector(SelectAllModalStore)
+  const dispath = useDispatch()
+  // const [pageNum, setPageNum] = useState(1)
 
-   const [pageNum, setPageNum] = useState(1);
-   const { isLoading, isError, hasNextPage } = useVideo(pageNum);
 
-   const {videos} = store;
+  // console.log("store =", store)
 
-   const intObserver = useRef();
-   const lastElementRef = useCallback(
-      (post) => {
-         if (isLoading) return;
+  const { videos, pageNum } = videoStore;
+  const { isOpenModal } = modalStore;
 
-         if (intObserver.current) intObserver.current.disconnect();
+  const { isLoading, isError, hasNextPage } = useVideo(pageNum);
 
-         intObserver.current = new IntersectionObserver((posts) => {
-            if (posts[0].isIntersecting && hasNextPage) {
-               console.log("near last element");
-               setPageNum((prev) => prev + 1);
-            }
-         });
+  const intObserver = useRef();
+  const lastElementRef = useCallback(
+    (post) => {
+      if (isLoading) return;
 
-         if (post) intObserver.current.observe(post);
-      },
-      [isLoading, hasNextPage]
-   );
+      if (intObserver.current) intObserver.current.disconnect();
 
-   const renderContent = () => {
-      return videos.map((item, index) => {
-         if (videos.length === index + 1) {
-            return <ContentItem index={index} key={index} ref={lastElementRef} data={item} />;
-         }
-         return <ContentItem index={index} key={index} data={item} />;
+      intObserver.current = new IntersectionObserver((posts) => {
+        if (posts[0].isIntersecting && hasNextPage) {
+          dispath(nextPage())
+        }
       });
-   };
 
-   const skeletons = [...Array(4).keys()].map((index) => {
-      return <ContentItem skeleton key={index} />;
-   });
+      if (post) intObserver.current.observe(post);
+    },
+    [isLoading, hasNextPage]
+  );
 
-   let content;
-   if (isError) content = <h1>Error</h1>;
-   else content = renderContent();
+  useEffect(() => {
+    dispath(nextPage({init: true}))
+  }, [])
 
+  const renderContent = () => {
+    return videos.map((item, index) => {
+      if (videos.length === index + 1) {
+        return (
+          <ContentItem
+            index={index}
+            key={index}
+            ref={lastElementRef}
+            data={item}
+          />
+        );
+      }
+      return <ContentItem index={index} key={index} data={item} />;
+    });
+  };
 
-   // 4 lan render
-   return (
-      <>
-         {content} {isLoading && skeletons}
+  const skeletons = [...Array(4).keys()].map((index) => {
+    return <ContentItem skeleton key={index} />;
+  });
 
-         {isOpenModal && (
-            <Modal setIsOpenModal={setIsOpenModal}>
-               <VideoPreview
-                  setIsOpenModal={setIsOpenModal}
-                  end={end}
-                  index={indexOfCurrent.current}
-               />
-            </Modal>
-         )}
-      </>
-   );
+  let content;
+  if (isError) content = <h1>Error</h1>;
+  else content = renderContent();
+
+  // 4 lan render
+  return (
+    <>
+      {content} {isLoading && skeletons}
+      {isOpenModal && (
+        <Modal>
+          <VideoPreview end />
+        </Modal>
+      )}
+    </>
+  );
 }
 
 export default Home;

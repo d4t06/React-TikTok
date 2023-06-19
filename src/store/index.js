@@ -1,10 +1,12 @@
-import { configureStore, createAsyncThunk } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import videoReducer from "./videoSlice";
+import modalReducer from "./modalSlice";
 
 
 const store = configureStore({
     reducer : {
-        videos: videoReducer
+        videos: videoReducer,
+        modal: modalReducer,
     }
 })
 

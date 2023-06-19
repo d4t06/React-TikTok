@@ -5,13 +5,22 @@ import classNames from "classnames/bind";
 import VolumeControl from "../PlayerItem/section/VolumeControl";
 import PlayerItem from "../PlayerItem";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { SelectAllModalStore, setCurrentTime } from "~/store/modalSlice";
 
 const cx = classNames.bind(styles);
 const cy = classNames.bind(videoPreviewStyles);
 
-function VideoItem({end, index, data}) {
+function VideoItem({end, index, data, currentTime}) {
+   const dispatch = useDispatch()
+   const modalStore = useSelector(SelectAllModalStore)
+   const {isOpenModal, currentTime: modalCurrentTime} = modalStore
+
    const videoRef = useRef();
+   const firstUpdate  = useRef()
+   // const currentTimeIdea = useRef();
+   
 
    const durationLine = useRef();
    const durationText = useRef();
@@ -44,6 +53,11 @@ function VideoItem({end, index, data}) {
       const newWidth = (currentTime / duration) * videoRef.current.durationLineWidth;
 
       currentTimeLine.current.style.width = newWidth + "px";
+
+      if (end) {
+         dispatch(setCurrentTime({time: currentTime}))
+         // currentTimeIdea.current = currentTime
+      }
    };
 
    videoControl = (
@@ -65,20 +79,39 @@ function VideoItem({end, index, data}) {
 
    const updatePlayerInfo = () => {
 
-      console.log(videoRef.current);
+      // console.log(videoRef.current);
 
       videoRef.current.volume = 0.5;
       videoRef.current.loop = true;
+      videoRef.current.currentTime = currentTime || 0;
+
 
       durationText.current.innerText = "/" + handleTimeText(videoRef.current.duration);
       videoRef.current["durationLineWidth"] = durationLine.current.offsetWidth;
 
       currentTimeLine.current.style.width = "0px"
-
+      // if (currentTime) currentTimeText.innerText = handleTimeText(currentTime);
    }
 
    // console.log("isLoadingVideo =", isLoadingVideo);
-   console.log("video item render");
+   // console.log("video item render");
+
+
+   useEffect(() => {
+      console.log("modalCurrentTime =", modalCurrentTime);
+      if (firstUpdate.current || isOpenModal) {
+         firstUpdate.current = false;
+         return;
+      }
+
+      if (modalCurrentTime) {
+         videoRef.current.currentTime = modalCurrentTime;
+         // console.log("currentTimeIdea =", currentTimeIdea.current);
+      }
+
+   }, [isOpenModal])
+
+
 
    return (
       <>

@@ -16,11 +16,14 @@
    }
 }
 .overlay.preview {
-   bottom: 40px;
+   bottom: 70px;
    .time-text {
       span {
          font-size: 1.5rem;
       }
+   }
+   .time-text-wrapper {
+      width: 92px;
    }
 }
 .btn {
