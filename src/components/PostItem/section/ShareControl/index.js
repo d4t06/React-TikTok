@@ -8,44 +8,51 @@ import ShareContainer from "~/components/ShareContainer";
 import styles from "./ShareControl.module.scss";
 
 const cx = classNames.bind(styles);
-function ShareControl() {
-   const [isLike, setIsLike] = useState(false);
-   const [likeCount, setLikeCount] = useState(827);
+function ShareControl({end}) {
+  const [isLike, setIsLike] = useState(false);
+  const [likeCount, setLikeCount] = useState(827);
 
-   const handleLike = () => {
-      if (!isLike) {
-         // handleLike
-         setIsLike(true);
-         setLikeCount(likeCount + 1);
-      } else {
-         // handleLike
-         setIsLike(false);
-         setLikeCount(likeCount - 1);
-      }
-   };
+  const handleLike = () => {
+    if (!isLike) {
+      // handleLike
+      setIsLike(true);
+      setLikeCount(likeCount + 1);
+    } else {
+      // handleLike
+      setIsLike(false);
+      setLikeCount(likeCount - 1);
+    }
+  };
 
-   return (
-      <div className={cx("video-action")}>
-         <button
-            className={cx(isLike ? "liked" : "")}
-            onClick={() => handleLike()}
-         >
-            <FontAwesomeIcon icon={faHeart} />
-         </button>
-         <span className={cx("share-number")}>{likeCount}</span>
+  return (
+    <div className={cx("video-action", end ? "end" : "")}>
+      <button
+        className={cx(isLike ? "liked" : "")}
+        onClick={() => handleLike()}
+      >
+        <span className={cx("icon")}>
+          <FontAwesomeIcon icon={faHeart} />
+        </span>
+      <span className={cx("number")}>547</span>
 
-         <button>
-            <FontAwesomeIcon icon={faMessage} />
-         </button>
-         <span className={cx("share-number")}>212</span>
+      </button>
 
-         <ShareContainer>
-            <button>
-               <FontAwesomeIcon icon={faShare} />
-            </button>
-         </ShareContainer>
-         <span className={cx("share-number")}>547</span>
-      </div>
-   );
+      <button>
+        <span className={cx("icon")}>
+          <FontAwesomeIcon icon={faMessage} />
+        </span>
+        <span className={cx("number")}>{likeCount}</span>
+      </button>
+
+      <ShareContainer>
+        <button>
+          <span className={cx("icon")}>
+            <FontAwesomeIcon icon={faShare} />
+          </span>
+          <span className={cx("number")}>212</span>
+        </button>
+      </ShareContainer>
+    </div>
+  );
 }
 export default ShareControl;

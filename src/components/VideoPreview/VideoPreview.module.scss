@@ -30,7 +30,42 @@
    width: 40%;
    position: relative;
    background-color: #fff;
-   padding: 40px 20px;
+   .top {
+      padding: 25px;
+      .content-desc {
+         font-size: 1.6rem;
+         margin-top: 20px;
+         display: flex;
+         flex-wrap: wrap;
+         span {
+            font-weight: 600;
+            margin-left: 5px;
+         }
+         margin-bottom: var(--elementsGap);
+      }
+      .music-info {
+         display: inline-block;
+         margin-top: .8rem;
+         font-size: 1.6rem;
+         font-weight: 600;
+         span {
+            margin-right: 10px;
+         }
+      }
+   }
+
+   .bottom {
+      padding: 25px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: auto;
+      gap: 2rem;
+      width: 100%;
+      background-color: #f1f1f1;
+      height: 100%;
+      border-top: 1px solid #ccc;
+   }
 }
 .video-overlay {
    position: absolute;

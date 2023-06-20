@@ -3,13 +3,27 @@
    flex-direction: column;
    justify-content: flex-end;
    margin-left: 15px;
+   gap: 20px;
+   
    button {
-      height: 48px;
-      width: 48px;
-      font-size: 1.9rem;
-      border-radius: 50%;
-      margin-top: 8px;
-      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      background-color: transparent;
+      gap: 10px;
+      .icon {
+         height: 48px;
+         width: 48px;
+         background-color: #f1f1f1;
+         border-radius: 50%;
+         padding: 15px;
+         svg {
+            height: 100%;
+            width: 100%;
+         }
+      }
+      .number {
+         font-size: 1.4rem;
+      }
    }
    button.liked,
    button:hover {
@@ -21,7 +35,22 @@
       font-weight: 600;
       text-align: center;
    }
+   &.end {
+      flex-direction: row;
+      justify-content: flex-start;
+      margin-left: 0;
+      margin-top: 3rem;
+      button {
+         .icon {
+            height: 32px;
+            width: 32px;
+            padding: 8px;
+         }
+      }
+   }
 }
+
+
 .share-item {
    span {
       color: #fff;

@@ -8,30 +8,22 @@ import classNames from "classnames/bind";
 
 const cx = classNames.bind(styles);
 
-function PostItemHeader({ data, hasAvatar }) {
-  const videoDesc = (
-    <p className={cx("content-desc")}>
-      {data.popular_video.description}
-      <span>#monquayeuthuong</span>
-      <span>#ngaycuame</span>
-      <span>#20/10</span>
-    </p>
-  );
-
+function PostItemHeader({ data, hasAvatar, comment }) {
   return (
     <>
-      <div className={cx("content-header")}>
+      <div className={cx("content-header", comment ? "comment" : "")}>
         <div className={cx("container")}>
           <div className="left">
             {hasAvatar && (
               <AccountsItem
-                className={cx("avatarframe-main-container")}
+                className={cx("avatarframe-main-container",)}
                 imgOnly
+                end
                 src={data.avatar}
               />
             )}
           </div>
-          <div className="righ">
+          <div className={cx("right")}>
             <p className={cx("user-info")}>
               <Menu
                 content={
@@ -63,27 +55,29 @@ function PostItemHeader({ data, hasAvatar }) {
                 >{`${data.first_name} ${data.last_name}`}</span>
               )}
             </p>
-            {hasAvatar ? (
+            {comment ? (
+              <>
+                <p className={cx("comment-text")}>
+                  Hình như bé kia hỏi thăm má của con mèo{" "}
+                </p>
+                <div className={cx("comment-cta")}>
+                  <span className={cx("comment-time")}>20-6</span>
+                  <button className={cx("reply-btn")}>Trả lời</button>
+                </div>
+              </>
+            ) : (
               <p
                 className={cx("full-name")}
               >{`${data.first_name} ${data.last_name}`}</p>
-            ) : (
-              videoDesc
             )}
-
           </div>
         </div>
-        <Button outline className={cx("follow-btn", "hide-for-small")}>
-          Follow
-        </Button>
+        {!comment && (
+          <Button outline className={cx("follow-btn", "hide-for-small")}>
+            Follow
+          </Button>
+        )}
       </div>
-      {hasAvatar && videoDesc}
-      <a className={cx("music-info")} href="/home">
-        <span>
-          <FontAwesomeIcon icon={faMusic} />
-        </span>
-        Music - Steal My Girls
-      </a>
     </>
   );
 }

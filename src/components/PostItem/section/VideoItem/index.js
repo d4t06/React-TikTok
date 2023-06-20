@@ -90,6 +90,8 @@ function VideoItem({end, index, data, currentTime}) {
       videoRef.current["durationLineWidth"] = durationLine.current.offsetWidth;
 
       currentTimeLine.current.style.width = "0px"
+
+      if (end) videoRef.current.play();
       // if (currentTime) currentTimeText.innerText = handleTimeText(currentTime);
    }
 
@@ -105,12 +107,11 @@ function VideoItem({end, index, data, currentTime}) {
       }
 
       if (modalCurrentTime) {
-         videoRef.current.currentTime = modalCurrentTime;
+         // videoRef.current.currentTime = modalCurrentTime;
          // console.log("currentTimeIdea =", currentTimeIdea.current);
       }
 
    }, [isOpenModal])
-
 
 
    return (
