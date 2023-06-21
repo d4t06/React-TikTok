@@ -35,7 +35,7 @@ function VolumeControl({ videoRef }) {
             e.stopPropagation();
             handleMute();
          }}
-         className={cx("btn", "volume-icon")}
+         className={cx("volume-btn")}
       >
          {!isMute && (
             <span>

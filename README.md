@@ -41,3 +41,8 @@
 -  Sửa css PlayerItem
 -  Thêm skeleton loading
 -  Issue lỗi skeleton loading khi load thêm video
+
+### update thứ 4 21/6/2023
+
+- Màn hình chính sẽ tự cập nhật để  hiển thị được video hiện tại
+- Đồng bộ thời gian video ở màn hình chính và video trong modal

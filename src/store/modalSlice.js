@@ -13,7 +13,6 @@ const modalSlice = createSlice({
     setOpenModal(state, action) {
       state.isOpenModal = action.payload.isOpenModal;
       state.index = action.payload.index || 0;
-      state.currentTime = action.payload.time || 0;
     },
     setCurrentTime(state, action) {
       state.currentTime = action.payload.time;

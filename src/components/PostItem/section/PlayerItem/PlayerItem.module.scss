@@ -1,6 +1,18 @@
 @mixin box-shadow {
    box-shadow: 2px 2px 5px rgba($color: #000, $alpha: 0.5);
 }
+@mixin button-position {
+   position: absolute;
+   bottom: 45px;
+}
+@mixin player-btn {
+
+   font-size: 2.5rem;
+   color: #fff;
+   padding: 5px;
+   background-color: transparent;
+   cursor: pointer;
+}
 
 .overlay {
    position: absolute;
@@ -14,36 +26,49 @@
          visibility: visible;
       }
    }
-}
-.overlay.preview {
-   bottom: 70px;
-   .time-text {
-      span {
-         font-size: 1.5rem;
+   &.preview {
+      bottom: 70px;
+      .time-text {
+         span {
+            font-size: 1.5rem;
+         }
+      }
+      .time-text-wrapper {
+         width: 92px;
+      }
+      .cta {
+         .play-pause-btn {
+            font-size: 6rem;
+            left: 50%;
+            top: 60%;
+            bottom: unset;
+            transform: translate(-50%, -50%);
+            height: 80px;
+            width: 80px;
+         }
+         .pause-btn {
+            display: none;
+         }
+
       }
    }
-   .time-text-wrapper {
-      width: 92px;
+}
+
+.cta {
+   .play-pause-btn {
+      @include button-position();
+      @include player-btn();
+      left: 20px;
+   }
+   .volume-control-wrapper {
+      @include button-position();
+      right: 20px;
    }
 }
-.btn {
-   font-size: 2.5rem;
-   color: #fff;
-   background-color: transparent;
-   cursor: pointer;
+.volume-btn {
+   @include player-btn();
 }
-.play-btn,
-.volume-control-wrapper {
-   position: absolute;
-   bottom: 45px;
-   left: 20px;
-   padding: 5px;
-   // z-index: 5;
-}
-.volume-control-wrapper {
-   left: unset;
-   right: 20px;
-}
+
 .time-slider {
    opacity: 0;
    visibility: hidden;
