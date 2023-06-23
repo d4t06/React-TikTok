@@ -15,6 +15,10 @@
    }
 }
 .Content {
+   &.ovf-hidden {
+      height: calc(100vh - 70px);
+      overflow: hidden;
+   }
    // height: auto;
    min-width: 692px;
    max-width: 692px;

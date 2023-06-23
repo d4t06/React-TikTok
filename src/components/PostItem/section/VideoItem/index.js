@@ -5,15 +5,15 @@ import classNames from "classnames/bind";
 import VolumeControl from "../PlayerItem/section/VolumeControl";
 import PlayerItem from "../PlayerItem";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setCurrentTime } from "~/store/modalSlice";
 
 const cx = classNames.bind(styles);
 const cy = classNames.bind(videoPreviewStyles);
 
-function VideoItem({end, index, data, time}) {
-   const dispatch = useDispatch()
+function VideoItem({ end, index, data, time }) {
+   const dispatch = useDispatch();
 
    const videoRef = useRef();
 
@@ -52,7 +52,7 @@ function VideoItem({end, index, data, time}) {
       currentTimeLine.current.style.width = newWidth + "px";
 
       // if (end) {
-         dispatch(setCurrentTime({time: videoCurrentTime}))
+      dispatch(setCurrentTime({ time: videoCurrentTime }));
       // }
    };
 
@@ -64,10 +64,8 @@ function VideoItem({end, index, data, time}) {
 
             currentTimeLine,
             currentTimeText,
-
-            
          }}
-         isPlaying = {isPlaying}
+         isPlaying={isPlaying}
          videoRef={videoRef}
          end={end}
          index={index}
@@ -76,7 +74,6 @@ function VideoItem({end, index, data, time}) {
 
    // update text and get duration width when playing
    const updatePlayerInfo = () => {
-
       videoRef.current.volume = 0.5;
       videoRef.current.loop = true;
 
@@ -84,29 +81,13 @@ function VideoItem({end, index, data, time}) {
          videoRef.current.currentTime = time;
       }
 
-
       durationText.current.innerText = "/" + handleTimeText(videoRef.current.duration);
       videoRef.current["durationLineWidth"] = durationLine.current.offsetWidth;
 
-      currentTimeLine.current.style.width = "0px"
+      currentTimeLine.current.style.width = "0px";
 
       if (end) videoRef.current.play();
-   }
-
-
-   // cập nhật current time khi bật modal
-   // useEffect(() => {
-      // console.log("modalCurrentTime =", modalCurrentTime);
-      // if (firstUpdate.current || isOpenModal) {
-      //    firstUpdate.current = false;
-      //    return;
-      // }
-      // if (end) {
-
-      // }
-
-
-   // }, [])
+   };
 
 
    return (
@@ -121,7 +102,7 @@ function VideoItem({end, index, data, time}) {
                onPlay={() => setIsPlaying(true)}
                onPause={() => setIsPlaying(false)}
             />
-            {videoRef  && videoControl}
+            {videoRef && videoControl}
          </div>
 
          {end && videoRef && (

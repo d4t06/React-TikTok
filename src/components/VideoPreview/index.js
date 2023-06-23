@@ -33,28 +33,29 @@ function VideoPreview() {
    const triggerElement = useRef();
    const newTriggerElement = useRef();
 
+   const distance = useRef(0);
+   const isScroll = useRef(false)
+
    const handlePrevious = () => {
+      newTriggerElement.current = newTriggerElement.current.previousSibling;
+
       SetCurrentIndex((prev) => prev - 1);
    };
 
    const handleNext = () => {
       newTriggerElement.current = newTriggerElement.current.nextSibling;
 
-      newTriggerElement.current.scrollIntoView({ behavior: "instant", block: "start" });
       SetCurrentIndex((prev) => prev + 1);
    };
 
+   // Scroll video ở màn hình chủ, cập nhật current time khi tắt modal
    const handleCloseModal = () => {
-      triggerElement.current.classList.remove("trigger");
-
       const currentElement = newTriggerElement.current;
       const videoElement = currentElement.querySelector("video");
-
+      
       videoElement.currentTime = currentTime;
-
       dispath(setOpenModal({ isOpenModal: false }));
 
-      videoElement.play();
    };
 
    const indexControl = (
@@ -153,14 +154,43 @@ function VideoPreview() {
       }
    }, [currentIndex]);
 
-   // Scroll video ở màn hình chủ, cập nhật current time khi tắt modal
    useEffect(() => {
       const trigger = document.querySelector(".trigger");
       triggerElement.current = trigger;
       newTriggerElement.current = trigger;
    }, []);
 
-   // if (isError) content = <h1>Error when loading video</h1>
+   useEffect(() => {
+
+      return () => {
+         triggerElement.current.classList.remove("trigger");
+
+         newTriggerElement.current.scrollIntoView({ behavior: "instant", block: "center" });
+      }
+   }, [isOpenModal])
+
+
+   useEffect(() => {
+      const handleScroll = (e) => {
+         e.deltaY > 0 ? distance.current += 1 : distance.current -= 1
+
+         if (currentIndex == videos.length - 1) return;
+
+         if (distance.current >= 2) {
+            handleNext();
+         } else if ( distance.current <= -2) {
+            handlePrevious();
+         }
+         console.log("currentIndex =", currentIndex);
+      }
+
+      window.addEventListener("wheel", handleScroll);
+      distance.current = 0;
+      
+      return () => {
+         console.log("clean up");
+         window.removeEventListener("wheel", handleScroll)};
+   }, [isOpenModal, videos, currentIndex])
 
    return content;
 }
