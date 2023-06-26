@@ -26,6 +26,7 @@
          visibility: visible;
       }
    }
+   
    &.preview {
       bottom: 70px;
       .time-text {
@@ -34,7 +35,7 @@
          }
       }
       .time-text-wrapper {
-         width: 92px;
+         width: 95px;
       }
       .cta {
          .play-pause-btn {
@@ -99,7 +100,7 @@
    flex: 1;
    height: 4px;
    position: relative;
-   background-color: #ccc;
+   background-color: #fff;
    border-radius: 99px;
 
    cursor: pointer;
@@ -135,6 +136,7 @@
 
    span {
       font-size: 1.3rem;
+      font-weight: 500;
       color: #fff;
       text-shadow: 1px 0 2px #000;
    }

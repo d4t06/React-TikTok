@@ -14,10 +14,9 @@ const cx = classNames.bind(styles);
 function PlayerItem({ videoRef, end, index, isPlaying }, ref) {
    const dispatch = useDispatch();
 
-   const [isIntoView, setIsIntoView] = useState(false);
-
    const indexOfCurrent = useRef();
    const timerId = useRef();
+
 
    const handlePlayPause = () => {
       !isPlaying ? play() : pause();
@@ -60,6 +59,7 @@ function PlayerItem({ videoRef, end, index, isPlaying }, ref) {
 
       tempParent.classList.add("trigger");
       indexOfCurrent.current = index;
+      ref.timeSlider.current.display = "none"
       if (isPlaying) pause();
       dispatch(
          setOpenModal({
@@ -106,7 +106,34 @@ function PlayerItem({ videoRef, end, index, isPlaying }, ref) {
    //    };
    // }, [isIntoView]);
 
-   // console.log("player render", videoRef.current);
+   let timeSlider = (
+      <div ref={ref.timeSlider} className={cx("time-slider")} style={{display: "none"}}>
+         <div
+            className={cx("video-duration")}
+            onClick={(e) => {
+               e.stopPropagation();
+               handleSeek(e);
+            }}
+            ref={ref.durationLine}
+         >
+            <div className={cx("time-current")} ref={ref.currentTimeLine}></div>
+         </div>
+         <div className={cx("time-text-wrapper")}>
+            <div className={cx("time-text")}>
+               <div className="time-current-wrapper">
+                  <span className={cx("current")} ref={ref.currentTimeText}>
+                     00:00
+                  </span>
+               </div>
+               <span className={cx("duration")} ref={ref.durationText}>
+                  00:00
+               </span>
+            </div>
+         </div>
+      </div>
+   );
+
+   // console.log("Player render");
 
    return (
       <>
@@ -115,7 +142,6 @@ function PlayerItem({ videoRef, end, index, isPlaying }, ref) {
             onClick={(e) => handleOverlayClick(e)}
          >
             <div className={cx("cta")}>
-               
                <>
                   <button
                      className={cx("play-pause-btn")}
@@ -124,7 +150,7 @@ function PlayerItem({ videoRef, end, index, isPlaying }, ref) {
                         handlePlayPause();
                      }}
                   >
-                     {isPlaying ? (
+                     {isPlaying && videoRef.current ? (
                         <span>
                            <FontAwesomeIcon className={cx("pause-btn")} icon={faPause} />
                         </span>
@@ -141,31 +167,8 @@ function PlayerItem({ videoRef, end, index, isPlaying }, ref) {
                      </div>
                   )}
                </>
-               
-               <div className={cx("time-slider")}>
-                  <div
-                     className={cx("video-duration")}
-                     onClick={(e) => {
-                        e.stopPropagation();
-                        handleSeek(e);
-                     }}
-                     ref={ref.durationLine}
-                  >
-                     <div className={cx("time-current")} ref={ref.currentTimeLine}></div>
-                  </div>
-                  <div className={cx("time-text-wrapper")}>
-                     <div className={cx("time-text")}>
-                        <div className="time-current-wrapper">
-                           <span className={cx("current")} ref={ref.currentTimeText}>
-                              00:00
-                           </span>
-                        </div>
-                        <span className={cx("duration")} ref={ref.durationText}>
-                           00:00
-                        </span>
-                     </div>
-                  </div>
-               </div>
+
+               {timeSlider}
             </div>
          </div>
       </>

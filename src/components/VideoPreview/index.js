@@ -1,27 +1,18 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-   faClose,
-   faFlag,
-   faChevronUp,
-   faChevronDown,
-   faMusic,
-} from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import classNames from "classnames/bind";
 
 import { useDispatch, useSelector } from "react-redux";
 import { SelectAllVideoStore, nextPage } from "~/store/videoSlice";
 
-import VideoItem from "../PostItem/section/VideoItem";
-import PostItemHeader from "../PostItem/section/PostItemHeader";
-
 import styles from "./VideoPreview.module.scss";
 import { SelectAllModalStore, setOpenModal } from "~/store/modalSlice";
-import ShareControl from "../PostItem/section/ShareControl";
+import Video from "./section/Video";
+import Text from "./section/Text";
 
 const cx = classNames.bind(styles);
 
 function VideoPreview() {
+   // use store
    const dispath = useDispatch();
    const videoStore = useSelector(SelectAllVideoStore);
    const modalStore = useSelector(SelectAllModalStore);
@@ -30,122 +21,54 @@ function VideoPreview() {
    const { videos, hasNextPage } = videoStore;
 
    const [currentIndex, SetCurrentIndex] = useState(index);
+
    const triggerElement = useRef();
    const newTriggerElement = useRef();
-
    const distance = useRef(0);
-   const isScroll = useRef(false)
 
+   // handle functions
    const handlePrevious = () => {
       newTriggerElement.current = newTriggerElement.current.previousSibling;
-
+      // setIsLoading(true)
       SetCurrentIndex((prev) => prev - 1);
+
+      // setTimeout(() => {
+      //    setIsLoading(false)
+      // }, 200)
    };
 
    const handleNext = () => {
       newTriggerElement.current = newTriggerElement.current.nextSibling;
-
       SetCurrentIndex((prev) => prev + 1);
+      console.log("newTriggerElement", newTriggerElement.current);
    };
 
-   // Scroll video ở màn hình chủ, cập nhật current time khi tắt modal
    const handleCloseModal = () => {
       const currentElement = newTriggerElement.current;
       const videoElement = currentElement.querySelector("video");
-      
-      videoElement.currentTime = currentTime;
-      dispath(setOpenModal({ isOpenModal: false }));
 
+      // cập nhật current time ở màn hình chính
+      videoElement.currentTime = currentTime;
+
+      // tắt modal
+      dispath(setOpenModal({ isOpenModal: false }));
    };
 
-   const indexControl = (
-      <>
-         <button
-            className={cx("previous", "btn", currentIndex === 0 ? "disable" : "")}
-            onClick={() => handlePrevious()}
-         >
-            <span>
-               <FontAwesomeIcon icon={faChevronUp} />
-            </span>
-         </button>
-         <button className={cx("next", "btn")} onClick={() => handleNext()}>
-            <span>
-               <FontAwesomeIcon icon={faChevronDown} />
-            </span>
-         </button>
-      </>
-   );
+   const useMemoVideo = useMemo(() => {
+      return (
+         <Video
+            isUpdateCurrentTime = {index == currentIndex}
+            data={videos[currentIndex]}
+            currentTime={currentTime}
+            currentIndex={currentIndex}
+            handleNext={handleNext}
+            handlePrevious={handlePrevious}
+            handleCloseModal={handleCloseModal}
+         />
+      );
+   }, [currentIndex]);
 
-   let headerContent = (
-      <>
-         <div className={cx("header")}>
-            <button className={cx("close-btn", "btn")} onClick={() => handleCloseModal()}>
-               <FontAwesomeIcon icon={faClose} />
-            </button>
-            <button className={cx("report-btn", "btn")}>
-               <FontAwesomeIcon icon={faFlag} />
-               <span>Report</span>
-            </button>
-         </div>
-      </>
-   );
-
-   const videoDesc = (
-      <p className={cx("content-desc")}>
-         {videos[currentIndex].popular_video.description}
-         <span>#monquayeuthuong</span>
-         <span>#ngaycuame</span>
-         <span>#20/10</span>
-      </p>
-   );
-
-   const musicDesc = (
-      <a className={cx("music-info")} href="/home">
-         <span>
-            <FontAwesomeIcon icon={faMusic} />
-         </span>
-         Music - Steal My Girls
-      </a>
-   );
-
-   let content = (
-      <>
-         <div className={cx("container")}>
-            <div className={cx("left")}>
-               <div
-                  className={cx("video-overlay")}
-                  style={{
-                     backgroundImage: `url(${videos[currentIndex]?.popular_video?.thumb_url})`,
-                  }}
-               ></div>
-
-               {headerContent}
-
-               <div className={cx("index-control")}>{indexControl}</div>
-
-               <div className={cx("video-container")}>
-                  <VideoItem end time={currentTime} data={videos[currentIndex]} />
-               </div>
-            </div>
-
-            <div className={cx("right", "hide-for-medium")}>
-               <div className={cx("top")}>
-                  <PostItemHeader data={videos[currentIndex]} hasAvatar />
-                  {videoDesc}
-                  {musicDesc}
-
-                  <ShareControl end />
-               </div>
-
-               <div className={cx("bottom")}>
-                  <PostItemHeader data={videos[currentIndex]} comment hasAvatar />
-                  <PostItemHeader data={videos[currentIndex]} comment hasAvatar />
-               </div>
-            </div>
-         </div>
-      </>
-   );
-
+   // fetch thêm video
    useEffect(() => {
       if (currentIndex == videos.length - 1) {
          if (hasNextPage) {
@@ -154,45 +77,68 @@ function VideoPreview() {
       }
    }, [currentIndex]);
 
+   // lấy trigger element
    useEffect(() => {
       const trigger = document.querySelector(".trigger");
       triggerElement.current = trigger;
       newTriggerElement.current = trigger;
    }, []);
 
+   // scroll tới video hiện tại ở màn hình chính
    useEffect(() => {
-
       return () => {
          triggerElement.current.classList.remove("trigger");
 
          newTriggerElement.current.scrollIntoView({ behavior: "instant", block: "center" });
-      }
-   }, [isOpenModal])
+      };
+   }, [isOpenModal]);
 
-
+   // xử lí lăn chuột next video
    useEffect(() => {
       const handleScroll = (e) => {
-         e.deltaY > 0 ? distance.current += 1 : distance.current -= 1
+         e.deltaY > 0 ? (distance.current += 1) : (distance.current -= 1);
 
          if (currentIndex == videos.length - 1) return;
 
+         console.log("handle scroll", distance.current);
+
          if (distance.current >= 2) {
-            handleNext();
-         } else if ( distance.current <= -2) {
-            handlePrevious();
+            distance.current = 0;
+            setTimeout(() => {
+               handleNext();
+            }, 300);
+
+            window.removeEventListener("wheel", handleScroll);
+         } else if (distance.current <= -2) {
+            if (currentIndex == 0) return;
+
+            distance.current = 0;
+            setTimeout(() => {
+               handlePrevious();
+            }, 300);
+
+            window.removeEventListener("wheel", handleScroll);
          }
-         console.log("currentIndex =", currentIndex);
-      }
+      };
 
       window.addEventListener("wheel", handleScroll);
-      distance.current = 0;
-      
       return () => {
-         console.log("clean up");
-         window.removeEventListener("wheel", handleScroll)};
-   }, [isOpenModal, videos, currentIndex])
+         distance.current = 0;
+         window.removeEventListener("wheel", handleScroll);
+      };
+   }, [isOpenModal, videos, currentIndex]);
 
-   return content;
+   return (
+      <>
+         <div className={cx("container")}>
+            <div className={cx("left")}>{useMemoVideo}</div>
+
+            <div className={cx("right", "hide-for-medium")}>
+               {<Text data={videos[currentIndex]} />}
+            </div>
+         </div>
+      </>
+   );
 }
 
 export default VideoPreview;

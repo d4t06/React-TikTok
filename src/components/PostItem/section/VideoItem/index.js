@@ -5,17 +5,18 @@ import classNames from "classnames/bind";
 import VolumeControl from "../PlayerItem/section/VolumeControl";
 import PlayerItem from "../PlayerItem";
 
-import { useRef, useState, useEffect } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCurrentTime } from "~/store/modalSlice";
 
 const cx = classNames.bind(styles);
 const cy = classNames.bind(videoPreviewStyles);
 
-function VideoItem({ end, index, data, time }) {
+function VideoItem({ end, index, data, time, isUpdateCurrentTime }) {
    const dispatch = useDispatch();
 
    const videoRef = useRef();
+   const timeSlider = useRef();
 
    const durationLine = useRef();
    const durationText = useRef();
@@ -23,9 +24,10 @@ function VideoItem({ end, index, data, time }) {
    const currentTimeLine = useRef();
    const currentTimeText = useRef();
 
-   const [isPlaying, setIsPlaying] = useState(false);
+   const tempImage = useRef();
 
-   let videoControl;
+   const [isPlaying, setIsPlaying] = useState(false);
+   const [loading, setLoading] = useState(true);
 
    const handleTimeText = (duration) => {
       let minute = 0;
@@ -56,28 +58,36 @@ function VideoItem({ end, index, data, time }) {
       // }
    };
 
-   videoControl = (
-      <PlayerItem
-         ref={{
-            durationLine,
-            durationText,
+   const videoControl = useMemo(() => {
+      return (
+         <PlayerItem
+            ref={{
+               timeSlider,
 
-            currentTimeLine,
-            currentTimeText,
-         }}
-         isPlaying={isPlaying}
-         videoRef={videoRef}
-         end={end}
-         index={index}
-      />
-   );
+               durationLine,
+               durationText,
+
+               currentTimeLine,
+               currentTimeText,
+            }}
+            isPlaying={isPlaying}
+            videoRef={videoRef}
+            end={end}
+            index={index}
+         />
+      );
+   }, [data, isPlaying, videoRef.current]);
 
    // update text and get duration width when playing
    const updatePlayerInfo = () => {
+      if (!durationText.current || !currentTimeLine.current) {
+         console.log("element not found");
+         return;
+      }
       videoRef.current.volume = 0.5;
       videoRef.current.loop = true;
 
-      if (time) {
+      if (time && isUpdateCurrentTime) {
          videoRef.current.currentTime = time;
       }
 
@@ -86,32 +96,88 @@ function VideoItem({ end, index, data, time }) {
 
       currentTimeLine.current.style.width = "0px";
 
-      if (end) videoRef.current.play();
+      if (end) {
+         console.log("play");
+         videoRef.current.play();
+      }
    };
 
+   const handleLoaded = () => {
+      setLoading(false);
+   };
 
-   return (
+   useEffect(() => {
+      if (loading) return;
+
+      setTimeout(() => {
+         const videoEl = videoRef.current;
+         videoEl.style.display = "block";
+         videoEl.style.width = videoEl.offsetWidth + "px"
+         
+         const timeSliderEl = timeSlider.current;
+         timeSliderEl.style.display = "flex";
+         timeSliderEl.style.width = timeSliderEl.offsetWidth + "px"
+
+         tempImage.current.style.display = "none";
+      }, 1000);
+      updatePlayerInfo();
+   }, [loading]);
+
+   useEffect(() => {
+      setLoading(true);
+      videoRef.current.addEventListener("loadedmetadata", handleLoaded);
+
+      return () => {
+
+         if (timeSlider.current) {
+            console.log("clean up");
+
+            videoRef.current.style.width = "unset"
+            timeSlider.current.style.width = "unset";
+            videoRef.current.style.display = "none";
+            tempImage.current.style.display = "block";
+         }
+
+         if (videoRef.current) {
+            videoRef.current.removeEventListener("loadedmetadata", handleLoaded);
+         }
+      };
+   }, [data]);
+
+   let content = (
       <>
          <div className={cx("video-frame", end ? "preview" : "")}>
-            <video
-               className={cx("video")}
-               ref={videoRef}
-               src={data.popular_video.file_url}
-               onTimeUpdate={() => handlePlaying()}
-               onLoadedMetadata={() => updatePlayerInfo()}
-               onPlay={() => setIsPlaying(true)}
-               onPause={() => setIsPlaying(false)}
-            />
-            {videoRef && videoControl}
-         </div>
+            <div className={cx("video-item")}>
+               <img
+                  ref={tempImage}
+                  className={cx("temp-image")}
+                  src={data.popular_video.thumb_url}
+                  alt=""
+               />
+               <video
+                  className={cx("video")}
+                  ref={videoRef}
+                  src={data.popular_video.file_url}
+                  onTimeUpdate={() => handlePlaying()}
+                  onPlay={() => setIsPlaying(true)}
+                  onPause={() => setIsPlaying(false)}
+                  style={{ display: "none" }}
+               />
+            </div>
 
-         {end && videoRef && (
+            {!loading && videoControl}
+         </div>
+         {end && !loading && videoRef && (
             <div className={cy("volume-slider-wrapper")}>
                <VolumeControl videoEl={videoRef.current} />
             </div>
          )}
       </>
    );
+
+   // console.log("video item render")
+
+   return content;
 }
 
 export default VideoItem;
