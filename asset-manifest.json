@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/React-TikTok/static/css/main.0b047286.css",
-    "main.js": "/React-TikTok/static/js/main.7020d26d.js",
+    "main.css": "/React-TikTok/static/css/main.b9109283.css",
+    "main.js": "/React-TikTok/static/js/main.73a3b0bf.js",
     "static/js/787.fe00223f.chunk.js": "/React-TikTok/static/js/787.fe00223f.chunk.js",
     "static/media/sofiapro-semibold.otf": "/React-TikTok/static/media/sofiapro-semibold.a9a8148f7d5d0db20db8.otf",
     "static/media/avatar.jpg": "/React-TikTok/static/media/avatar.e2808c655aee1b27f09b.jpg",
@@ -10,12 +10,12 @@
     "static/media/Proxima-Nova-Semibold.woff2": "/React-TikTok/static/media/Proxima-Nova-Semibold.c5632e80f6e35c93156f.woff2",
     "static/media/logo.svg": "/React-TikTok/static/media/logo.31886960ed38f42e20b184daaeb52719.svg",
     "index.html": "/React-TikTok/index.html",
-    "main.0b047286.css.map": "/React-TikTok/static/css/main.0b047286.css.map",
-    "main.7020d26d.js.map": "/React-TikTok/static/js/main.7020d26d.js.map",
+    "main.b9109283.css.map": "/React-TikTok/static/css/main.b9109283.css.map",
+    "main.73a3b0bf.js.map": "/React-TikTok/static/js/main.73a3b0bf.js.map",
     "787.fe00223f.chunk.js.map": "/React-TikTok/static/js/787.fe00223f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0b047286.css",
-    "static/js/main.7020d26d.js"
+    "static/css/main.b9109283.css",
+    "static/js/main.73a3b0bf.js"
   ]
 }
