@@ -1,34 +1,41 @@
 .video-frame {
-
    display: inline-block;
    height: 480px;
    border-radius: 8px;
-   margin-top: calc(var(--elementsGap) + 2px);
+   overflow: hidden;
    position: relative;
+
+   background-color: black;
    .video-item {
       height: 100%;
-      .video, .temp-image {
+      video,
+      img {
+         transition: opacity linear 0.1s;
          position: relative;
+
          height: 100%;
-         border-radius: 8px;
       }
    }
 
    @media screen and (max-width: 1023px) {
       height: unset;
       width: 60%;
-      .video {
-         height: unset;
-         width: 100%;
+      .video-item {
+         video,
+         img {
+            border-radius: unset;
+            width: 100%;
+         }
+         .temp-image {
+            object-fit: contain;
+         }
       }
    }
 }
-.preview {
+
+.video-frame.preview {
    height: 100%;
-   .video, .temp-image {
-      height: 100%;
-      width: 100%;
-   }
+   border-radius: 0;
    @media screen and (max-width: 1023px) {
       width: unset;
    }

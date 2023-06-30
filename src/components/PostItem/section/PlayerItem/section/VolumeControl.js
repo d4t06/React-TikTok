@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeHigh, faVolumeXmark } from "@fortawesome/free-solid-svg-icons";
-import {  useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import Menu from "~/components/Menu";
 
@@ -9,25 +9,23 @@ import styles from "../PlayerItem.module.scss";
 
 const cx = classNames.bind(styles);
 
-function VolumeControl({ videoRef }) {
-
+function VolumeControl({ videoEl }) {
    const [isMute, setIsMute] = useState(false);
-   const currentVolumeLine = useRef()
+   const currentVolumeLine = useRef();
 
    const handleVolume = (e) => {
       const rect = e.target.getBoundingClientRect();
       const volume = (rect.bottom.toFixed(0) - e.clientY) / e.target.offsetHeight;
 
-      videoRef.current.volume = volume.toFixed(1);
+      videoEl.volume = volume.toFixed(1);
       currentVolumeLine.current.style.height = volume.toFixed(2) * 100 + "%";
    };
 
    const handleMute = () => {
       setIsMute(!isMute);
 
-      !isMute ? (videoRef.current.muted = true) : (videoRef.current.muted = false);
+      !isMute ? (videoEl.muted = true) : (videoEl.muted = false);
    };
-
 
    const content = (
       <button
@@ -67,9 +65,7 @@ function VolumeControl({ videoRef }) {
    return (
       <>
          <Menu
-            content={
-               toolTip
-            }
+            content={toolTip}
             option={{
                placement: "top",
                // delay: [200, 0],

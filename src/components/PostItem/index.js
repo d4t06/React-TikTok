@@ -1,7 +1,5 @@
 import classNames from "classnames/bind";
 
-
-
 import ShareControl from "./section/ShareControl";
 import VideoItem from "./section/VideoItem";
 
@@ -12,6 +10,7 @@ const cx = classNames.bind(styles);
 
 
 function PostItem({ data, index }) {
+   // console.log("posItem render");
    return (
       <>
         <PostItemHeader data={data} />

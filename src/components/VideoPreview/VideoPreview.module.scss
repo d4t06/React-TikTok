@@ -1,22 +1,37 @@
+:root {
+   --btn-size: 60px;
+   --btn-font-size: 3rem;
+}
+@media screen and (max-width: 549px){
+   :root {
+      --btn-size: 45px;   
+      --btn-font-size: 2rem;
+   }
+}
+
+@mixin button {
+   background: rgba(84, 84, 84, 0.5);
+   color: #fff;
+   font-size: var(--btn-font-size);
+   cursor: pointer;
+   transition: background-color linear 0.2s;
+   height: var(--btn-size);
+   min-width: var(--btn-size);
+   border-radius: 50%;
+   &:hover {
+      background-color: rgba(84, 84, 84, 0.3);
+   }   
+}
+.btn {
+   @include button();
+}
 .container {
    position: fixed;
    inset: 0;
    display: flex;
    z-index: 11;
 }
-@mixin btn {
-   background: rgba(84, 84, 84, 0.5);
-   color: #fff;
-   font-size: 2rem;
-   cursor: pointer;
-   transition: background-color linear 0.2s;
-   &:hover {
-      background-color: rgba(84, 84, 84, 0.3);
-   }   
-}
-.btn {
-   @include btn();
-}
+
 .left {
    width: 60%;
    position: relative;
@@ -100,14 +115,12 @@
    background-color: transparent;
   
    .close-btn {
-      height: 50px;
-      width: 50px;
-      font-size: 3rem;
+      height: var(--btn-size);
+      width: var(--btn-size);
       background-color: rgba(84, 84, 84, 0.5);
-      border-radius: 50%;
    }
    .report-btn {
-      height: 50px;
+      height: var(--btn-size);
       border-radius: 99px;
       padding: 0 20px;
       svg {
@@ -124,24 +137,16 @@
    top: 50%;
    transform: translateY(-50%);
    z-index: 1;
-   .btn {
-      height: 50px;
-      width: 50px;
-      border-radius: 50%;
-      font-size: 2.5rem;
-   }
 }
 .volume-slider-wrapper {
+   @include button();
+
    position: absolute;
    right: 30px;
    bottom: 15px;
-   height: 50px;
-   width: 50px;
    display: flex;
    align-items: center;
    justify-content: center;
-   border-radius: 50%;
-   @include btn();
 }
 .disable {
    opacity: .3;

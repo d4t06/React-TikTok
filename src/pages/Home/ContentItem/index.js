@@ -35,6 +35,8 @@ function ContentItem({ data, skeleton, index }, ref) {
       <div className={cx("item-container", "seperate")}>{body}</div>
    );
 
+
+   console.log("content item render");
    return content;
 }
 

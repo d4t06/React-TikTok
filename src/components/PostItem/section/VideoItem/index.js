@@ -6,17 +6,12 @@ import VolumeControl from "../PlayerItem/section/VolumeControl";
 import PlayerItem from "../PlayerItem";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import { setCurrentTime } from "~/store/modalSlice";
 
 const cx = classNames.bind(styles);
 const cy = classNames.bind(videoPreviewStyles);
 
-function VideoItem({ end, index, data, time, isUpdateCurrentTime }) {
-   const dispatch = useDispatch();
-
+function VideoItem({ end, index, data, time, isUpdateTime }) {
    const videoRef = useRef();
-   const timeSlider = useRef();
 
    const durationLine = useRef();
    const durationText = useRef();
@@ -25,9 +20,20 @@ function VideoItem({ end, index, data, time, isUpdateCurrentTime }) {
    const currentTimeText = useRef();
 
    const tempImage = useRef();
+   const videoFrame = useRef();
+   const playerRef = useRef();
 
-   const [isPlaying, setIsPlaying] = useState(false);
+   const [isPlaying, setIsPlaying] = useState(end ? true : false);
    const [loading, setLoading] = useState(true);
+
+   const hidden = {
+      opacity: "0.5",
+      visibility: "hidden",
+   };
+   const visible = {
+      opacity: "1",
+      visibility: "visible",
+   };
 
    const handleTimeText = (duration) => {
       let minute = 0;
@@ -42,63 +48,50 @@ function VideoItem({ end, index, data, time, isUpdateCurrentTime }) {
       return `0${minute}:0${Number.parseInt(duration)}`;
    };
 
-   // when video playing
-   const handlePlaying = () => {
-      const videoEl = videoRef.current;
-      const duration = videoEl.duration;
-      const videoCurrentTime = videoEl.currentTime;
-
-      currentTimeText.current.innerText = handleTimeText(videoCurrentTime);
-      const newWidth = (videoCurrentTime / duration) * videoRef.current.durationLineWidth;
-
-      currentTimeLine.current.style.width = newWidth + "px";
-
-      // if (end) {
-      dispatch(setCurrentTime({ time: videoCurrentTime }));
-      // }
-   };
-
-   const videoControl = useMemo(() => {
-      return (
-         <PlayerItem
-            ref={{
-               timeSlider,
-
-               durationLine,
-               durationText,
-
-               currentTimeLine,
-               currentTimeText,
-            }}
-            isPlaying={isPlaying}
-            videoRef={videoRef}
-            end={end}
-            index={index}
-         />
-      );
-   }, [data, isPlaying, videoRef.current]);
-
-   // update text and get duration width when playing
    const updatePlayerInfo = () => {
+      const videoEl = videoRef.current;
+      const videoFrameEl = videoFrame.current
+
+      // update video width
+      if (window.innerWidth > 1023) {
+         if (videoEl.offsetWidth > 500 && !end) {
+            Object.assign(videoFrameEl.style, {
+               height: "auto",
+               maxWidth: "500px",
+            })
+         } else {
+            Object.assign(videoEl.style, {
+               width: videoEl.offsetWidth + "px",
+            });
+         }
+         videoEl.volume = 0.5;
+      } else {
+         Object.assign(videoEl.style, {
+            width: "100%",
+         });
+      }
+
       if (!durationText.current || !currentTimeLine.current) {
          console.log("element not found");
          return;
       }
-      videoRef.current.volume = 0.5;
-      videoRef.current.loop = true;
 
-      if (time && isUpdateCurrentTime) {
-         videoRef.current.currentTime = time;
+      // update time in modal
+      if (time && end) {
+         // cập nhật khi trigger video và video trong mnodal giống nhau
+         if (isUpdateTime) {
+            videoEl.currentTime = time;
+         }
       }
 
-      durationText.current.innerText = "/" + handleTimeText(videoRef.current.duration);
-      videoRef.current["durationLineWidth"] = durationLine.current.offsetWidth;
+      durationText.current.innerText = "/" + handleTimeText(videoEl.duration);
+      videoEl["durationLineWidth"] = durationLine.current.offsetWidth;
 
       currentTimeLine.current.style.width = "0px";
 
       if (end) {
          console.log("play");
-         videoRef.current.play();
+         videoEl.play();
       }
    };
 
@@ -106,21 +99,57 @@ function VideoItem({ end, index, data, time, isUpdateCurrentTime }) {
       setLoading(false);
    };
 
+   const videoControl = useMemo(() => {
+      return (
+         <PlayerItem
+            ref={{
+               durationLine,
+               durationText,
+
+               currentTimeLine,
+               currentTimeText,
+
+               playerRef,
+            }}
+            // state
+            isPlaying={isPlaying}
+            loading={loading}
+            end={end}
+            index={index}
+            // ref
+            videoRef={videoRef}
+            currentTimeText={currentTimeText}
+            currentTimeLine={currentTimeLine}
+         />
+      );
+   }, [data, isPlaying, videoRef.current, loading]);
+
    useEffect(() => {
       if (loading) return;
 
       setTimeout(() => {
          const videoEl = videoRef.current;
-         videoEl.style.display = "block";
-         videoEl.style.width = videoEl.offsetWidth + "px"
-         
-         const timeSliderEl = timeSlider.current;
-         timeSliderEl.style.display = "flex";
-         timeSliderEl.style.width = timeSliderEl.offsetWidth + "px"
+         const tempImageEl = tempImage.current;
+         const playerEl = playerRef.current;
 
-         tempImage.current.style.display = "none";
-      }, 1000);
-      updatePlayerInfo();
+         if (videoEl && tempImageEl && playerEl) {
+            Object.assign(videoEl.style, {
+               ...visible,
+               width: "100%",
+            });
+
+            Object.assign(tempImageEl.style, {
+               ...hidden,
+               width: "0",
+            });
+
+            Object.assign(playerEl.style, {
+               position: "absolute",
+            });
+         }
+
+         updatePlayerInfo();
+      }, 300);
    }, [loading]);
 
    useEffect(() => {
@@ -128,56 +157,65 @@ function VideoItem({ end, index, data, time, isUpdateCurrentTime }) {
       videoRef.current.addEventListener("loadedmetadata", handleLoaded);
 
       return () => {
+         const videoEl = videoRef.current;
+         const tempImageEl = tempImage.current;
+         const playerEl = playerRef.current;
 
-         if (timeSlider.current) {
+         if (videoEl && tempImageEl && playerEl) {
             console.log("clean up");
 
-            videoRef.current.style.width = "unset"
-            timeSlider.current.style.width = "unset";
-            videoRef.current.style.display = "none";
-            tempImage.current.style.display = "block";
-         }
+            Object.assign(videoEl.style, {
+               ...hidden,
+               width: "0",
+            });
 
-         if (videoRef.current) {
-            videoRef.current.removeEventListener("loadedmetadata", handleLoaded);
+            Object.assign(tempImageEl.style, {
+               ...visible,
+               width: "auto",
+            });
+
+            Object.assign(playerEl.style, {
+               position: "relative",
+            });
          }
       };
    }, [data]);
 
-   let content = (
+   // console.log("video item render");
+   // only state change
+
+   return (
       <>
-         <div className={cx("video-frame", end ? "preview" : "")}>
+         <div ref={videoFrame} className={cx("video-frame", end ? "preview" : "")}>
             <div className={cx("video-item")}>
                <img
                   ref={tempImage}
                   className={cx("temp-image")}
                   src={data.popular_video.thumb_url}
                   alt=""
+                  style={visible}
                />
                <video
                   className={cx("video")}
+                  loop
                   ref={videoRef}
                   src={data.popular_video.file_url}
-                  onTimeUpdate={() => handlePlaying()}
                   onPlay={() => setIsPlaying(true)}
                   onPause={() => setIsPlaying(false)}
-                  style={{ display: "none" }}
+                  style={{ ...hidden, width: "0" }}
+                  index = {index}
                />
             </div>
 
-            {!loading && videoControl}
+            {videoControl}
          </div>
-         {end && !loading && videoRef && (
+         {end && !!(window.innerWidth > 549) && (
             <div className={cy("volume-slider-wrapper")}>
                <VolumeControl videoEl={videoRef.current} />
             </div>
          )}
       </>
    );
-
-   // console.log("video item render")
-
-   return content;
 }
 
 export default VideoItem;

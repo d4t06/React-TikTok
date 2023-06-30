@@ -7,16 +7,27 @@ import { forwardRef, useEffect, useRef, useState } from "react";
 import VolumeControl from "./section/VolumeControl";
 
 import styles from "./PlayerItem.module.scss";
-import { useDispatch } from "react-redux";
-import { setOpenModal } from "~/store/modalSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { SelectAllModalStore, setOpenModal } from "~/store/modalSlice";
+import { setCurrentTime, setCurrentIndex, SelectAllTimeStore } from "~/store/timeSlice";
 const cx = classNames.bind(styles);
 
-function PlayerItem({ videoRef, end, index, isPlaying }, ref) {
+function PlayerItem(
+   { videoRef, currentTimeText, currentTimeLine, end, index, isPlaying, loading },
+   ref
+) {
    const dispatch = useDispatch();
+   const modalStore = useSelector(SelectAllModalStore)
+   const timeStore = useSelector(SelectAllTimeStore)
+
+   const {currentIndex} = timeStore
+   const {isOpenModal} = modalStore
 
    const indexOfCurrent = useRef();
    const timerId = useRef();
+   // const isIntoView = useRef()
 
+   const [isIntoView, setIsIntoView]= useState(false);
 
    const handlePlayPause = () => {
       !isPlaying ? play() : pause();
@@ -34,7 +45,8 @@ function PlayerItem({ videoRef, end, index, isPlaying }, ref) {
    const handleSeek = (e) => {
       const rect = e.target.getBoundingClientRect();
       const seekTime =
-         ((e.clientX - rect.left) / videoRef.current.durationLineWidth) * videoRef.current.duration;
+         ((e.clientX - rect.left) / videoRef.current.durationLineWidth) *
+         videoRef.current.duration;
       videoRef.current.currentTime = seekTime.toFixed(1);
 
       if (!isPlaying) play();
@@ -59,7 +71,6 @@ function PlayerItem({ videoRef, end, index, isPlaying }, ref) {
 
       tempParent.classList.add("trigger");
       indexOfCurrent.current = index;
-      ref.timeSlider.current.display = "none"
       if (isPlaying) pause();
       dispatch(
          setOpenModal({
@@ -70,44 +81,21 @@ function PlayerItem({ videoRef, end, index, isPlaying }, ref) {
       );
    };
 
-   // auto play video when scroll in to view
-   // useEffect(() => {
-   //    const callbackFunction = (entries) => {
-   //       const [entry] = entries;
-   //       if (end || isOpenModal) return
-   //       setIsIntoView(entry.isIntersecting);
-   //    };
+   const handleTimeText = (duration) => {
+      let minute = 0;
+      while (duration > 60) {
+         duration -= 60;
+         minute++;
+      }
 
-   //    const observer = new IntersectionObserver(callbackFunction, {
-   //       threshold: 0.8,
-   //    });
-   //    observer.observe(videoRef.current);
-   // }, []);
-
-   // play video denounce
-   // useEffect(() => {
-   //    if (isOpenModal || end) return;
-
-   //    timerId.current = setTimeout(() => {
-   //       if (!isIntoView) {
-   //          pause();
-   //          return;
-   //       } else {
-   //          console.log("play");
-   //          play();
-   //       }
-   //    }, 600);
-
-   //    return () => {
-   //       console.log("clear time out");
-   //       clearTimeout(timerId.current);
-   //       if (end) return;
-   //       pause();
-   //    };
-   // }, [isIntoView]);
+      if (duration > 10) {
+         return `0${minute}:${Number.parseInt(duration)}`;
+      }
+      return `0${minute}:0${Number.parseInt(duration)}`;
+   };
 
    let timeSlider = (
-      <div ref={ref.timeSlider} className={cx("time-slider")} style={{display: "none"}}>
+      <div className={cx("time-slider")}>
          <div
             className={cx("video-duration")}
             onClick={(e) => {
@@ -133,13 +121,74 @@ function PlayerItem({ videoRef, end, index, isPlaying }, ref) {
       </div>
    );
 
-   // console.log("Player render");
+   // auto play video when scroll in to view
+   useEffect(() => {
+      const callbackFunction = (entries) => {
+         const [entry] = entries;
+         if (end || isOpenModal) return
+         setIsIntoView(entry.isIntersecting);
+      };
+
+      const observer = new IntersectionObserver(callbackFunction, {
+         threshold: 0.8,
+      });
+      observer.observe(videoRef.current);
+   }, []);
+
+   // play video denounce
+   useEffect(() => {
+      if (isOpenModal || end) return;
+      if (loading) return;
+
+      timerId.current = setTimeout(() => {
+         if (isIntoView) {
+            dispatch(setCurrentIndex({index: +videoRef.current.attributes.index.value}))
+         }
+      }, 600);
+
+      return () => {
+         console.log("clear time out");
+         clearTimeout(timerId.current);
+         if (end) return;
+      };
+   }, [isIntoView, loading]);
+
+   useEffect(() => {
+      if (currentIndex === index) play();
+      else if (isPlaying) pause();
+   }, [currentIndex])
+
+   useEffect(() => {
+      const videoEl = videoRef.current;
+      const handlePlaying = () => {
+         const duration = videoEl.duration;
+         const videoCurrentTime = videoEl.currentTime;
+
+         currentTimeText.current.innerText = handleTimeText(videoCurrentTime);
+         const newWidth =
+            (videoCurrentTime / duration) * videoRef.current.durationLineWidth;
+
+         currentTimeLine.current.style.width = newWidth + "px";
+
+         dispatch(setCurrentTime({ time: videoCurrentTime }));
+      };
+
+      videoEl.addEventListener("timeupdate", handlePlaying);
+
+      return () => {
+         videoEl.removeEventListener('timeupdate', handlePlaying)
+      }
+   }, []);
+
+   // console.log("player render index =", index)
 
    return (
       <>
          <div
             className={cx("overlay", end ? "preview" : "")}
             onClick={(e) => handleOverlayClick(e)}
+            style={{ position: "relative" }}
+            ref={ref.playerRef}
          >
             <div className={cx("cta")}>
                <>
@@ -150,9 +199,12 @@ function PlayerItem({ videoRef, end, index, isPlaying }, ref) {
                         handlePlayPause();
                      }}
                   >
-                     {isPlaying && videoRef.current ? (
+                     {isPlaying ? (
                         <span>
-                           <FontAwesomeIcon className={cx("pause-btn")} icon={faPause} />
+                           <FontAwesomeIcon
+                              className={cx("pause-btn")}
+                              icon={faPause}
+                           />
                         </span>
                      ) : (
                         <span className={cx("play-btn")}>

@@ -32,7 +32,9 @@ function Sidebar() {
          // console.log(result);
          setSuggestedUser(result);
       };
-      // fecthApi();
+      if (window.innerWidth > 1023) {
+         fecthApi();
+      } 
    }, []);
 
    return (

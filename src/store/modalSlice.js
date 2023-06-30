@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isOpenModal: "",
   index: "",
-  currentTime: "",
 };
 
 const modalSlice = createSlice({
@@ -13,11 +12,8 @@ const modalSlice = createSlice({
     setOpenModal(state, action) {
       state.isOpenModal = action.payload.isOpenModal;
       state.index = action.payload.index || 0;
-    },
-    setCurrentTime(state, action) {
-      state.currentTime = action.payload.time;
-    },
-  },
+    }
+  }
 });
 
 export const SelectAllModalStore = (state) => state.modal;

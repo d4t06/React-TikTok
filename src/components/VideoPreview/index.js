@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import classNames from "classnames/bind";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +17,7 @@ function VideoPreview() {
    const videoStore = useSelector(SelectAllVideoStore);
    const modalStore = useSelector(SelectAllModalStore);
 
-   const { index, currentTime, isOpenModal } = modalStore;
+   const { index, isOpenModal } = modalStore;
    const { videos, hasNextPage } = videoStore;
 
    const [currentIndex, SetCurrentIndex] = useState(index);
@@ -29,44 +29,26 @@ function VideoPreview() {
    // handle functions
    const handlePrevious = () => {
       newTriggerElement.current = newTriggerElement.current.previousSibling;
-      // setIsLoading(true)
       SetCurrentIndex((prev) => prev - 1);
-
-      // setTimeout(() => {
-      //    setIsLoading(false)
-      // }, 200)
    };
 
    const handleNext = () => {
       newTriggerElement.current = newTriggerElement.current.nextSibling;
       SetCurrentIndex((prev) => prev + 1);
-      console.log("newTriggerElement", newTriggerElement.current);
    };
 
-   const handleCloseModal = () => {
+   const handleCloseModal = (time) => {
       const currentElement = newTriggerElement.current;
       const videoElement = currentElement.querySelector("video");
 
       // cập nhật current time ở màn hình chính
-      videoElement.currentTime = currentTime;
+      console.log("time =", time);
+      videoElement.currentTime = time;
+      videoElement.play();
 
       // tắt modal
       dispath(setOpenModal({ isOpenModal: false }));
    };
-
-   const useMemoVideo = useMemo(() => {
-      return (
-         <Video
-            isUpdateCurrentTime = {index == currentIndex}
-            data={videos[currentIndex]}
-            currentTime={currentTime}
-            currentIndex={currentIndex}
-            handleNext={handleNext}
-            handlePrevious={handlePrevious}
-            handleCloseModal={handleCloseModal}
-         />
-      );
-   }, [currentIndex]);
 
    // fetch thêm video
    useEffect(() => {
@@ -89,7 +71,10 @@ function VideoPreview() {
       return () => {
          triggerElement.current.classList.remove("trigger");
 
-         newTriggerElement.current.scrollIntoView({ behavior: "instant", block: "center" });
+         newTriggerElement.current.scrollIntoView({
+            behavior: "instant",
+            block: "center",
+         });
       };
    }, [isOpenModal]);
 
@@ -128,13 +113,25 @@ function VideoPreview() {
       };
    }, [isOpenModal, videos, currentIndex]);
 
+   // console.log("video preview render");
+   // many
+
    return (
       <>
          <div className={cx("container")}>
-            <div className={cx("left")}>{useMemoVideo}</div>
+            <div className={cx("left")}>
+               <Video
+                  data={videos[currentIndex - 1]}
+                  isUpdateTime = {currentIndex == index}
+                  currentIndex={currentIndex - 1}
+                  handleNext={handleNext}
+                  handlePrevious={handlePrevious}
+                  handleCloseModal={(time) => handleCloseModal(time)}
+               />
+            </div>
 
             <div className={cx("right", "hide-for-medium")}>
-               {<Text data={videos[currentIndex]} />}
+               {<Text data={videos[currentIndex - 1]} />}
             </div>
          </div>
       </>

@@ -11,7 +11,7 @@ const useVideo = () => {
   const firstUpdate = useRef(true);
 
   const {pageNum} = videoStore
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [hasNextPage, setHasNextPage] = useState(false);
 
@@ -21,7 +21,7 @@ const useVideo = () => {
     const fetch = async () => {
       
       try {
-        setIsLoading(true);
+        // setIsLoading(true);
 
         const res = await userServices.getSuggested(pageNum || 1, 4, {
           signal: controller.signal,
