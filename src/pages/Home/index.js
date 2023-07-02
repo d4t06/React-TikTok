@@ -2,12 +2,13 @@ import { useRef, useCallback, useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { SelectAllVideoStore, nextPage } from "~/store/videoSlice";
-import { SelectAllModalStore } from "~/store/modalSlice";
+import { SelectAllModalStore, setVolume, setMute } from "~/store/modalSlice";
 import useVideo from "~/hook/useVideo";
 
 import ContentItem from "./ContentItem";
 import Modal from "~/components/Modal";
 import VideoPreview from "~/components/VideoPreview";
+import useLocalStorage from "~/hook/useLocalStorage";
 
 function Home() {
    const videoStore = useSelector(SelectAllVideoStore);
@@ -18,6 +19,8 @@ function Home() {
    const { isOpenModal } = modalStore;
 
    const { isLoading, isError, hasNextPage } = useVideo(pageNum);
+   const [LCSvolume, setLCSVolume] = useLocalStorage('volume', 1)
+   const [LCSmute, setLCSMute] = useLocalStorage('mute', false)
 
    const intObserver = useRef();
    const lastElementRef = useCallback(
@@ -37,8 +40,12 @@ function Home() {
       [isLoading, hasNextPage]
    );
 
+   // init
    useEffect(() => {
       dispath(nextPage({ init: true }));
+      dispath(setVolume({volume: LCSvolume}));
+      dispath(setMute({isMute: LCSmute}));
+
    }, []);
 
    const useMemoRenderContent = useMemo(() => {

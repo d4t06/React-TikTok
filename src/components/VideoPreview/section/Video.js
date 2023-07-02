@@ -24,12 +24,18 @@ function Video({
    handleCloseModal,
 }) {
    const timeStore = useSelector(SelectAllTimeStore);
-   const {currentTime} = timeStore;
+   const { currentTime } = timeStore;
 
    const useMemoVideoItem = useMemo(() => {
       return (
          <div className={cx("video-container")}>
-            <VideoItem isUpdateTime={isUpdateTime} end time={currentTime} data={data} />
+            <VideoItem
+               isUpdateTime={isUpdateTime}
+               end
+               time={currentTime}
+               data={data}
+               modalIndex={currentIndex}
+            />
          </div>
       );
    }, [currentIndex]);
@@ -72,8 +78,8 @@ function Video({
       </div>
    );
 
-// console.log("video prerender");
-// many
+   // console.log("video prerender");
+   // many
 
    return (
       <>

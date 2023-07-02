@@ -42,7 +42,6 @@ function VideoPreview() {
       const videoElement = currentElement.querySelector("video");
 
       // cập nhật current time ở màn hình chính
-      console.log("time =", time);
       videoElement.currentTime = time;
       videoElement.play();
 
@@ -85,7 +84,7 @@ function VideoPreview() {
 
          if (currentIndex == videos.length - 1) return;
 
-         console.log("handle scroll", distance.current);
+         // console.log("handle scroll", distance.current);
 
          if (distance.current >= 2) {
             distance.current = 0;

@@ -50,3 +50,9 @@
 ### update thứ 6 23/6/2023
 
 - Lăn chuột để chuyển video
+
+### update cn 2/7/2023
+
+- cập nhật time mỗi 500ms
+- Đổi logic play video khi into view
+

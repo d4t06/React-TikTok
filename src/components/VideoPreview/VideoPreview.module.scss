@@ -1,11 +1,11 @@
 :root {
-   --btn-size: 60px;
-   --btn-font-size: 3rem;
+   --btn-size: 45px;
+   --btn-font-size: 1.8rem;
 }
 @media screen and (max-width: 549px){
    :root {
-      --btn-size: 45px;   
-      --btn-font-size: 2rem;
+      --btn-size: 35px;   
+      --btn-font-size: 1.5rem;
    }
 }
 

@@ -1,3 +1,12 @@
+:root {
+   --btn-font-size: 2.7rem;
+}
+@media screen and (max-width: 549px) {
+   :root {
+      --btn-font-size: 2.7rem;
+   }
+}
+
 @mixin box-shadow {
    box-shadow: 2px 2px 5px rgba($color: #000, $alpha: 0.5);
 }
@@ -6,7 +15,7 @@
    bottom: 45px;
 }
 @mixin player-btn {
-   font-size: 2.5rem;
+   font-size: var(--btn-font-size);
    color: #fff;
    padding: 5px;
    background-color: transparent;
@@ -25,7 +34,7 @@
          visibility: visible;
       }
    }
-   
+
    &.preview {
       bottom: 70px;
       .time-text {
@@ -49,24 +58,50 @@
          .pause-btn {
             display: none;
          }
-
       }
    }
 }
 
-.cta {
-   .play-pause-btn {
-      @include button-position();
-      @include player-btn();
-      left: 20px;
+.play-pause-btn {
+   @include button-position();
+   @include player-btn();
+   left: 20px;
+}
+.volume-control-wrapper {
+   @include button-position();
+   right: 20px;
+}
+.frame {
+   position: relative;
+   &::after {
+      // content: "";
+      position: absolute;
+      width: 100%;
+      height: 12px;
+      bottom: 100%;
+      left: 0;
+      z-index: 99;
    }
-   .volume-control-wrapper {
-      @include button-position();
-      right: 20px;
+   &:hover {
+      &::after {
+         content: "";
+      }
+      .volume-slider {
+         opacity: 1;
+         visibility: visible;
+      }
    }
 }
+
 .volume-btn {
    @include player-btn();
+   span {
+      display: inline-block;
+      width: 27px;
+      svg {
+         width: 100%;
+      }
+   }
 }
 
 .time-slider {
@@ -147,21 +182,31 @@
 }
 
 .volume-slider {
-   height: 80px;
-   padding: 8px 0;
-   width: 18px;
-   border-radius: 10px;
-   background-color: rgba($color: #000, $alpha: 0.25);
+   position: absolute;
+   bottom: calc(100% + 10px);
+   left: 50%;
+   transform: translateX(-50%) rotate(180deg);
+
    display: flex;
    justify-content: center;
-   transform: rotate(180deg);
+   height: 90px;
+   padding: 10px 0;
+   width: 18px;
+   border-radius: 99px;
+
+   background-color: rgba($color: #000, $alpha: 0.25);
+
+   opacity: 0;
+   visibility: hidden;
+
+   transition: opacity 0.15s linear;
    &:hover {
       .volume-duration {
          width: 4px;
       }
       .volume-current {
          &::before {
-            left: calc(50% + 1px);
+            // left: calc(50% + 1px);
          }
       }
    }
@@ -175,6 +220,7 @@
    width: 20px;
    background-color: transparent;
 }
+
 .volume-duration {
    position: relative;
    height: 100%;
@@ -193,7 +239,7 @@
 }
 
 .volume-current {
-   height: 50%;
+   height: 100%;
    width: 100%;
    background-color: var(--primary-color);
    position: relative;

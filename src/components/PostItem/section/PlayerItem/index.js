@@ -9,25 +9,42 @@ import VolumeControl from "./section/VolumeControl";
 import styles from "./PlayerItem.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { SelectAllModalStore, setOpenModal } from "~/store/modalSlice";
-import { setCurrentTime, setCurrentIndex, SelectAllTimeStore } from "~/store/timeSlice";
+import {
+   setCurrentTime,
+   setCurrentIndex,
+   SelectAllTimeStore,
+} from "~/store/timeSlice";
 const cx = classNames.bind(styles);
 
 function PlayerItem(
-   { videoRef, currentTimeText, currentTimeLine, end, index, isPlaying, loading },
+   {
+      videoRef,
+
+      currentTimeText,
+      currentTimeLine,
+      
+      end = false,
+      index,
+      modalIndex,
+      isPlaying,
+      isUpdateTime,
+      loading,
+   },
    ref
 ) {
    const dispatch = useDispatch();
-   const modalStore = useSelector(SelectAllModalStore)
-   const timeStore = useSelector(SelectAllTimeStore)
+   const modalStore = useSelector(SelectAllModalStore);
+   const timeStore = useSelector(SelectAllTimeStore);
 
-   const {currentIndex} = timeStore
-   const {isOpenModal} = modalStore
+   const { currentIndex, currentTime } = timeStore;
+   const { isOpenModal } = modalStore;
 
    const indexOfCurrent = useRef();
    const timerId = useRef();
+   const intervalId = useRef();
    // const isIntoView = useRef()
 
-   const [isIntoView, setIsIntoView]= useState(false);
+   const [isIntoView, setIsIntoView] = useState(false);
 
    const handlePlayPause = () => {
       !isPlaying ? play() : pause();
@@ -52,6 +69,7 @@ function PlayerItem(
       if (!isPlaying) play();
    };
 
+   // handle open modal
    const handleOverlayClick = (e) => {
       if (end) {
          return handlePlayPause();
@@ -71,12 +89,15 @@ function PlayerItem(
 
       tempParent.classList.add("trigger");
       indexOfCurrent.current = index;
-      if (isPlaying) pause();
+
+      if (isPlaying) {
+         pause();
+      }
+
       dispatch(
          setOpenModal({
             isOpenModal: true,
             index: index,
-            time: videoRef.current.currentTime.toFixed(1),
          })
       );
    };
@@ -94,6 +115,20 @@ function PlayerItem(
       return `0${minute}:0${Number.parseInt(duration)}`;
    };
 
+   const handleSetCurrentTime = () => {
+      console.log("handle set current time");
+      const videoEl = videoRef.current;
+      intervalId.current = setInterval(() => {
+         const videoCurrentTime = videoEl.currentTime;
+
+         dispatch(setCurrentTime({ time: +videoCurrentTime.toFixed(2) }));
+      }, 800);
+   };
+
+   const handleClearInterval = () => {
+      console.log("clear interval");
+      clearInterval(intervalId.current);
+   };
    let timeSlider = (
       <div className={cx("time-slider")}>
          <div
@@ -121,43 +156,7 @@ function PlayerItem(
       </div>
    );
 
-   // auto play video when scroll in to view
-   useEffect(() => {
-      const callbackFunction = (entries) => {
-         const [entry] = entries;
-         if (end || isOpenModal) return
-         setIsIntoView(entry.isIntersecting);
-      };
-
-      const observer = new IntersectionObserver(callbackFunction, {
-         threshold: 0.8,
-      });
-      observer.observe(videoRef.current);
-   }, []);
-
-   // play video denounce
-   useEffect(() => {
-      if (isOpenModal || end) return;
-      if (loading) return;
-
-      timerId.current = setTimeout(() => {
-         if (isIntoView) {
-            dispatch(setCurrentIndex({index: +videoRef.current.attributes.index.value}))
-         }
-      }, 600);
-
-      return () => {
-         console.log("clear time out");
-         clearTimeout(timerId.current);
-         if (end) return;
-      };
-   }, [isIntoView, loading]);
-
-   useEffect(() => {
-      if (currentIndex === index) play();
-      else if (isPlaying) pause();
-   }, [currentIndex])
-
+   // handle video playing => process line
    useEffect(() => {
       const videoEl = videoRef.current;
       const handlePlaying = () => {
@@ -169,16 +168,86 @@ function PlayerItem(
             (videoCurrentTime / duration) * videoRef.current.durationLineWidth;
 
          currentTimeLine.current.style.width = newWidth + "px";
-
-         dispatch(setCurrentTime({ time: videoCurrentTime }));
       };
 
       videoEl.addEventListener("timeupdate", handlePlaying);
+      videoEl.addEventListener("play", handleSetCurrentTime);
+      videoEl.addEventListener("pause", handleClearInterval);
 
       return () => {
-         videoEl.removeEventListener('timeupdate', handlePlaying)
-      }
+         videoEl.removeEventListener("timeupdate", handlePlaying);
+         videoEl.removeEventListener("play", handleSetCurrentTime);
+         videoEl.removeEventListener("pause", handleClearInterval);
+      };
    }, []);
+
+   // auto play video when scroll in to view
+   useEffect(() => {
+      const callbackFunction = (entries) => {
+         const [entry] = entries;
+         if (end || isOpenModal) return;
+         setIsIntoView(entry.isIntersecting);
+      };
+
+      const observer = new IntersectionObserver(callbackFunction, {
+         threshold: 0.8,
+      });
+      observer.observe(videoRef.current);
+   }, [isOpenModal]);
+
+   // set current index denounce
+   useEffect(() => {
+      if (isOpenModal) return;
+
+      timerId.current = setTimeout(() => {
+         if (isIntoView) {
+            dispatch(
+               setCurrentIndex({
+                  index: +videoRef.current.attributes.index.value,
+               })
+            );
+         }
+      }, 600);
+
+      return () => {
+         if (isOpenModal) return;
+
+         console.log("clear time out");
+         clearTimeout(timerId.current);
+         if (end) return;
+      };
+   }, [isIntoView, loading]);
+
+   // play video in homepage
+   useEffect(() => {
+      // don't need in modal
+      if (isOpenModal || end) return;
+
+      if (currentIndex == index) {
+         play();
+      } else {
+         pause();
+      }
+   }, [currentIndex]);
+
+   // update current time and play video in modal
+   useEffect(() => {
+      if (end ) {
+         if (!currentTime) {
+            console.log("no have time");
+         }
+         if (isUpdateTime && currentTime) {
+
+            videoRef.current.currentTime = currentTime;
+         }
+         play();
+      }
+
+      return () => {
+         handleClearInterval();
+      }
+   }, [modalIndex]);
+
 
    // console.log("player render index =", index)
 

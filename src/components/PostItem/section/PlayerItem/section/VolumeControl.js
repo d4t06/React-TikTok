@@ -1,30 +1,38 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeHigh, faVolumeXmark } from "@fortawesome/free-solid-svg-icons";
-import { useRef, useState } from "react";
-
-import Menu from "~/components/Menu";
+import { useEffect, useRef } from "react";
 
 import classNames from "classnames/bind";
 import styles from "../PlayerItem.module.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { SelectAllModalStore, setVolume, setMute } from "~/store/modalSlice";
+import useLocalStorage from "~/hook/useLocalStorage";
 
 const cx = classNames.bind(styles);
 
-function VolumeControl({ videoEl }) {
-   const [isMute, setIsMute] = useState(false);
+function VolumeControl({ videoRef }) {
+   const dispatch = useDispatch();
+   const modalStore = useSelector(SelectAllModalStore);
+
+   const { isOpenModal, volume, isMute } = modalStore;
+
+   const [LCSvolume, setLCSVolume] = useLocalStorage("volume", 1);
+   const [LCSMute, setLCSMute] = useLocalStorage("mute", false);
+
    const currentVolumeLine = useRef();
 
    const handleVolume = (e) => {
       const rect = e.target.getBoundingClientRect();
-      const volume = (rect.bottom.toFixed(0) - e.clientY) / e.target.offsetHeight;
+      const volume =
+         (rect.bottom.toFixed(0) - e.clientY) / e.target.offsetHeight;
 
-      videoEl.volume = volume.toFixed(1);
-      currentVolumeLine.current.style.height = volume.toFixed(2) * 100 + "%";
+      dispatch(setVolume({ volume: +volume.toFixed(1) }));
+      setLCSVolume(+volume.toFixed(1));
    };
 
    const handleMute = () => {
-      setIsMute(!isMute);
-
-      !isMute ? (videoEl.muted = true) : (videoEl.muted = false);
+      dispatch(setMute({ isMute: !isMute }));
+      setLCSMute(!isMute);
    };
 
    const content = (
@@ -62,9 +70,46 @@ function VolumeControl({ videoEl }) {
       </div>
    );
 
+   useEffect(() => {
+      // if (isOpenModal) return;
+
+      const videoEl = videoRef.current;
+      const currentVolumeLineEl = currentVolumeLine.current;
+
+      if (!videoEl || !currentVolumeLineEl) {
+         console.log("element not found volume control");
+         return;
+      }
+
+      if (isMute) {
+         console.log("muted");
+         videoEl.volume = 0;
+         currentVolumeLineEl.style.height = "0";
+         return;
+      }
+
+      if (!currentVolumeLineEl) return;
+
+      if (volume == 1) {
+         currentVolumeLineEl.style.height = "100%";
+      } else if (volume == 0) {
+         videoEl.volume = 0;
+         currentVolumeLineEl.style.height = "0";
+      } else {
+         videoEl.volume = volume;
+         currentVolumeLineEl.style.height = volume.toFixed(2) * 100 + "%";
+      }
+   }, [volume, isMute]);
+
+   // console.log("volume rerender");
+
    return (
       <>
-         <Menu
+         <div className={cx("frame")}>
+            {content}
+            {toolTip}
+         </div>
+         {/* <Menu
             content={toolTip}
             option={{
                placement: "top",
@@ -74,7 +119,7 @@ function VolumeControl({ videoEl }) {
             }}
          >
             {content}
-         </Menu>
+         </Menu> */}
       </>
    );
 }
